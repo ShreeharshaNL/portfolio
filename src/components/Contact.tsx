@@ -14,15 +14,15 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2200);
   };
 
-  const handleSend = () => {
-    const s = encodeURIComponent(subject.trim() || 'Project Inquiry / Opportunity');
-    const b = encodeURIComponent(
-      message.trim()
-        ? `${message.trim()}\n\n-- Sent from Shreeharsha's Portfolio`
-        : 'Hi Shreeharsha,\n\nI came across your portfolio and wanted to reach out regarding...'
-    );
-    window.location.href = `mailto:${personalInfo.social.email}?subject=${s}&body=${b}`;
-  };
+  const encodedSubject = encodeURIComponent(subject.trim() || 'Project Inquiry / Opportunity');
+  const encodedBody = encodeURIComponent(
+    message.trim()
+      ? `${message.trim()}\n\n-- Sent from Shreeharsha's Portfolio`
+      : 'Hi Shreeharsha,\n\nI came across your portfolio and wanted to reach out regarding...'
+  );
+
+  const mailtoUrl = `mailto:${personalInfo.social.email}?subject=${encodedSubject}&body=${encodedBody}`;
+  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${personalInfo.social.email}&su=${encodedSubject}&body=${encodedBody}`;
 
   return (
     <section id="contact" className="py-24 border-t border-zinc-200/60 dark:border-[#232b3b]/60 relative z-10">
@@ -47,7 +47,7 @@ export const Contact: React.FC = () => {
           <div className="md:col-span-5 space-y-4">
             
             {/* Primary Email Card with Copy */}
-            <div className="p-6 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-xl border border-zinc-200/90 dark:border-[#232b3b] space-y-3 shadow-xl shadow-black/5 dark:shadow-black/20">
+            <div className="p-6 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-md border border-zinc-200/90 dark:border-[#232b3b] space-y-3 shadow-xl shadow-black/5 dark:shadow-black/20">
               <div className="flex items-center space-x-2 text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-medium">
                 <Mail className="w-4 h-4 text-amber-500" />
                 <span>Email Address</span>
@@ -87,7 +87,7 @@ export const Contact: React.FC = () => {
             </div>
 
             {/* Social Network Cards */}
-            <div className="p-6 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-xl border border-zinc-200/90 dark:border-[#232b3b] space-y-3 shadow-xl shadow-black/5 dark:shadow-black/20">
+            <div className="p-6 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-md border border-zinc-200/90 dark:border-[#232b3b] space-y-3 shadow-xl shadow-black/5 dark:shadow-black/20">
               <span className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-medium block">
                 Connect Directly
               </span>
@@ -132,7 +132,7 @@ export const Contact: React.FC = () => {
             </div>
 
             {/* Location */}
-            <div className="p-4 rounded-xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-xl border border-zinc-200/90 dark:border-[#232b3b] flex items-center space-x-3 text-xs text-zinc-600 dark:text-zinc-400 shadow-md">
+            <div className="p-4 rounded-xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-md border border-zinc-200/90 dark:border-[#232b3b] flex items-center space-x-3 text-xs text-zinc-600 dark:text-zinc-400 shadow-md">
               <MapPin className="w-4 h-4 text-amber-500 shrink-0" />
               <span>The National Institute of Engineering (NIE), Mysuru, India</span>
             </div>
@@ -140,13 +140,13 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Direct Message Form (Span 7) */}
-          <div className="md:col-span-7 p-7 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-xl border border-zinc-200/90 dark:border-[#232b3b] space-y-5 shadow-xl shadow-black/5 dark:shadow-black/20">
+          <div className="md:col-span-7 p-7 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-md border border-zinc-200/90 dark:border-[#232b3b] space-y-5 shadow-xl shadow-black/5 dark:shadow-black/20">
             <div>
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">
-                Send a Quick Message
+                Send a Message
               </h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                Launches your native mail client with the message pre-filled.
+                Compose below to send directly via Gmail in your browser or your system email app.
               </p>
             </div>
 
@@ -179,14 +179,28 @@ export const Contact: React.FC = () => {
                 />
               </div>
 
-              <button
-                type="button"
-                onClick={handleSend}
-                className="w-full inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-all shadow-md shadow-amber-950/20 active:scale-[0.99]"
-              >
-                <Send className="w-4 h-4" />
-                <span>Send Message via Email Client</span>
-              </button>
+              {/* Two clear action options */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {/* Option 1: Open directly in Gmail (Web) */}
+                <a
+                  href={gmailWebUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs sm:text-sm transition-all shadow-md shadow-amber-950/20 active:scale-[0.99]"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Open in Gmail (Web)</span>
+                </a>
+
+                {/* Option 2: Default System Mail Client (mailto:) */}
+                <a
+                  href={mailtoUrl}
+                  className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-zinc-100 dark:bg-[#181e2b] hover:bg-zinc-200 dark:hover:bg-[#202738] border border-zinc-200 dark:border-[#232b3b] text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white font-medium text-xs sm:text-sm transition-all active:scale-[0.99]"
+                >
+                  <Mail className="w-4 h-4 text-amber-500" />
+                  <span>Default Mail App</span>
+                </a>
+              </div>
             </div>
           </div>
 
