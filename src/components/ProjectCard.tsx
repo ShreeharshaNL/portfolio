@@ -7,6 +7,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const isRepoOnly = !project.demoUrl && project.githubUrl;
+
   return (
     <a
       href={project.projectUrl}
@@ -19,19 +21,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
       <div className="space-y-4">
         
-        {/* Project Homepage / UI Photo Mockup Preview */}
-        <div className="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden border border-zinc-200 dark:border-[#232b3b] group-hover:border-amber-500/40 transition-all duration-300 bg-zinc-100 dark:bg-[#080b11]">
+        {/* Project Homepage / Screenshot Preview (16:9 Aspect Ratio) */}
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-zinc-200 dark:border-[#232b3b] group-hover:border-amber-500/40 transition-all duration-300 bg-zinc-100 dark:bg-[#080b11]">
           <img
             src={project.image}
-            alt={`${project.title} Interface Preview`}
+            alt={`${project.title} Screenshot Preview`}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
             loading="lazy"
           />
           
-          {/* Subtle gradient overlay to blend into the card */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white/40 dark:from-[#121620] via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity" />
+          {/* Subtle bottom gradient to blend into the card */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white/30 dark:from-[#121620]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity" />
 
-          {/* Quick Corner Badge */}
+          {/* Corner Redirect Badge */}
           <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-lg bg-white/90 dark:bg-[#0c0f17]/90 border border-zinc-200 dark:border-[#232b3b] group-hover:bg-amber-500 group-hover:text-black group-hover:border-amber-400 flex items-center justify-center text-zinc-700 dark:text-zinc-300 transition-all shadow-md">
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
@@ -90,7 +92,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         {/* Bottom Link Prompt */}
         <div className="flex items-center justify-between pt-1 text-xs font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-amber-500 transition-colors">
-          <span>Click card to open project site</span>
+          <span>{isRepoOnly ? 'Open Project Repository' : 'Open Live Application'}</span>
           <ExternalLink className="w-3.5 h-3.5" />
         </div>
       </div>
