@@ -27,24 +27,24 @@ export const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-24 border-t border-[#232b3b]/60 relative z-10">
+    <section id="about" className="py-24 border-t border-zinc-200/60 dark:border-[#232b3b]/60 relative z-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#181e29] border border-[#232b3b] text-xs font-mono text-amber-400">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/80 dark:bg-[#181e29] border border-zinc-200 dark:border-[#232b3b] text-xs font-mono text-amber-500 shadow-sm">
             <span>BACKGROUND</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
             About Me
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400">
+          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
             A brief introduction to my background and technical interests.
           </p>
         </div>
 
         {/* Narrative */}
-        <div className="max-w-3xl mx-auto text-zinc-300 text-base sm:text-lg leading-relaxed space-y-4 text-center mb-14">
+        <div className="max-w-3xl mx-auto text-zinc-700 dark:text-zinc-300 text-base sm:text-lg leading-relaxed space-y-4 text-center mb-14">
           {personalInfo.aboutText.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
@@ -57,15 +57,15 @@ export const About: React.FC = () => {
             return (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-[#121620]/90 border border-[#232b3b] hover:border-amber-500/30 transition-all space-y-3 group"
+                className="p-6 rounded-2xl bg-white/85 dark:bg-[#121620]/90 backdrop-blur-xl border border-zinc-200/90 dark:border-[#232b3b] hover:border-amber-500/40 transition-all space-y-3 group shadow-xl shadow-black/5 dark:shadow-black/20"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#181e2b] border border-[#232b3b] group-hover:border-amber-500/40 flex items-center justify-center text-amber-400 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 dark:bg-[#181e2b] border border-amber-500/20 dark:border-[#232b3b] group-hover:border-amber-500/50 flex items-center justify-center text-amber-500 transition-colors">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-white text-lg">
+                <h3 className="font-semibold text-zinc-900 dark:text-white text-lg">
                   {item.title}
                 </h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   {item.desc}
                 </p>
               </div>
