@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1220"/>
+      <stop offset="100%" stop-color="#050912"/>
+    </linearGradient>
+    <linearGradient id="fp-sky" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" rx="16" fill="url(#fp-bg)"/>
+  <rect x="1" y="1" width="798" height="478" rx="15" fill="none" stroke="#1d2d47" stroke-width="1.5"/>
+
+  <!-- Window Header -->
+  <rect x="0" y="0" width="800" height="42" rx="16" fill="#0f192b"/>
+  <circle cx="28" cy="21" r="5" fill="#ef4444" opacity="0.8"/>
+  <circle cx="44" cy="21" r="5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="60" cy="21" r="5" fill="#10b981" opacity="0.8"/>
+  <text x="400" y="26" fill="#7dd3fc" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" text-anchor="middle">Student Freelancing Platform · Campus Dev Network</text>
+
+  <!-- Navigation / Filter Bar -->
+  <rect x="30" y="60" width="740" height="48" rx="10" fill="#132035" stroke="#223659" stroke-width="1"/>
+  <text x="50" y="88" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Explore Open Projects</text>
+  
+  <rect x="220" y="70" width="85" height="28" rx="6" fill="#0284c7"/>
+  <text x="262" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">All Gigs (18)</text>
+
+  <rect x="315" y="70" width="80" height="28" rx="6" fill="#1a2b47"/>
+  <text x="355" y="88" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11" font-weight="500" text-anchor="middle">Frontend</text>
+
+  <rect x="405" y="70" width="80" height="28" rx="6" fill="#1a2b47"/>
+  <text x="445" y="88" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11" font-weight="500" text-anchor="middle">Backend</text>
+
+  <rect x="495" y="70" width="80" height="28" rx="6" fill="#1a2b47"/>
+  <text x="535" y="88" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11" font-weight="500" text-anchor="middle">UI/UX Design</text>
+
+  <!-- Left: Featured Campus Gig -->
+  <rect x="30" y="122" width="460" height="325" rx="12" fill="#0e1726" stroke="#1d2e4a" stroke-width="1"/>
+  <text x="55" y="152" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">FEATURED PROJECT GIG</text>
+  <text x="55" y="182" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Full-Stack Club Portal & Event Registry</text>
+  <text x="55" y="206" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Campus Technical Society · Requires React & Node.js API</text>
+
+  <!-- Tech Requirements -->
+  <rect x="55" y="225" width="410" height="52" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <text x="75" y="246" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">Tech Stack:</text>
+  <rect x="145" y="238" width="55" height="24" rx="4" fill="#0284c7" opacity="0.2"/>
+  <text x="172" y="254" fill="#38bdf8" font-family="monospace" font-size="11" text-anchor="middle">React</text>
+  <rect x="210" y="238" width="65" height="24" rx="4" fill="#10b981" opacity="0.2"/>
+  <text x="242" y="254" fill="#34d399" font-family="monospace" font-size="11" text-anchor="middle">Node.js</text>
+  <rect x="285" y="238" width="80" height="24" rx="4" fill="#f59e0b" opacity="0.2"/>
+  <text x="325" y="254" fill="#fbbf24" font-family="monospace" font-size="11" text-anchor="middle">PostgreSQL</text>
+
+  <!-- Timeline & Proposal Status -->
+  <rect x="55" y="290" width="410" height="60" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <text x="75" y="315" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Milestone Timeline:</text>
+  <text x="75" y="335" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="600">3 Weeks · 4 Milestones</text>
+  <rect x="365" y="305" width="85" height="28" rx="6" fill="#059669"/>
+  <text x="407" y="323" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Apply Now</text>
+
+  <rect x="55" y="365" width="410" height="65" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <circle cx="80" cy="397" r="14" fill="#0284c7"/>
+  <text x="80" y="401" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">SN</text>
+  <text x="105" y="392" fill="#f1f5f9" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Student Developer Profile Architecture</text>
+  <text x="105" y="410" fill="#64748b" font-family="system-ui, sans-serif" font-size="10">Verified NIE Mysuru Student Credentials</text>
+
+  <!-- Right: Active Peer Profiles -->
+  <rect x="510" y="122" width="260" height="325" rx="12" fill="#0e1726" stroke="#1d2e4a" stroke-width="1"/>
+  <text x="530" y="152" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="600" letter-spacing="1">STUDENT TALENT POOL</text>
+
+  <rect x="530" y="170" width="220" height="70" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <text x="545" y="195" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Frontend Engineer</text>
+  <text x="545" y="213" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">TypeScript, Tailwind CSS, Next.js</text>
+  <text x="545" y="228" fill="#10b981" font-family="monospace" font-size="10">● Available for Projects</text>
+
+  <rect x="530" y="250" width="220" height="70" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <text x="545" y="275" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Backend Specialist</text>
+  <text x="545" y="293" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Node.js, Express, MySQL, Docker</text>
+  <text x="545" y="308" fill="#38bdf8" font-family="monospace" font-size="10">● 4 Projects Completed</text>
+
+  <rect x="530" y="330" width="220" height="70" rx="8" fill="#152238" stroke="#253859" stroke-width="1"/>
+  <text x="545" y="355" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="12" font-weight="600">UI/UX Designer</text>
+  <text x="545" y="373" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Figma, Design Systems, Mobile</text>
+  <text x="545" y="388" fill="#f59e0b" font-family="monospace" font-size="10">● In Active Project</text>
+</svg>
