@@ -2,6 +2,12 @@ export interface PersonalInfo {
   name: string;
   role: string;
   location: string;
+  spawnOrigin: {
+    place: string;
+    dob: string;
+    time: string;
+    coordinates?: string;
+  };
   institution: string;
   eyebrow: string;
   headline: string;

@@ -8,6 +8,34 @@ export default {
   theme: {
     extend: {
       colors: {
+        mc: {
+          dirt: '#866043',
+          grass: '#5c8e32',
+          grassLight: '#7ec046',
+          stone: '#737373',
+          stoneDark: '#505050',
+          deepslate: '#1b1d24',
+          bedrock: '#12141a',
+          diamond: '#4dedf4',
+          diamondGlow: '#80ffff',
+          diamondDark: '#1b8b91',
+          emerald: '#17dd62',
+          gold: '#fcee4b',
+          goldShadow: '#b0a31c',
+          redstone: '#ff3322',
+          netherite: '#3e3436',
+          gui: {
+            bg: '#c6c6c6',
+            panel: '#dcdcdc',
+            slot: '#8b8b8b',
+            slotDark: '#373737',
+            darkBg: '#181b24',
+            darkSurface: '#212635',
+            darkElevated: '#2a3144',
+            darkBorder: '#363d50',
+            darkBorderMuted: '#2b3040',
+          }
+        },
         omarchy: {
           darkest: '#080a0e',
           base: '#0c0f14',
@@ -33,6 +61,8 @@ export default {
         }
       },
       fontFamily: {
+        pixel: ['"Pixelify Sans"', '"Silkscreen"', 'monospace'],
+        minecraft: ['"Silkscreen"', '"Pixelify Sans"', 'monospace'],
         mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', 'monospace'],
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
       },

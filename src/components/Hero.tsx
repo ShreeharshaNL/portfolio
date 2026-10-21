@@ -1,49 +1,115 @@
-import React from 'react';
-import { ArrowRight, Mail, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, Mail, FileText, Backpack } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../config/portfolio';
+import { MineableBlock } from './MineableBlock';
+import { useGame } from '../context/GameContext';
+import { sound } from '../utils/audio';
+import { DiamondSword, CreeperFace, CompassIcon } from './MinecraftIcons';
+
+const SPLASHES = [
+  'Winner — NeoNexus 2026!',
+  'Full-Stack Developer & AI Explorer!',
+  'Press [E] for Inventory!',
+  'B.E. ISE · NIE Mysuru!',
+  'Spawn: Karkala, Karnataka!',
+  'Built with React 18 & Vite!',
+  'Clean code & solid systems!',
+];
 
 export const Hero: React.FC = () => {
+  const { openBiomeModal, openInventory } = useGame();
+  const [splashIndex, setSplashIndex] = useState(0);
+
+  useEffect(() => {
+    // Pick random splash on load
+    const idx = Math.floor(Math.random() * SPLASHES.length);
+    setSplashIndex(idx);
+  }, []);
+
+  const rotateSplash = () => {
+    sound.playPop();
+    setSplashIndex((prev) => (prev + 1) % SPLASHES.length);
+  };
+
   return (
-    <section className="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
+    <section id="hero" className="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-7">
         
-        {/* Eyebrow badge */}
-        <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/85 dark:bg-[#181e2b]/85 border border-zinc-200 dark:border-[#232b3b] text-xs text-zinc-700 dark:text-zinc-300 font-medium shadow-sm backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-          <span>{personalInfo.eyebrow}</span>
+        {/* Eyebrow Badge (Minecraft Style) */}
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-[#181b24]/90 border-2 border-black shadow-[inset_1px_1px_#3d4559,inset_-1px_-1px_#0e1015,2px_2px_0px_rgba(0,0,0,0.5)]">
+          <CreeperFace size={16} />
+          <span className="font-pixel text-xs text-[#55ff55] uppercase tracking-wider mc-text-shadow">
+            {personalInfo.eyebrow}
+          </span>
+          <span className="text-zinc-500">•</span>
+          <span className="font-pixel text-[11px] text-[#fcee4b] mc-text-shadow">
+            NEONEXUS 2026 WINNER
+          </span>
         </div>
 
-        {/* Main Heading */}
-        <div className="space-y-4">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
-            Hi, I'm <span className="text-amber-500">Shreeharsha</span>.
+        {/* Main Heading with 3D Bevel & Bouncing Yellow Splash Text */}
+        <div className="relative inline-block max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-pixel font-bold tracking-wide text-white mc-text-shadow leading-tight">
+            Hi, I'm <span className="text-[#55ffff]">Shreeharsha</span>.
           </h1>
-          <p className="text-xl sm:text-2xl text-zinc-800 dark:text-zinc-200 font-medium max-w-2xl mx-auto leading-relaxed">
+
+          {/* Minecraft Yellow Splash Text (bouncing at an angle) */}
+          <div
+            onClick={rotateSplash}
+            className="absolute -top-4 -right-4 sm:-right-12 mc-splash text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 select-none"
+            title="Click for another splash!"
+          >
+            {SPLASHES[splashIndex]}
+          </div>
+
+          <p className="mt-4 text-lg sm:text-2xl text-zinc-200 font-pixel font-medium max-w-2xl mx-auto leading-relaxed mc-text-shadow-subtle">
             {personalInfo.headline}
           </p>
         </div>
 
         {/* Short description */}
-        <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-300 font-sans max-w-xl mx-auto leading-relaxed">
           {personalInfo.bio}
         </p>
 
-        {/* Action Buttons */}
+        {/* Action Buttons (Minecraft styled) */}
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          
           <a
             href="#projects"
-            className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-all shadow-lg shadow-amber-950/20 active:scale-[0.99] group"
+            onClick={() => sound.playClick()}
+            className="mc-button-diamond px-5 py-3 text-xs sm:text-sm space-x-2 group"
           >
+            <DiamondSword size={18} />
             <span>Explore Projects</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
 
+          <button
+            onClick={() => openBiomeModal()}
+            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2 text-[#fcee4b]"
+            title="Switch Background Biome / Theme"
+          >
+            <CompassIcon size={18} />
+            <span>Biomes & Themes</span>
+          </button>
+
+          <button
+            onClick={() => openInventory()}
+            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2 text-[#55ffff]"
+            title="Open Character Vault (Press E)"
+          >
+            <Backpack className="w-4 h-4" />
+            <span>Inventory [E]</span>
+          </button>
+
           <a
             href="#contact"
-            className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-white/85 dark:bg-[#181e2b]/85 hover:bg-white dark:hover:bg-[#202738] border border-zinc-200 dark:border-[#232b3b] text-zinc-800 dark:text-white font-medium text-sm transition-all backdrop-blur-md shadow-sm"
+            onClick={() => sound.playClick()}
+            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2"
           >
-            <Mail className="w-4 h-4 text-amber-500" />
+            <Mail className="w-4 h-4 text-[#55ffff]" />
             <span>Get in Touch</span>
           </a>
 
@@ -51,10 +117,11 @@ export const Hero: React.FC = () => {
             href={personalInfo.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 px-4 py-3 rounded-xl bg-white/85 dark:bg-[#181e2b]/85 hover:bg-white dark:hover:bg-[#202738] border border-zinc-200 dark:border-[#232b3b] text-zinc-700 dark:text-zinc-300 hover:text-sky-500 transition-colors text-sm backdrop-blur-md shadow-sm"
+            onClick={() => sound.playClick()}
+            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-[#55ffff]"
             title="LinkedIn Profile"
           >
-            <LinkedinIcon className="w-4 h-4 text-sky-500" />
+            <LinkedinIcon className="w-4 h-4" />
             <span>LinkedIn</span>
           </a>
 
@@ -62,7 +129,8 @@ export const Hero: React.FC = () => {
             href={personalInfo.social.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 px-4 py-3 rounded-xl bg-white/85 dark:bg-[#181e2b]/85 hover:bg-white dark:hover:bg-[#202738] border border-zinc-200 dark:border-[#232b3b] text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors text-sm backdrop-blur-md shadow-sm"
+            onClick={() => sound.playClick()}
+            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-white"
             title="GitHub Profile"
           >
             <GithubIcon className="w-4 h-4" />
@@ -73,12 +141,18 @@ export const Hero: React.FC = () => {
             <a
               href={personalInfo.social.resumeUrl}
               download
-              className="inline-flex items-center space-x-2 px-4 py-3 rounded-xl bg-white/85 dark:bg-[#181e2b]/85 hover:bg-white dark:hover:bg-[#202738] border border-zinc-200 dark:border-[#232b3b] text-zinc-700 dark:text-zinc-300 hover:text-amber-500 transition-colors text-sm backdrop-blur-md shadow-sm"
+              onClick={() => sound.playClick()}
+              className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-[#fcee4b]"
             >
-              <FileText className="w-4 h-4 text-amber-500" />
+              <FileText className="w-4 h-4" />
               <span>Résumé</span>
             </a>
           )}
+        </div>
+
+        {/* Interactive Mineable Block Widget (cleanly centered below buttons) */}
+        <div className="pt-4 flex justify-center">
+          <MineableBlock />
         </div>
 
       </div>

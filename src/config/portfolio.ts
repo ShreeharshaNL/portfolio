@@ -4,6 +4,12 @@ export const personalInfo: PersonalInfo = {
   name: "Shreeharsha N. L.",
   role: "Information Science & Engineering Student",
   location: "Mysuru, India",
+  spawnOrigin: {
+    place: "Karkala, Karnataka",
+    dob: "06 Oct 2005",
+    time: "11:50 PM",
+    coordinates: "13.21°N, 74.99°E",
+  },
   institution: "The National Institute of Engineering (NIE), Mysuru",
   eyebrow: "Information Science & Engineering · NIE Mysuru",
   headline: "Building practical web applications and exploring AI solutions.",
@@ -109,6 +115,6 @@ export const educationData: EducationData = {
     event: "NeoNexus 36.1 Hackathon at NIE Mysuru",
     project: "LabelWise",
     team: "Team Code4Care",
-    year: "2024",
+    year: "2026",
   },
 };

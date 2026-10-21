@@ -3,22 +3,23 @@ import { projectsData } from '../config/portfolio';
 import { ProjectCard } from './ProjectCard';
 import { ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import { sound } from '../utils/audio';
 
 export const ProjectGrid: React.FC = () => {
   return (
-    <section id="projects" className="py-24 border-t border-zinc-200/60 dark:border-[#232b3b]/60 relative z-10">
+    <section id="projects" className="py-24 border-t-2 border-black relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/80 dark:bg-[#181e29] border border-zinc-200 dark:border-[#232b3b] text-xs font-mono text-amber-500 shadow-sm">
-            <span>FEATURED WORK</span>
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 bg-[#181b24] border-2 border-black text-xs font-pixel text-[#55ffff] shadow-[inset_1px_1px_#3d4559,2px_2px_0px_rgba(0,0,0,0.5)]">
+            <span>[FEATURED INVENTORY]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
-            Selected Projects
+          <h2 className="text-3xl sm:text-4xl font-pixel font-bold text-white tracking-wide mc-text-shadow">
+            Selected Software Projects
           </h2>
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-            Click on any project card to open its live site or repository.
+          <p className="text-sm sm:text-base text-zinc-300 font-sans">
+            Curated systems, hackathon-winning builds, and full-stack applications.
           </p>
         </div>
 
@@ -30,12 +31,13 @@ export const ProjectGrid: React.FC = () => {
         </div>
 
         {/* Bottom GitHub Prompt */}
-        <div className="mt-14 text-center">
+        <div className="mt-12 text-center">
           <a
             href="https://github.com/ShreeharshaNL"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 text-sm text-zinc-700 dark:text-zinc-400 hover:text-amber-500 transition-colors"
+            onClick={() => sound.playClick()}
+            className="inline-flex items-center space-x-2 text-xs sm:text-sm font-pixel text-zinc-300 hover:text-[#55ffff] transition-colors mc-text-shadow"
           >
             <GithubIcon className="w-4 h-4" />
             <span>Explore more open-source repositories on GitHub</span>
