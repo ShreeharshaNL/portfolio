@@ -3,6 +3,7 @@ import { ExternalLink, Award, ArrowUpRight, Sparkles } from 'lucide-react';
 import { ProjectItem } from '../types';
 import { sound } from '../utils/audio';
 import { useGame } from '../context/GameContext';
+import { portfolioApi } from '../services/api';
 
 interface ProjectCardProps {
   project: ProjectItem;
@@ -14,6 +15,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const handleCardClick = () => {
     sound.playClick();
+    portfolioApi.trackEvent('project_click', project.title);
     if (project.id === 'labelwise') {
       unlockAdvancement('winner');
     }
@@ -49,12 +51,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {/* Category & Achievement Badge */}
-        <div className="flex items-center justify-between gap-2 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
           <span className="text-[11px] font-pixel uppercase tracking-wider text-[#55ffff] font-bold mc-text-shadow">
             {project.category}
           </span>
           {project.achievement && (
-            <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-[#fcee4b]/15 border border-[#fcee4b]/40 text-[10px] font-pixel text-[#fcee4b] font-bold mc-text-shadow">
+            <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-[#fcee4b]/15 border border-[#fcee4b]/40 text-[10px] font-pixel text-[#fcee4b] font-bold mc-text-shadow shrink-0">
               <Award className="w-3 h-3 text-[#fcee4b]" />
               <span>NeoNexus 2026 Winner</span>
             </span>

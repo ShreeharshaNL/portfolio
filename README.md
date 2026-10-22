@@ -42,7 +42,39 @@ npm run preview
 
 ---
 
+## 💾 Database & Cloudflare D1 Backend
+
+The portfolio includes a serverless edge backend powered by **Cloudflare Pages Functions** and **Cloudflare D1** (Serverless SQLite).
+
+* **Direct Contact Transmission API:** [`functions/api/contact.ts`](file:///home/shnl/Projects/Portfolio-web/functions/api/contact.ts) — validates, logs messages to `contact_messages` table, and optionally forwards notification emails via Resend.
+* **Visitor Signpost (Guestbook):** [`functions/api/guestbook.ts`](file:///home/shnl/Projects/Portfolio-web/functions/api/guestbook.ts) — allows visitors to sign notes with custom Minecraft avatars stored in `guestbook_entries`.
+* **Global Miner Leaderboard:** [`functions/api/leaderboard.ts`](file:///home/shnl/Projects/Portfolio-web/functions/api/leaderboard.ts) — syncs and ranks visitor mining stats in `miner_stats`.
+* **Database Schema:** [`d1/schema.sql`](file:///home/shnl/Projects/Portfolio-web/d1/schema.sql)
+
+### Setup Cloudflare D1 in 2 Minutes:
+
+```bash
+# 1. Login to Cloudflare Wrangler
+npx wrangler login
+
+# 2. Create the D1 Database
+npx wrangler d1 create portfolio-db
+# Copy the output database_id into wrangler.jsonc
+
+# 3. Apply the SQL Schema locally or remotely
+npm run d1:migrate:local
+# or deploy to Cloudflare production:
+npm run d1:migrate:remote
+
+# 4. Deploy Pages with Functions & D1
+npx wrangler pages deploy dist
+```
+
+*(Note: During local Vite development `npm run dev`, a graceful client fallback automatically mirrors the D1 ledger in browser storage so features function out of the box without setup).*
+
+---
+
 ## ⚙️ Updating Information
 
 All personal details, project descriptions, and links are located in:
-👉 [`src/config/portfolio.ts`](file:///run/media/shnl/MyFiles/SHNL/Projects/Portfolio-web/src/config/portfolio.ts)
+👉 [`src/config/portfolio.ts`](file:///home/shnl/Projects/Portfolio-web/src/config/portfolio.ts)

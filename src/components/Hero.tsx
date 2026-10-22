@@ -5,16 +5,16 @@ import { personalInfo } from '../config/portfolio';
 import { MineableBlock } from './MineableBlock';
 import { useGame } from '../context/GameContext';
 import { sound } from '../utils/audio';
-import { DiamondSword, CreeperFace, CompassIcon } from './MinecraftIcons';
+import { DiamondSword, CompassIcon } from './MinecraftIcons';
 
 const SPLASHES = [
-  'Winner — NeoNexus 2026!',
   'Full-Stack Developer & AI Explorer!',
-  'Press [E] for Inventory!',
-  'B.E. ISE · NIE Mysuru!',
+  'Press [E] for Character Vault!',
   'Spawn: Karkala, Karnataka!',
   'Built with React 18 & Vite!',
   'Clean code & solid systems!',
+  'Crafting modern web experiences!',
+  'Explore projects & lore below!',
 ];
 
 export const Hero: React.FC = () => {
@@ -33,62 +33,61 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-7">
-        
-        {/* Eyebrow Badge (Minecraft Style) */}
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-[#181b24]/90 border-2 border-black shadow-[inset_1px_1px_#3d4559,inset_-1px_-1px_#0e1015,2px_2px_0px_rgba(0,0,0,0.5)]">
-          <CreeperFace size={16} />
-          <span className="font-pixel text-xs text-[#55ff55] uppercase tracking-wider mc-text-shadow">
-            {personalInfo.eyebrow}
-          </span>
-          <span className="text-zinc-500">•</span>
-          <span className="font-pixel text-[11px] text-[#fcee4b] mc-text-shadow">
-            NEONEXUS 2026 WINNER
-          </span>
-        </div>
+    <section id="hero" className="relative pt-24 pb-14 sm:pt-36 sm:pb-20 md:pt-44 md:pb-28 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6 sm:space-y-7">
 
         {/* Main Heading with 3D Bevel & Bouncing Yellow Splash Text */}
-        <div className="relative inline-block max-w-3xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-pixel font-bold tracking-wide text-white mc-text-shadow leading-tight">
-            Hi, I'm <span className="text-[#55ffff]">Shreeharsha</span>.
-          </h1>
+        <div className="relative inline-flex flex-col items-center max-w-3xl mx-auto w-full">
+          <div className="relative inline-block max-w-full">
+            <h1 className="text-3xl sm:text-6xl md:text-7xl font-pixel font-bold tracking-wide text-white mc-text-shadow leading-tight px-1 break-words">
+              Hi, I'm <span className="text-[#55ffff]">Shreeharsha</span>.
+            </h1>
 
-          {/* Minecraft Yellow Splash Text (bouncing at an angle) */}
-          <div
-            onClick={rotateSplash}
-            className="absolute -top-4 -right-4 sm:-right-12 mc-splash text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 select-none"
-            title="Click for another splash!"
-          >
-            {SPLASHES[splashIndex]}
+            {/* Desktop Minecraft Yellow Splash Text (bouncing at top-right angle) */}
+            <div
+              onClick={rotateSplash}
+              className="hidden sm:inline-block absolute -top-5 -right-8 md:-right-12 mc-splash text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 select-none whitespace-nowrap z-20"
+              title="Click for another splash!"
+            >
+              {SPLASHES[splashIndex]}
+            </div>
           </div>
 
-          <p className="mt-4 text-lg sm:text-2xl text-zinc-200 font-pixel font-medium max-w-2xl mx-auto leading-relaxed mc-text-shadow-subtle">
+          {/* Mobile Splash Text (positioned cleanly below heading so it NEVER overlaps text) */}
+          <div
+            onClick={rotateSplash}
+            className="sm:hidden mt-2.5 inline-block mc-splash text-[11px] font-bold cursor-pointer select-none px-3 py-1 bg-[#181b24]/90 border border-black shadow-[inset_1px_1px_#3d4559,2px_2px_0px_rgba(0,0,0,0.5)]"
+            title="Tap for another splash!"
+          >
+            ✦ {SPLASHES[splashIndex]}
+          </div>
+
+          <p className="mt-3 sm:mt-4 text-base sm:text-2xl text-zinc-200 font-pixel font-medium max-w-2xl mx-auto leading-relaxed mc-text-shadow-subtle px-2">
             {personalInfo.headline}
           </p>
         </div>
 
         {/* Short description */}
-        <p className="text-sm sm:text-base text-zinc-300 font-sans max-w-xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-base text-zinc-300 font-sans max-w-xl mx-auto leading-relaxed px-2">
           {personalInfo.bio}
         </p>
 
         {/* Action Buttons (Minecraft styled) */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1 sm:pt-2">
           
           <a
             href="#projects"
             onClick={() => sound.playClick()}
-            className="mc-button-diamond px-5 py-3 text-xs sm:text-sm space-x-2 group"
+            className="mc-button-diamond px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm space-x-2 group"
           >
             <DiamondSword size={18} />
             <span>Explore Projects</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
           </a>
 
           <button
             onClick={() => openBiomeModal()}
-            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2 text-[#fcee4b]"
+            className="mc-button px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 sm:space-x-2 text-[#fcee4b]"
             title="Switch Background Biome / Theme"
           >
             <CompassIcon size={18} />
@@ -97,19 +96,19 @@ export const Hero: React.FC = () => {
 
           <button
             onClick={() => openInventory()}
-            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2 text-[#55ffff]"
+            className="mc-button px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 sm:space-x-2 text-[#55ffff]"
             title="Open Character Vault (Press E)"
           >
-            <Backpack className="w-4 h-4" />
+            <Backpack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Inventory [E]</span>
           </button>
 
           <a
             href="#contact"
             onClick={() => sound.playClick()}
-            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-2"
+            className="mc-button px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 sm:space-x-2"
           >
-            <Mail className="w-4 h-4 text-[#55ffff]" />
+            <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#55ffff]" />
             <span>Get in Touch</span>
           </a>
 
@@ -118,11 +117,11 @@ export const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
-            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-[#55ffff]"
+            className="mc-button px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-[#55ffff]"
             title="LinkedIn Profile"
           >
-            <LinkedinIcon className="w-4 h-4" />
-            <span>LinkedIn</span>
+            <LinkedinIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">LinkedIn</span>
           </a>
 
           <a
@@ -130,11 +129,11 @@ export const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
-            className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-white"
+            className="mc-button px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 text-zinc-200 hover:text-white"
             title="GitHub Profile"
           >
-            <GithubIcon className="w-4 h-4" />
-            <span>GitHub</span>
+            <GithubIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">GitHub</span>
           </a>
 
           {personalInfo.social.resumeUrl && (
@@ -142,16 +141,16 @@ export const Hero: React.FC = () => {
               href={personalInfo.social.resumeUrl}
               download
               onClick={() => sound.playClick()}
-              className="mc-button px-4 py-3 text-xs sm:text-sm space-x-1.5 text-[#fcee4b]"
+              className="mc-button px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 text-[#fcee4b]"
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Résumé</span>
             </a>
           )}
         </div>
 
         {/* Interactive Mineable Block Widget (cleanly centered below buttons) */}
-        <div className="pt-4 flex justify-center">
+        <div className="pt-3 sm:pt-4 flex justify-center">
           <MineableBlock />
         </div>
 

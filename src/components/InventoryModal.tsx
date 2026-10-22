@@ -188,26 +188,39 @@ export const InventoryModal: React.FC = () => {
       <div className="relative z-10 w-full max-w-3xl bg-[#1c202a] border-2 border-black shadow-[inset_2px_2px_#3d4559,inset_-2px_-2px_#0e1015,10px_10px_0px_rgba(0,0,0,0.8)] p-4 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto">
         
         {/* Header bar */}
-        <div className="flex items-center justify-between border-b-2 border-black pb-3">
-          <div className="flex items-center space-x-3">
-            <ChestIcon size={24} />
-            <span className="font-pixel text-lg font-bold text-white mc-text-shadow">
-              Character Vault & Gear
-            </span>
-            <span className="text-xs font-pixel text-[#55ff55] mc-text-shadow hidden sm:inline">
-              [Level {level}]
-            </span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-black pb-3 gap-2.5">
+          <div className="flex items-center justify-between w-full sm:w-auto">
+            <div className="flex items-center space-x-2.5">
+              <ChestIcon size={24} />
+              <span className="font-pixel text-base sm:text-lg font-bold text-white mc-text-shadow">
+                Character Vault & Gear
+              </span>
+              <span className="text-xs font-pixel text-[#55ff55] mc-text-shadow hidden sm:inline">
+                [Level {level}]
+              </span>
+            </div>
+
+            <button
+              onClick={() => {
+                sound.playClick();
+                closeInventory();
+              }}
+              className="sm:hidden w-7 h-7 bg-[#616161] hover:bg-[#727272] border border-black shadow-[inset_1px_1px_#9c9c9c,inset_-1px_-1px_#383838] flex items-center justify-center text-white shrink-0"
+              aria-label="Close Inventory"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-between sm:justify-end space-x-2 w-full sm:w-auto">
             {/* Tabs */}
-            <div className="flex bg-[#12141a] border border-black p-0.5">
+            <div className="flex bg-[#12141a] border border-black p-0.5 w-full sm:w-auto">
               <button
                 onClick={() => {
                   sound.playClick();
                   setActiveTab('inventory');
                 }}
-                className={`px-3 py-1 font-pixel text-xs transition-colors ${
+                className={`flex-1 sm:flex-initial px-3 py-1 font-pixel text-xs transition-colors ${
                   activeTab === 'inventory' ? 'bg-[#2b3345] text-[#55ffff]' : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -218,7 +231,7 @@ export const InventoryModal: React.FC = () => {
                   sound.playClick();
                   setActiveTab('advancements');
                 }}
-                className={`px-3 py-1 font-pixel text-xs transition-colors ${
+                className={`flex-1 sm:flex-initial px-3 py-1 font-pixel text-xs transition-colors ${
                   activeTab === 'advancements' ? 'bg-[#2b3345] text-[#fcee4b]' : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -231,7 +244,7 @@ export const InventoryModal: React.FC = () => {
                 sound.playClick();
                 closeInventory();
               }}
-              className="w-7 h-7 bg-[#616161] hover:bg-[#727272] border border-black shadow-[inset_1px_1px_#9c9c9c,inset_-1px_-1px_#383838] flex items-center justify-center text-white"
+              className="hidden sm:flex w-7 h-7 bg-[#616161] hover:bg-[#727272] border border-black shadow-[inset_1px_1px_#9c9c9c,inset_-1px_-1px_#383838] items-center justify-center text-white shrink-0"
               aria-label="Close Inventory"
             >
               <X className="w-4 h-4" />
@@ -256,7 +269,7 @@ export const InventoryModal: React.FC = () => {
                     {personalInfo.name}
                   </h4>
                   <p className="text-[11px] font-mono text-[#55ffff]">
-                    B.E. ISE · NIE Mysuru
+                    B.E. Info Science · NIE Mysuru
                   </p>
                   <p className="text-[10px] font-sans text-zinc-400">
                     Grad: 2027 · CGPA {educationData.cgpa} / 10.0

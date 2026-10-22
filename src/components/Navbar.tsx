@@ -28,6 +28,7 @@ export const Navbar: React.FC = () => {
     { name: 'Projects', href: '#projects' },
     { name: 'Toolbox', href: '#skills' },
     { name: 'Academics', href: '#education' },
+    { name: 'Ledger', href: '#guestbook' },
     { name: 'Connect', href: '#contact' },
   ];
 
@@ -98,13 +99,13 @@ export const Navbar: React.FC = () => {
               )}
             </button>
 
-            {/* Biome Compass Selector */}
+            {/* Biome Compass Selector (tablet/desktop) */}
             <button
               onClick={() => {
                 sound.playClick();
                 openBiomeModal();
               }}
-              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-200 hover:text-[#55ffff] transition-colors flex items-center space-x-1"
+              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-200 hover:text-[#55ffff] transition-colors hidden sm:flex items-center space-x-1"
               title="Select Minecraft Biome Theme"
               aria-label="Select Biome"
             >
@@ -126,7 +127,7 @@ export const Navbar: React.FC = () => {
               )}
             </button>
 
-            {/* Open Inventory Shortcut */}
+            {/* Open Inventory Shortcut (sm and above) */}
             <button
               onClick={openInventory}
               className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-200 transition-colors hidden sm:flex items-center space-x-1"
@@ -136,27 +137,27 @@ export const Navbar: React.FC = () => {
               <span className="text-[10px] font-pixel text-zinc-300">[E]</span>
             </button>
 
-            {/* LinkedIn */}
+            {/* LinkedIn (sm and above) */}
             <a
               href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}
               aria-label="LinkedIn Profile"
-              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-300 hover:text-[#55ffff] transition-colors"
+              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-300 hover:text-[#55ffff] transition-colors hidden sm:flex"
               title="LinkedIn Profile"
             >
               <LinkedinIcon className="w-4 h-4" />
             </a>
 
-            {/* GitHub */}
+            {/* GitHub (sm and above) */}
             <a
               href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playClick()}
               aria-label="GitHub Profile"
-              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-300 hover:text-white transition-colors"
+              className="p-1.5 bg-[#202534] hover:bg-[#2c3347] border border-black text-zinc-300 hover:text-white transition-colors hidden sm:flex"
               title="GitHub Profile"
             >
               <GithubIcon className="w-4 h-4" />
@@ -191,16 +192,51 @@ export const Navbar: React.FC = () => {
                 {link.name}
               </a>
             ))}
-            <div className="pt-2 border-t border-black flex items-center justify-between">
+            
+            {/* Quick Action Buttons in Mobile Menu */}
+            <div className="pt-2 border-t border-black space-y-2">
               <button
                 onClick={() => {
                   openInventory();
                   setMobileMenuOpen(false);
                 }}
-                className="mc-button px-3 py-1 text-xs w-full font-pixel"
+                className="mc-button px-3 py-2 text-xs w-full font-pixel space-x-1.5 text-[#55ffff]"
               >
-                Open Inventory [E]
+                <Backpack className="w-4 h-4 text-[#fcee4b]" />
+                <span>Open Character Vault [E]</span>
               </button>
+
+              <button
+                onClick={() => {
+                  openBiomeModal();
+                  setMobileMenuOpen(false);
+                }}
+                className="mc-button px-3 py-2 text-xs w-full font-pixel space-x-1.5 text-[#fcee4b]"
+              >
+                <CompassIcon size={16} />
+                <span>Switch Biome Atmosphere</span>
+              </button>
+
+              <div className="flex gap-2 pt-1">
+                <a
+                  href={personalInfo.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mc-button flex-1 py-1.5 text-xs font-pixel space-x-1 text-sky-300"
+                >
+                  <LinkedinIcon className="w-3.5 h-3.5" />
+                  <span>LinkedIn</span>
+                </a>
+                <a
+                  href={personalInfo.social.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mc-button flex-1 py-1.5 text-xs font-pixel space-x-1 text-zinc-200"
+                >
+                  <GithubIcon className="w-3.5 h-3.5" />
+                  <span>GitHub</span>
+                </a>
+              </div>
             </div>
           </div>
         )}

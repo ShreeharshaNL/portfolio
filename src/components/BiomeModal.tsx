@@ -2,6 +2,7 @@ import React from 'react';
 import { useTheme, BiomeId } from '../context/ThemeContext';
 import { sound } from '../utils/audio';
 import { useGame } from '../context/GameContext';
+import { portfolioApi } from '../services/api';
 import {
   CompassIcon,
   CherryBlossomIcon,
@@ -45,6 +46,7 @@ export const BiomeModal: React.FC<BiomeModalProps> = ({ isOpen, onClose }) => {
   const handleSelectBiome = (id: BiomeId) => {
     sound.playPop();
     setBiome(id);
+    portfolioApi.trackEvent('biome_switch', id);
     unlockAdvancement('explorer');
     onClose();
   };

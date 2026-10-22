@@ -33,6 +33,8 @@ export const MinecraftHotbar: React.FC = () => {
     openInventory,
     openBiomeModal,
     diamondsMined,
+    inventoryOpen,
+    biomeModalOpen,
   } = useGame();
 
   const [activeSlot, setActiveSlot] = useState<number>(1);
@@ -80,7 +82,7 @@ export const MinecraftHotbar: React.FC = () => {
     {
       id: 5,
       name: 'Totem of Undying',
-      lore: 'Academics & NeoNexus 2026 Winner',
+      lore: 'Engineering Academics & Standing',
       icon: <TotemIcon size={22} />,
       action: () => scrollToSection('education'),
     },
@@ -154,16 +156,20 @@ export const MinecraftHotbar: React.FC = () => {
   const xpProgress = (xp % 10) * 10;
 
   return (
-    <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none select-none max-w-[96vw]">
+    <div
+      className={`fixed bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none select-none max-w-[98vw] transition-opacity duration-200 ${
+        inventoryOpen || biomeModalOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}
+    >
       
       {/* Minecraft Tooltip on Hover */}
-      <div className="h-9 mb-1 pointer-events-none flex items-end">
+      <div className="h-8 sm:h-9 mb-1 pointer-events-none flex items-end">
         {hoveredItem && (
-          <div className="mc-tooltip-box rounded-none text-center animate-in fade-in zoom-in-95 duration-100 shadow-2xl">
-            <span className="text-[#55ffff] font-bold text-xs tracking-wider block">
+          <div className="mc-tooltip-box rounded-none text-center animate-in fade-in zoom-in-95 duration-100 shadow-2xl max-w-[90vw]">
+            <span className="text-[#55ffff] font-bold text-[11px] sm:text-xs tracking-wider block truncate">
               {hoveredItem.name}
             </span>
-            <span className="text-zinc-300 text-[10px] font-sans block">
+            <span className="text-zinc-300 text-[9px] sm:text-[10px] font-sans block truncate">
               {hoveredItem.lore}
             </span>
           </div>
@@ -171,30 +177,32 @@ export const MinecraftHotbar: React.FC = () => {
       </div>
 
       {/* Minecraft Health & Hunger HUD Stats */}
-      <div className="w-full max-w-sm sm:max-w-md px-2 pb-1.5 flex flex-col items-center pointer-events-auto space-y-1">
+      <div className="w-full max-w-[340px] sm:max-w-md px-1 sm:px-2 pb-1 sm:pb-1.5 flex flex-col items-center pointer-events-auto space-y-1">
         
         {/* Hearts and Drumsticks Row */}
-        <div className="w-full flex items-center justify-between text-xs px-1">
-          {/* 10 Hearts */}
+        <div className="w-full flex items-center justify-between text-xs px-0.5">
+          {/* Hearts (5 on mobile, 10 on sm+) */}
           <div className="flex items-center space-x-0.5">
             {Array.from({ length: 10 }).map((_, i) => (
-              <HeartIcon key={i} size={13} state="full" />
+              <span key={i} className={i >= 5 ? 'hidden sm:inline-flex' : 'inline-flex'}>
+                <HeartIcon size={12} state="full" />
+              </span>
             ))}
           </div>
 
           {/* Quick HUD controls: Sound + Inventory button */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1.5 sm:space-x-2">
             <button
               onClick={toggleSound}
               className="p-1 bg-[#1c202a] border border-black hover:border-zinc-400 text-zinc-300 hover:text-white transition-colors"
               title={soundMuted ? 'Unmute Minecraft Sounds' : 'Mute Minecraft Sounds'}
               aria-label="Toggle Sound"
             >
-              {soundMuted ? <VolumeX className="w-3.5 h-3.5 text-red-400" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-400" />}
+              {soundMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />}
             </button>
             <button
               onClick={openInventory}
-              className="px-1.5 py-0.5 bg-[#1c202a] border border-black text-[10px] font-pixel text-zinc-300 hover:text-[#fcee4b] flex items-center space-x-1"
+              className="px-1.5 py-0.5 bg-[#1c202a] border border-black text-[9px] sm:text-[10px] font-pixel text-zinc-300 hover:text-[#fcee4b] flex items-center space-x-1"
               title="Open Inventory (Press E)"
             >
               <Backpack className="w-3 h-3 text-[#fcee4b]" />
@@ -202,16 +210,18 @@ export const MinecraftHotbar: React.FC = () => {
             </button>
           </div>
 
-          {/* 10 Food Drumsticks */}
+          {/* Food Drumsticks (5 on mobile, 10 on sm+) */}
           <div className="flex items-center space-x-0.5">
             {Array.from({ length: 10 }).map((_, i) => (
-              <DrumstickIcon key={i} size={13} />
+              <span key={i} className={i >= 5 ? 'hidden sm:inline-flex' : 'inline-flex'}>
+                <DrumstickIcon size={12} />
+              </span>
             ))}
           </div>
         </div>
 
         {/* Experience Bar */}
-        <div className="w-full relative h-2 bg-[#0c0d12] border border-black rounded-none overflow-visible">
+        <div className="w-full relative h-1.5 sm:h-2 bg-[#0c0d12] border border-black rounded-none overflow-visible">
           {/* Green XP Bar Fill */}
           <div
             className="h-full bg-gradient-to-r from-[#2ebd3a] via-[#55ff55] to-[#7eff55] transition-all duration-300 xp-glow"
@@ -219,7 +229,7 @@ export const MinecraftHotbar: React.FC = () => {
           />
 
           {/* Centered Level Number */}
-          <div className="absolute left-1/2 -top-2.5 -translate-x-1/2 text-[12px] font-pixel font-bold text-[#55ff55] mc-text-shadow leading-none">
+          <div className="absolute left-1/2 -top-2.5 sm:-top-2.5 -translate-x-1/2 text-[11px] sm:text-[12px] font-pixel font-bold text-[#55ff55] mc-text-shadow leading-none">
             {level}
           </div>
         </div>
@@ -227,7 +237,7 @@ export const MinecraftHotbar: React.FC = () => {
       </div>
 
       {/* 9 Hotbar Slots Container */}
-      <div className="pointer-events-auto bg-[#181b24]/95 border-2 border-black p-1 shadow-[inset_2px_2px_#3d4559,inset_-2px_-2px_#0e1015,0_8px_20px_rgba(0,0,0,0.6)] flex items-center space-x-1 backdrop-blur-md">
+      <div className="pointer-events-auto bg-[#181b24]/95 border-2 border-black p-0.5 sm:p-1 shadow-[inset_2px_2px_#3d4559,inset_-2px_-2px_#0e1015,0_8px_20px_rgba(0,0,0,0.6)] flex items-center space-x-0.5 sm:space-x-1 backdrop-blur-md">
         {hotbarItems.map((item) => {
           const isSelected = activeSlot === item.id;
           return (
@@ -239,7 +249,7 @@ export const MinecraftHotbar: React.FC = () => {
                 sound.playPop();
               }}
               onMouseLeave={() => setHoveredItem(null)}
-              className={`relative w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center transition-all ${
+              className={`relative w-7 h-7 min-[380px]:w-8 min-[380px]:h-8 sm:w-11 sm:h-11 flex items-center justify-center transition-all shrink-0 ${
                 isSelected
                   ? 'bg-[#293042] border-2 border-white shadow-[0_0_8px_rgba(255,255,255,0.7)] scale-105 z-10'
                   : 'bg-[#12141a] border border-black hover:bg-[#1e2330] hover:border-zinc-500'
@@ -247,12 +257,12 @@ export const MinecraftHotbar: React.FC = () => {
               title={`${item.name} (${item.id})`}
             >
               {/* Slot Number in Corner */}
-              <span className="absolute top-0.5 left-1 text-[9px] font-pixel text-zinc-400 font-bold leading-none select-none">
+              <span className="absolute top-0.5 left-0.5 sm:left-1 text-[8px] sm:text-[9px] font-pixel text-zinc-400 font-bold leading-none select-none">
                 {item.id}
               </span>
 
-              {/* Icon */}
-              <div className="transform transition-transform hover:scale-110 flex items-center justify-center">
+              {/* Icon scaled for mobile */}
+              <div className="transform transition-transform hover:scale-110 flex items-center justify-center scale-75 min-[380px]:scale-[0.85] sm:scale-100">
                 {item.icon}
               </div>
 

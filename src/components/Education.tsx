@@ -55,7 +55,7 @@ export const Education: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-black flex items-center justify-between text-xs font-pixel">
-              <span className="text-zinc-400">Cumulative GPA (ISE):</span>
+              <span className="text-zinc-400">Cumulative CGPA:</span>
               <span className="font-bold text-[#55ff55] text-sm mc-text-shadow">
                 {educationData.cgpa} / 10.0
               </span>

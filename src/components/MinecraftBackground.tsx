@@ -35,7 +35,7 @@ export const MinecraftBackground: React.FC = () => {
       {/* 2. Celestial Body (Square Sun, Moon, or Dimensional Glow) */}
       <div className="absolute top-10 right-10 sm:right-24">
         {biome === 'overworld-day' && (
-          <div className="relative w-22 h-22 sm:w-24 sm:h-24 bg-[#ffffaa] border-4 border-[#ffaa00] shadow-[0_0_36px_rgba(255,200,50,0.5)]">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-[#ffffaa] border-4 border-[#ffaa00] shadow-[0_0_36px_rgba(255,200,50,0.5)]">
             <div className="absolute inset-1 bg-white" />
           </div>
         )}
@@ -50,7 +50,7 @@ export const MinecraftBackground: React.FC = () => {
         )}
 
         {biome === 'cherry-grove' && (
-          <div className="relative w-20 h-20 bg-[#fdf2f8] border-3 border-[#f472b6] shadow-[0_0_30px_rgba(244,114,182,0.45)]">
+          <div className="relative w-20 h-20 bg-[#fdf2f8] border-2 border-[#f472b6] shadow-[0_0_30px_rgba(244,114,182,0.45)]">
             <div className="absolute inset-1.5 bg-[#fce7f3]" />
           </div>
         )}

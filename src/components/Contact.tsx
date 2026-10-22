@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Copy, Check, Send, ExternalLink, Mail } from 'lucide-react';
+import { Copy, Check, Send, ExternalLink, Mail, Loader2, Database } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../config/portfolio';
 import { sound } from '../utils/audio';
 import { useGame } from '../context/GameContext';
 import { EmeraldGem, EnchantedBook } from './MinecraftIcons';
+import { portfolioApi } from '../services/api';
 
 export const Contact: React.FC = () => {
   const { unlockAdvancement } = useGame();
   const [copied, setCopied] = useState(false);
+  const [senderName, setSenderName] = useState('');
+  const [senderEmail, setSenderEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const copyEmail = () => {
     sound.playPop();
@@ -20,10 +25,58 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2200);
   };
 
+  const handleDirectSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    sound.playClick();
+    setStatusMessage(null);
+
+    if (!senderName.trim()) {
+      setStatusMessage({ type: 'error', text: 'Please enter your name.' });
+      return;
+    }
+    if (!senderEmail.trim() || !senderEmail.includes('@')) {
+      setStatusMessage({ type: 'error', text: 'Please enter a valid email address.' });
+      return;
+    }
+    if (!message.trim() || message.trim().length < 5) {
+      setStatusMessage({ type: 'error', text: 'Please enter a message (at least 5 characters).' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await portfolioApi.sendContact({
+        name: senderName.trim(),
+        email: senderEmail.trim(),
+        subject: subject.trim() || 'Software Opportunity / Project Inquiry',
+        message: message.trim(),
+      });
+
+      sound.playLevelUp();
+      unlockAdvancement('contact');
+      setStatusMessage({
+        type: 'success',
+        text: res.message || 'Transmission dispatched and stored into database ledger!',
+      });
+      setSenderName('');
+      setSenderEmail('');
+      setSubject('');
+      setMessage('');
+    } catch (err: any) {
+      sound.playBlockHit();
+      setStatusMessage({
+        type: 'error',
+        text: err.message || 'Failed to dispatch transmission. Please use Gmail/mail client.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const encodedSubject = encodeURIComponent(subject.trim() || 'Software Opportunity / Project Inquiry');
   const encodedBody = encodeURIComponent(
     message.trim()
-      ? `${message.trim()}\n\n-- Dispatched from Shreeharsha's Minecraft Portfolio`
+      ? `${message.trim()}\n\n-- Dispatched from ${senderName || 'Visitor'} via Shreeharsha's Minecraft Portfolio`
       : 'Hi Shreeharsha,\n\nI explored your portfolio and wanted to reach out regarding...'
   );
 
@@ -60,11 +113,11 @@ export const Contact: React.FC = () => {
                 <span>Primary Transmission</span>
               </div>
               
-              <div className="flex items-center justify-between p-3 bg-[#12141a] border border-black shadow-[inset_1px_1px_#0a0c10]">
+              <div className="flex items-center justify-between p-3 bg-[#12141a] border border-black shadow-[inset_1px_1px_#0a0c10] min-w-0">
                 <a
                   href={`mailto:${personalInfo.social.email}`}
                   onClick={() => sound.playClick()}
-                  className="text-xs sm:text-sm font-mono text-zinc-200 hover:text-[#55ffff] truncate pr-2 transition-colors select-all"
+                  className="text-xs sm:text-sm font-mono text-zinc-200 hover:text-[#55ffff] truncate mr-2 transition-colors select-all min-w-0 flex-1"
                   title="Click to compose email"
                 >
                   {personalInfo.social.email}
@@ -134,13 +187,52 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Message Dispatch Form (Span 7) */}
-          <div className="md:col-span-7 p-6 sm:p-7 bg-[#181b24]/90 border-2 border-black shadow-[inset_2px_2px_#3d4559,inset_-2px_-2px_#0e1015,6px_6px_0px_rgba(0,0,0,0.6)] space-y-4">
-            <div className="flex items-center space-x-2 border-b border-black pb-2 text-xs font-pixel text-zinc-400 uppercase tracking-wider">
-              <EnchantedBook size={16} />
-              <span>Compose Transmission</span>
+          <form
+            onSubmit={handleDirectSubmit}
+            className="md:col-span-7 p-6 sm:p-7 bg-[#181b24]/90 border-2 border-black shadow-[inset_2px_2px_#3d4559,inset_-2px_-2px_#0e1015,6px_6px_0px_rgba(0,0,0,0.6)] space-y-4"
+          >
+            <div className="flex items-center justify-between border-b border-black pb-2 text-xs font-pixel text-zinc-400 uppercase tracking-wider">
+              <div className="flex items-center space-x-2">
+                <EnchantedBook size={16} />
+                <span>Compose Transmission</span>
+              </div>
+              <div className="flex items-center space-x-1 text-[#55ff55] text-[10px]">
+                <Database size={12} />
+                <span>Edge D1 Synced</span>
+              </div>
             </div>
 
             <div className="space-y-3 font-sans">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-pixel text-zinc-300 mb-1">
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    placeholder="e.g. Alex"
+                    className="w-full px-3 py-2 bg-[#12141a] border-2 border-black text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#55ffff]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-pixel text-zinc-300 mb-1">
+                    Your Email *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                    placeholder="alex@company.com"
+                    className="w-full px-3 py-2 bg-[#12141a] border-2 border-black text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#55ffff]"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-pixel text-zinc-300 mb-1">
                   Topic / Subject
@@ -156,30 +248,52 @@ export const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-pixel text-zinc-300 mb-1">
-                  Message Content
+                  Message Content *
                 </label>
                 <textarea
                   rows={4}
+                  required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Share details about what you'd like to work on..."
+                  placeholder="Share details about what you'd like to build or discuss..."
                   className="w-full px-3 py-2 bg-[#12141a] border-2 border-black text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#55ffff]"
                 />
               </div>
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-2.5">
-              <a
-                href={mailtoUrl}
-                onClick={() => {
-                  sound.playClick();
-                  unlockAdvancement('contact');
-                }}
-                className="mc-button-diamond px-4 py-2.5 text-xs font-pixel space-x-1.5"
+            {/* Submission Status Alerts */}
+            {statusMessage && (
+              <div
+                className={`p-3 border-2 text-xs font-pixel animate-in fade-in ${
+                  statusMessage.type === 'success'
+                    ? 'bg-[#122e1b] border-[#55ff55] text-[#55ff55]'
+                    : 'bg-[#3b1215] border-[#ff5555] text-[#ff7777]'
+                }`}
               >
-                <Send className="w-3.5 h-3.5" />
-                <span>Open Mail Client</span>
-              </a>
+                {statusMessage.type === 'success' ? '✓ ' : '✕ '}
+                {statusMessage.text}
+              </div>
+            )}
+
+            {/* Actions: Direct submit + Alternative client openers */}
+            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="mc-button-diamond w-full sm:w-auto px-5 py-2.5 text-xs font-pixel space-x-1.5 disabled:opacity-60 cursor-pointer"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Transmitting to DB...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Send Transmission Directly</span>
+                  </>
+                )}
+              </button>
 
               <a
                 href={gmailWebUrl}
@@ -189,14 +303,25 @@ export const Contact: React.FC = () => {
                   sound.playClick();
                   unlockAdvancement('contact');
                 }}
-                className="mc-button px-4 py-2.5 text-xs font-pixel space-x-1.5"
+                className="mc-button w-full sm:w-auto px-4 py-2.5 text-xs font-pixel space-x-1.5 text-zinc-300 hover:text-white"
               >
                 <span>Open in Gmail</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
+
+              <a
+                href={mailtoUrl}
+                onClick={() => {
+                  sound.playClick();
+                  unlockAdvancement('contact');
+                }}
+                className="mc-button w-full sm:w-auto px-4 py-2.5 text-xs font-pixel space-x-1.5 text-zinc-400 hover:text-zinc-200"
+              >
+                <span>Mail App</span>
+              </a>
             </div>
 
-          </div>
+          </form>
 
         </div>
 
