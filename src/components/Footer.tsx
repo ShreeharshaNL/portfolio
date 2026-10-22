@@ -4,11 +4,7 @@ import { personalInfo } from '../config/portfolio';
 import { sound } from '../utils/audio';
 import { GrassBlockIcon } from './MinecraftIcons';
 
-interface FooterProps {
-  onOpenAdmin?: () => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
+export const Footer: React.FC = () => {
   const scrollToTop = () => {
     sound.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -73,17 +69,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
           <div>
             Minecraft Edition v1.20 · XYZ: 2026 / 64 / 2027 · Spawn: Karkala, Karnataka · Biome: NIE-Mysuru · Mode: Survival
           </div>
-          <div className="flex items-center space-x-2">
-            <span>Crafted with React 18 & Cloudflare D1.</span>
-            {onOpenAdmin && (
-              <button
-                onClick={onOpenAdmin}
-                className="text-zinc-600 hover:text-[#fcee4b] transition-colors font-pixel text-[10px]"
-                title="Open Operator Command Block (Admin Portal - Default PIN: 2027)"
-              >
-                [OP]
-              </button>
-            )}
+          <div>
+            Crafted with React 18, TypeScript & Cloudflare D1.
           </div>
         </div>
 

@@ -12,8 +12,8 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 };
 
 const verifyAdmin = (request: Request, env: Env) => {
-  const defaultPin = '2027'; // graduation year default PIN
-  const adminSecret = env.ADMIN_SECRET || defaultPin;
+  const defaultSecret = 'shnl2005';
+  const adminSecret = env.ADMIN_SECRET || defaultSecret;
   const headerSecret = request.headers.get('Authorization')?.replace('Bearer ', '') || '';
   const url = new URL(request.url);
   const paramSecret = url.searchParams.get('secret') || '';
@@ -21,12 +21,12 @@ const verifyAdmin = (request: Request, env: Env) => {
   return headerSecret === adminSecret || paramSecret === adminSecret;
 };
 
-// GET: Load admin dashboard data (Messages, Guestbook moderation, Analytics)
+// GET: Load admin dashboard data (Messages, Guestbook moderation, Analytics with Theme Popularity)
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
 
   if (!verifyAdmin(request, env)) {
-    return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Admin PIN' }), {
+    return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Admin Password' }), {
       status: 401,
       headers: corsHeaders,
     });
@@ -39,7 +39,20 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       JSON.stringify({
         messages: [],
         guestbook: [],
-        analytics: { totalViews: 0, biomeSwitches: 0, projectClicks: 0 },
+        analytics: {
+          totalViews: 0,
+          biomeSwitches: 0,
+          projectClicks: 0,
+          themeStats: [
+            { theme: 'overworld-night', count: 12 },
+            { theme: 'cherry-grove', count: 8 },
+            { theme: 'overworld-day', count: 6 },
+            { theme: 'nether', count: 4 },
+            { theme: 'the-end', count: 3 },
+            { theme: 'snowy-tundra', count: 2 },
+          ],
+          projectStats: [],
+        },
         source: 'local-fallback',
       }),
       { status: 200, headers: corsHeaders }
@@ -60,12 +73,30 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ).first<{ count: number }>();
 
     const biomeSwitches = await db.prepare(
-      `SELECT COUNT(*) as count FROM analytics_events WHERE event_type = 'biome_switch'`
+      `SELECT COUNT(*) as count FROM analytics_events WHERE event_type IN ('biome_switch', 'theme_selection')`
     ).first<{ count: number }>();
 
     const projectClicks = await db.prepare(
       `SELECT COUNT(*) as count FROM analytics_events WHERE event_type = 'project_click'`
     ).first<{ count: number }>();
+
+    // Detailed Theme / Biome Popularity Ranking
+    const themeRanking = await db.prepare(
+      `SELECT event_value as theme, COUNT(*) as count 
+       FROM analytics_events 
+       WHERE event_type IN ('theme_selection', 'biome_switch') AND event_value != ''
+       GROUP BY event_value 
+       ORDER BY count DESC`
+    ).all<{ theme: string; count: number }>();
+
+    // Top Clicked Projects
+    const projectRanking = await db.prepare(
+      `SELECT event_value as project, COUNT(*) as count 
+       FROM analytics_events 
+       WHERE event_type = 'project_click' AND event_value != ''
+       GROUP BY event_value 
+       ORDER BY count DESC`
+    ).all<{ project: string; count: number }>();
 
     return new Response(
       JSON.stringify({
@@ -75,6 +106,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
           totalViews: totalViews?.count || 0,
           biomeSwitches: biomeSwitches?.count || 0,
           projectClicks: projectClicks?.count || 0,
+          themeStats: themeRanking.results || [],
+          projectStats: projectRanking.results || [],
         },
         source: 'd1-database',
       }),

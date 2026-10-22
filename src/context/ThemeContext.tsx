@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { portfolioApi } from '../services/api';
 
 export type BiomeId =
   | 'overworld-day'
@@ -91,10 +92,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     localStorage.setItem('portfolio-theme', theme);
     localStorage.setItem('mc_portfolio_biome', biome);
+
+    // Track initial session theme selection once
+    if (!sessionStorage.getItem('mc_tracked_session_theme')) {
+      portfolioApi.trackEvent('theme_selection', biome);
+      sessionStorage.setItem('mc_tracked_session_theme', 'true');
+    }
   }, [theme, biome]);
 
   const setBiome = (newBiome: BiomeId) => {
     setBiomeState(newBiome);
+    portfolioApi.trackEvent('theme_selection', newBiome);
   };
 
   const toggleTheme = () => {

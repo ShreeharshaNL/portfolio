@@ -16,27 +16,38 @@ import { MinecraftHotbar } from './components/MinecraftHotbar';
 import { AdvancementToast } from './components/AdvancementToast';
 import { BiomeModal } from './components/BiomeModal';
 import { InventoryModal } from './components/InventoryModal';
-import { AdminModal } from './components/AdminModal';
+import { AdminPage } from './components/AdminPage';
 import { portfolioApi } from './services/api';
 
 export const AppContent: React.FC = () => {
   const { biomeModalOpen, closeBiomeModal } = useGame();
-  const [adminOpen, setAdminOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
 
   useEffect(() => {
-    // 1. Telemetry: track page view
-    portfolioApi.trackEvent('page_view', window.location.pathname);
-
-    // 2. Secret shortcut: Ctrl + Shift + A opens Operator Command Block
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-        e.preventDefault();
-        setAdminOpen((prev) => !prev);
-      }
+    // Listen for browser navigation (back/forward)
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('popstate', handlePopState);
+
+    // Track page impression
+    if (!window.location.pathname.startsWith('/admin')) {
+      portfolioApi.trackEvent('page_view', window.location.pathname);
+    }
+
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  const navigateToHome = () => {
+    window.history.pushState({}, '', '/');
+    setCurrentPath('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // When visiting /admin directly in URL
+  if (currentPath === '/admin' || currentPath === '/admin/') {
+    return <AdminPage onBackToHome={navigateToHome} />;
+  }
 
   return (
     <div className="relative min-h-screen text-zinc-100 font-sans selection:bg-[#4dedf4] selection:text-black transition-colors duration-300">
@@ -59,7 +70,7 @@ export const AppContent: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <Footer onOpenAdmin={() => setAdminOpen(true)} />
+      <Footer />
 
       {/* Minecraft HUD Hotbar (Docked at Bottom) */}
       <MinecraftHotbar />
@@ -72,9 +83,6 @@ export const AppContent: React.FC = () => {
 
       {/* Interactive Player Inventory Modal (Press E) */}
       <InventoryModal />
-
-      {/* Operator Command Block Admin CMS (Ctrl+Shift+A or footer) */}
-      <AdminModal isOpen={adminOpen} onClose={() => setAdminOpen(false)} />
     </div>
   );
 };
