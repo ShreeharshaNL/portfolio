@@ -5,11 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:mc": "vite",
+    "dev:pro": "vite --config apps/professional/vite.config.ts",
     "build": "tsc && vite build",
+    "build:mc": "tsc && vite build",
+    "build:pro": "tsc -p apps/professional/tsconfig.json && vite build --config apps/professional/vite.config.ts",
+    "build:all": "npm run build:mc && npm run build:pro",
     "preview": "vite preview",
+    "preview:mc": "vite preview",
+    "preview:pro": "vite preview --config apps/professional/vite.config.ts",
     "d1:migrate:local": "wrangler d1 execute portfolio-db --local --file=./d1/schema.sql --yes",
     "d1:migrate:remote": "wrangler d1 execute portfolio-db --remote --file=./d1/schema.sql --yes",
-    "pages:deploy": "wrangler pages deploy dist"
+    "pages:deploy": "wrangler pages deploy dist --project-name=shreeharsha-portfolio",
+    "pages:deploy:mc": "wrangler pages deploy dist --project-name=shreeharsha-portfolio",
+    "pages:deploy:pro": "wrangler pages deploy apps/professional/dist --project-name=shreeharsha-pro"
   },
   "dependencies": {
     "lucide-react": "^1.16.0",

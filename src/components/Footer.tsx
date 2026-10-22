@@ -53,6 +53,14 @@ export const Footer: React.FC = () => {
             >
               Email
             </a>
+            <a
+              href="https://shreeharsha.online"
+              onClick={() => sound.playClick()}
+              className="text-[#ffffa0] hover:underline transition-colors"
+              title="Switch to Professional Edition"
+            >
+              Professional Portfolio ↗
+            </a>
             <button
               onClick={scrollToTop}
               className="flex items-center space-x-1 hover:text-[#ffffa0] transition-colors"
