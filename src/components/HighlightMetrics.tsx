@@ -9,7 +9,7 @@ export const HighlightMetrics: React.FC = () => {
       label: "Discipline",
       value: "Software & Systems",
       sub: "Data Structures & Core Engineering",
-      highlight: "CGPA: 8.66 / 10.0",
+      highlight: "CGPA: 8.65 / 10.0",
       accentColor: "text-[#55ffff]",
     },
     {

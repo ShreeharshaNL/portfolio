@@ -70,7 +70,7 @@ const INVENTORY_ITEMS: InventoryItem[] = [
     rarity: 'legendary',
     lore: [
       'The National Institute of Engineering (NIE), Mysuru',
-      'Cumulative GPA: 8.66 / 10.0',
+      'Cumulative GPA: 8.65 / 10.0',
       'Expected Graduation: 2027',
       'Focus: Data Structures, Algorithms, Full-Stack Architecture',
     ],

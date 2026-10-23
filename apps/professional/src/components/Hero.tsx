@@ -26,10 +26,10 @@ export const Hero: React.FC = () => {
         height="calc(100svh - 4rem)"
         minHeight="600px"
         headline="Hi, I'm Shreeharsha."
-        description="Information Science & Engineering undergraduate at NIE Mysuru (CGPA 8.66 / 10.0) building functional full-stack web applications and applied AI systems."
+        description="Information Science & Engineering undergraduate at NIE Mysuru (CGPA 8.65 / 10.0) building functional full-stack web applications and applied AI systems."
         index="08/27"
         discipline="Full-Stack & AI"
-        tagline="NIE Mysuru · CGPA 8.66"
+        tagline="NIE Mysuru · CGPA 8.65"
         collection={["NeoNexus", "Winner"]}
         reel={["NIE Mysuru @ 2027", "Information Science"]}
         href="#projects"

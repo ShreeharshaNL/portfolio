@@ -109,7 +109,7 @@ export const educationData: EducationData = {
   degree: "Bachelor of Engineering (B.E.)",
   field: "Information Science and Engineering",
   expectedGraduation: "2027",
-  cgpa: "8.66",
+  cgpa: "8.65",
   achievement: {
     title: "Winner — NeoNexus 36.1",
     event: "NeoNexus 36.1 Hackathon at NIE Mysuru",

@@ -6,7 +6,7 @@ export const personalInfo: PersonalInfo = {
   institution: "The National Institute of Engineering (NIE), Mysuru",
   degree: "Bachelor of Engineering (B.E.) in Information Science and Engineering",
   expectedGraduation: "2027",
-  cgpa: "8.65 / 10.0",
+  cgpa: "8.65",
   location: "Mysuru, Karnataka, India",
   eyebrow: "Information Science & Engineering · NIE Mysuru",
   headline: "I build software that solves real problems.",
@@ -107,7 +107,7 @@ export const educationData: EducationItem = {
   degree: "Bachelor of Engineering (B.E.)",
   field: "Information Science and Engineering",
   expectedGraduation: "2027",
-  cgpa: "8.65 / 10.0",
+  cgpa: "8.65",
   location: "Mysuru, Karnataka, India",
   highlights: [
     "Consistent academic record with a cumulative GPA of 8.65/10.0",

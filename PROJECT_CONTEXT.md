@@ -135,7 +135,7 @@ Portfolio-web/
    * *Specialization:* Full-Stack & AI
    * *Spawn Biome:* Karkala, Karnataka · NIE Mysuru
 4. **Cleaned Typography Across Components:**
-   * Changed `Cumulative GPA (ISE):` to `Cumulative CGPA: 8.66 / 10.0` in [`Education.tsx`](src/components/Education.tsx).
+   * Changed `Cumulative GPA (ISE):` to `Cumulative CGPA: 8.65 / 10.0` in [`Education.tsx`](src/components/Education.tsx).
    * Updated profile text in [`InventoryModal.tsx`](src/components/InventoryModal.tsx) to `B.E. Info Science · NIE Mysuru`.
    * Updated Hotbar slot 5 lore in [`MinecraftHotbar.tsx`](src/components/MinecraftHotbar.tsx) to `Engineering Academics & Standing`.
    * Updated SEO metadata in [`index.html`](index.html).
