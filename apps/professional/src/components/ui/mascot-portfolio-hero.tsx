@@ -4,6 +4,14 @@ import * as React from "react"
 
 /* ------------------------------------------------------------------ types */
 
+export type TechAvatarItem = {
+  src: string
+  alt: string
+  role: string
+  status: string
+  greeting: string
+}
+
 export type MascotPortfolioHeroProps = {
   /**
    * Height of the hero on desktop.
@@ -44,7 +52,8 @@ export type MascotPortfolioHeroProps = {
   href?: string
   services?: string[]
 
-  /* ---- interactive emoji & greetings ---- */
+  /* ---- interactive avatars & greetings ---- */
+  avatars?: TechAvatarItem[]
   emojis?: string[]
   greetings?: string[]
 
@@ -128,28 +137,30 @@ const CSS = `
 .mph-room{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--mph-ink);pointer-events:none;}
 .mph-room line,.mph-room path{vector-effect:non-scaling-stroke;}
 
-/* Waving Hand Emoji Animation */
-.mph-wave-emoji{display:inline-block;margin-left:.25em;transform-origin:70% 70%;animation:mph-wave 2.2s infinite ease-in-out;user-select:none;}
-@keyframes mph-wave{0%{transform:rotate(0deg);}15%{transform:rotate(14deg);}30%{transform:rotate(-8deg);}45%{transform:rotate(14deg);}60%{transform:rotate(-4deg);}75%{transform:rotate(10deg);}100%{transform:rotate(0deg);}}
 @keyframes mph-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.85);}}
-@keyframes mph-wiggle{0%{transform:rotate(0);}25%{transform:rotate(-14deg) scale(1.1);}55%{transform:rotate(9deg) scale(1.15);}80%{transform:rotate(-4deg);}100%{transform:rotate(0) scale(1);}}
+@keyframes mph-wiggle{0%{transform:rotate(0);}25%{transform:rotate(-10deg) scale(1.06);}55%{transform:rotate(8deg) scale(1.08);}80%{transform:rotate(-3deg);}100%{transform:rotate(0) scale(1);}}
 
-/* Shared Emoji Card Styles */
-.mph-emoji-stage{position:relative;width:100%;}
-.mph-emoji-card{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;background:var(--mph-surface, #ffffff);border:2px solid var(--mph-ink);border-radius:1.5rem;box-shadow:4px 4px 0px 0px var(--mph-ink);cursor:pointer;outline:none;transition:box-shadow .25s cubic-bezier(.3,1.4,.5,1),border-color .2s;transform-style:preserve-3d;will-change:transform;-webkit-tap-highlight-color:transparent;}
-.mph-emoji-card:hover{box-shadow:6px 6px 0px 0px var(--mph-accent);}
-.mph-emoji-card:focus-visible{outline:2px dashed var(--mph-accent);outline-offset:4px;}
+/* Shared Avatar Card Styles */
+.mph-avatar-stage{position:relative;width:100%;}
+.mph-avatar-card{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;background:var(--mph-surface, #ffffff);border:2px solid var(--mph-ink);border-radius:1.5rem;box-shadow:4px 4px 0px 0px var(--mph-ink);cursor:pointer;outline:none;transition:box-shadow .25s cubic-bezier(.3,1.4,.5,1),border-color .2s;transform-style:preserve-3d;will-change:transform;-webkit-tap-highlight-color:transparent;}
+.mph-avatar-card:hover{box-shadow:6px 6px 0px 0px var(--mph-accent);}
+.mph-avatar-card:focus-visible{outline:2px dashed var(--mph-accent);outline-offset:4px;}
 
-.mph-emoji-status{display:inline-flex;align-items:center;gap:.5em;background:var(--mph-paper);border:1.5px solid var(--mph-ink);padding:.25em .8em;border-radius:999px;font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--mph-ink);}
+.mph-avatar-status{display:inline-flex;align-items:center;gap:.5em;background:var(--mph-paper);border:1.5px solid var(--mph-ink);padding:.25em .8em;border-radius:999px;font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--mph-ink);}
 .mph-live-dot{width:.6em;height:.6em;border-radius:50%;background:var(--mph-accent);box-shadow:0 0 .5em var(--mph-accent);animation:mph-pulse 1.8s infinite ease-in-out;}
 
-.mph-emoji-wrap{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--mph-paper);border:2px solid var(--mph-ink);transform-style:preserve-3d;transition:transform .15s ease-out;}
-.mph-main-emoji{line-height:1;display:block;user-select:none;}
-.mph-happy .mph-emoji-wrap{animation:mph-wiggle .8s cubic-bezier(.3,1.6,.5,1);}
+.mph-avatar-wrap{display:flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:var(--mph-paper);border:2.5px solid var(--mph-ink);box-shadow:2px 2px 0px 0px var(--mph-ink);transform-style:preserve-3d;transition:transform .2s ease-out,border-color .2s;}
+.mph-avatar-img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none;transition:transform .3s cubic-bezier(.3,1.4,.5,1);}
+.mph-avatar-card:hover .mph-avatar-img{transform:scale(1.08);}
+.mph-happy .mph-avatar-wrap{animation:mph-wiggle .8s cubic-bezier(.3,1.6,.5,1);}
 
-.mph-emoji-meta{display:flex;flex-direction:column;align-items:center;gap:.25em;}
-.mph-emoji-role{font-family:var(--mph-display);font-size:1rem;font-weight:900;letter-spacing:-.01em;color:var(--mph-ink);text-transform:uppercase;}
-.mph-emoji-hint{font-size:.75rem;font-weight:700;color:var(--mph-ink);opacity:.65;}
+.mph-avatar-meta{display:flex;flex-direction:column;align-items:center;gap:.2em;}
+.mph-avatar-role{font-family:var(--mph-display);font-size:1rem;font-weight:900;letter-spacing:-.01em;color:var(--mph-ink);text-transform:uppercase;}
+.mph-avatar-hint{font-size:.75rem;font-weight:700;color:var(--mph-ink);opacity:.65;}
+
+.mph-avatar-dots{display:flex;align-items:center;gap:.35rem;margin-top:.35rem;}
+.mph-avatar-dot{width:.45rem;height:.45rem;border-radius:999px;background:var(--mph-ink);opacity:.25;transition:width .25s,opacity .25s,background-color .25s;}
+.mph-avatar-dot-active{width:1.2rem;opacity:1;background:var(--mph-accent);}
 
 .mph-bubble{position:absolute;background:var(--mph-surface, #ffffff);color:var(--mph-ink);border:2px solid var(--mph-ink);border-radius:1rem;font-weight:800;line-height:1.3;box-shadow:3px 3px 0px 0px var(--mph-accent);opacity:0;pointer-events:none;z-index:30;transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s;}
 .mph-bubble[data-on="true"]{opacity:1;}
@@ -298,27 +309,24 @@ const CSS = `
     box-shadow: 5px 5px 0 var(--mph-accent);
   }
 
-  .mph-desktop-emoji-slot {
+  .mph-desktop-avatar-slot {
     position: absolute;
     right: 2%;
     top: 20%;
-    width: 280px;
+    width: 290px;
     z-index: 20;
   }
-  .mph-mobile-emoji-slot {
+  .mph-mobile-avatar-slot {
     display: none;
   }
 
-  .mph-emoji-card {
+  .mph-avatar-card {
     padding: 1.75rem 1.5rem;
   }
-  .mph-emoji-wrap {
-    width: 5.5rem;
-    height: 5.5rem;
+  .mph-avatar-wrap {
+    width: 6.5rem;
+    height: 6.5rem;
     margin: 1.25rem 0 .75rem 0;
-  }
-  .mph-main-emoji {
-    font-size: 3.2rem;
   }
 
   .mph-bubble {
@@ -514,30 +522,27 @@ const CSS = `
     box-shadow: 3px 3px 0 var(--mph-ink);
   }
 
-  .mph-desktop-emoji-slot {
+  .mph-desktop-avatar-slot {
     display: none;
   }
-  .mph-mobile-emoji-slot {
+  .mph-mobile-avatar-slot {
     display: block;
     width: 100%;
     margin-top: 1rem;
   }
 
-  .mph-emoji-stage {
+  .mph-avatar-stage {
     position: relative;
     width: 100%;
   }
-  .mph-emoji-card {
+  .mph-avatar-card {
     padding: 1.25rem 1.25rem;
     border-radius: 1.25rem;
   }
-  .mph-emoji-wrap {
-    width: 4.8rem;
-    height: 4.8rem;
+  .mph-avatar-wrap {
+    width: 5.2rem;
+    height: 5.2rem;
     margin: 1rem 0 .6rem 0;
-  }
-  .mph-main-emoji {
-    font-size: 2.8rem;
   }
 
   .mph-bubble {
@@ -595,15 +600,28 @@ const DEFAULT_SERVICES = [
   "Cloudflare Edge Infrastructure",
 ]
 
-const DEFAULT_EMOJIS = ["👨‍💻", "👋", "🚀", "⚡", "🤖", "✨"]
-
-const DEFAULT_GREETINGS = [
-  "Hi, I'm Shreeharsha N. L.!",
-  "B.E. Information Science @ NIE Mysuru.",
-  "Winner of NeoNexus 36.1 Hackathon at BITM Ballari!",
-  "Building practical software & AI systems.",
-  "Check out my projects below ↓",
-  "Okay, you can stop poking me :)",
+export const DEFAULT_AVATARS: TechAvatarItem[] = [
+  {
+    src: "/images/avatars/developer.jpg",
+    alt: "Full-Stack Technologist 3D Avatar",
+    role: "Full-Stack & AI",
+    status: "NIE Mysuru '27",
+    greeting: "Hi, I'm Shreeharsha N. L.!",
+  },
+  {
+    src: "/images/avatars/ai-core.jpg",
+    alt: "Applied AI & Computer Vision Avatar",
+    role: "Applied AI & Vision",
+    status: "NeoNexus Winner",
+    greeting: "Building practical AI systems & OCR pipelines!",
+  },
+  {
+    src: "/images/avatars/rocket.jpg",
+    alt: "Speed & Edge Architecture Avatar",
+    role: "Cloud & Systems",
+    status: "Open to Internships",
+    greeting: "Architecting resilient, high-speed edge web apps!",
+  },
 ]
 
 export default function MascotPortfolioHero({
@@ -618,8 +636,7 @@ export default function MascotPortfolioHero({
   reel = ["NIE Mysuru @ 2027", "Information Science"],
   href,
   services = DEFAULT_SERVICES,
-  emojis = DEFAULT_EMOJIS,
-  greetings = DEFAULT_GREETINGS,
+  avatars = DEFAULT_AVATARS,
   accent = "#5fb57a",
   paper = "#ebebea",
   ink = "#111111",
@@ -628,17 +645,15 @@ export default function MascotPortfolioHero({
   const rootRef = React.useRef<HTMLDivElement>(null)
   const cardRef = React.useRef<HTMLButtonElement>(null)
   const mobileCardRef = React.useRef<HTMLButtonElement>(null)
-  const emojiRef = React.useRef<HTMLDivElement>(null)
-  const mobileEmojiRef = React.useRef<HTMLDivElement>(null)
+  const avatarWrapRef = React.useRef<HTMLDivElement>(null)
+  const mobileAvatarWrapRef = React.useRef<HTMLDivElement>(null)
 
   const [happy, setHappy] = React.useState(false)
-  const [said, setSaid] = React.useState(0)
-  const [emojiIndex, setEmojiIndex] = React.useState(0)
+  const [avatarIndex, setAvatarIndex] = React.useState(0)
   const happyTimer = React.useRef<number | undefined>(undefined)
 
   const poke = () => {
-    setSaid((n) => (n + 1) % Math.max(1, greetings.length))
-    setEmojiIndex((i) => (i + 1) % Math.max(1, emojis.length))
+    setAvatarIndex((prev) => (prev + 1) % avatars.length)
     setHappy(true)
     window.clearTimeout(happyTimer.current)
     happyTimer.current = window.setTimeout(() => setHappy(false), 2400)
@@ -712,8 +727,8 @@ export default function MascotPortfolioHero({
 
       const breathe = still ? 0 : Math.sin(now / 550) * 2.5
 
-      // Apply 3D perspective to card and inner emoji
-      const applyCardTransform = (el: HTMLButtonElement | null, eEl: HTMLDivElement | null) => {
+      // Apply 3D perspective to card and inner avatar wrap
+      const applyCardTransform = (el: HTMLButtonElement | null, wrapEl: HTMLDivElement | null) => {
         if (!el) return
         const rotY = (gx * 14).toFixed(2)
         const rotX = (-gy * 12).toFixed(2)
@@ -721,19 +736,19 @@ export default function MascotPortfolioHero({
         const transY = (gy * 6 + breathe * 0.6).toFixed(2)
         el.style.transform = `perspective(800px) rotateY(${rotY}deg) rotateX(${rotX}deg) translate3d(${transX}px, ${transY}px, 0)`
 
-        if (eEl) {
-          const eRot = (gx * 16).toFixed(2)
-          const eX = (gx * 14).toFixed(2)
-          const eY = (gy * 12).toFixed(2)
-          const eScale = (1 + near * 0.12).toFixed(3)
-          eEl.style.transform = `translate3d(${eX}px, ${eY}px, 20px) rotate(${eRot}deg) scale(${eScale})`
+        if (wrapEl) {
+          const eRot = (gx * 12).toFixed(2)
+          const eX = (gx * 12).toFixed(2)
+          const eY = (gy * 10).toFixed(2)
+          const eScale = (1 + near * 0.08).toFixed(3)
+          wrapEl.style.transform = `translate3d(${eX}px, ${eY}px, 20px) rotate(${eRot}deg) scale(${eScale})`
         }
       }
 
       if (isMobile) {
-        applyCardTransform(mobileCardRef.current, mobileEmojiRef.current)
+        applyCardTransform(mobileCardRef.current, mobileAvatarWrapRef.current)
       } else {
-        applyCardTransform(cardRef.current, emojiRef.current)
+        applyCardTransform(cardRef.current, avatarWrapRef.current)
       }
     }
     raf = requestAnimationFrame(frame)
@@ -755,8 +770,7 @@ export default function MascotPortfolioHero({
     }
   }, [])
 
-  const greeting = greetings[said % greetings.length]
-  const currentEmoji = emojis[emojiIndex % emojis.length]
+  const currentAvatar = avatars[avatarIndex % avatars.length]
 
   const vars = {
     "--mph-accent": accent,
@@ -769,36 +783,49 @@ export default function MascotPortfolioHero({
     "--mph-min-height": minHeight,
   } as React.CSSProperties
 
-  const renderEmojiCard = (
+  const renderAvatarCard = (
     cRef: React.RefObject<HTMLButtonElement>,
-    eRef: React.RefObject<HTMLDivElement>
+    wRef: React.RefObject<HTMLDivElement>
   ) => (
-    <div className="mph-emoji-stage">
+    <div className="mph-avatar-stage">
       <div className="mph-bubble" data-on={happy ? "true" : "false"} aria-live="polite">
-        <span>{greeting}</span>
+        <span>{currentAvatar.greeting}</span>
       </div>
 
       <button
         ref={cRef}
         type="button"
-        className={"mph-emoji-card" + (happy ? " mph-happy" : "")}
+        className={"mph-avatar-card" + (happy ? " mph-happy" : "")}
         onClick={poke}
-        aria-label="Click to poke developer emoji for a greeting"
+        aria-label="Click to switch avatar and view greeting"
       >
-        <div className="mph-emoji-status">
+        <div className="mph-avatar-status">
           <span className="mph-live-dot" aria-hidden="true" />
-          <span className="mph-status-text">NIE Mysuru &apos;27</span>
+          <span className="mph-status-text">{currentAvatar.status}</span>
         </div>
 
-        <div ref={eRef} className="mph-emoji-wrap">
-          <span className="mph-main-emoji" role="img" aria-label="Interactive developer emoji">
-            {currentEmoji}
-          </span>
+        <div ref={wRef} className="mph-avatar-wrap">
+          <img
+            src={currentAvatar.src}
+            alt={currentAvatar.alt}
+            className="mph-avatar-img"
+            loading="eager"
+            width={104}
+            height={104}
+          />
         </div>
 
-        <div className="mph-emoji-meta">
-          <span className="mph-emoji-role">Full-Stack &amp; AI</span>
-          <span className="mph-emoji-hint">Click to poke me! ✨</span>
+        <div className="mph-avatar-meta">
+          <span className="mph-avatar-role">{currentAvatar.role}</span>
+          <span className="mph-avatar-hint">Click avatar to switch ✨</span>
+          <div className="mph-avatar-dots" aria-hidden="true">
+            {avatars.map((_, i) => (
+              <span
+                key={i}
+                className={"mph-avatar-dot" + (i === avatarIndex % avatars.length ? " mph-avatar-dot-active" : "")}
+              />
+            ))}
+          </div>
         </div>
       </button>
     </div>
@@ -850,7 +877,6 @@ export default function MascotPortfolioHero({
         <div className="mph-clean-box">
           <h1 className="mph-clean-h1">
             <span>{headline ?? "Hi, I'm Shreeharsha."}</span>
-            <span className="mph-wave-emoji" aria-hidden="true">👋</span>
           </h1>
           {description && <p className="mph-clean-desc">{description}</p>}
           <div className="mph-clean-actions">
@@ -863,15 +889,15 @@ export default function MascotPortfolioHero({
             </a>
           </div>
 
-          {/* Mobile Natural Flow Emoji Card Slot */}
-          <div className="mph-mobile-emoji-slot">
-            {renderEmojiCard(mobileCardRef, mobileEmojiRef)}
+          {/* Mobile Natural Flow Avatar Card Slot */}
+          <div className="mph-mobile-avatar-slot">
+            {renderAvatarCard(mobileCardRef, mobileAvatarWrapRef)}
           </div>
         </div>
 
-        {/* Desktop Interactive Emoji Card Slot (Right Column on Desktop) */}
-        <div className="mph-desktop-emoji-slot">
-          {renderEmojiCard(cardRef, emojiRef)}
+        {/* Desktop Interactive Avatar Card Slot (Right Column on Desktop) */}
+        <div className="mph-desktop-avatar-slot">
+          {renderAvatarCard(cardRef, avatarWrapRef)}
         </div>
 
         {/* Bottom Services Banner */}
