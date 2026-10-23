@@ -144,6 +144,29 @@ async function runTests() {
   const hashRes = await verifyAdminAuth(hashReq, hashEnv, 'professional');
   assert.equal(hashRes.authorized, true, 'Must verify against pre-computed SHA-256 hash');
 
+  // 7g. Robustness against quotes and newlines in environment variable
+  const quotedEnv = { PRO_ADMIN_SECRET: '"my_quoted_secret"\r\n' };
+  const unquotedReq = new Request('https://example.com/api/admin', {
+    headers: { Authorization: 'Bearer my_quoted_secret' },
+  });
+  const quotedRes = await verifyAdminAuth(unquotedReq, quotedEnv, 'professional');
+  assert.equal(quotedRes.authorized, true, 'Must accept clean password when env has accidental quotes or newlines');
+
+  // 7h. Support for X-Admin-Token header
+  const xTokenReq = new Request('https://example.com/api/admin', {
+    headers: { 'X-Admin-Token': 'my_quoted_secret' },
+  });
+  const xTokenRes = await verifyAdminAuth(xTokenReq, quotedEnv, 'professional');
+  assert.equal(xTokenRes.authorized, true, 'Must support X-Admin-Token header');
+
+  // 7i. Graceful fallback when only MC_ADMIN_SECRET is set
+  const mcOnlyEnv = { MC_ADMIN_SECRET: 'shared_backup_key' };
+  const fallbackReq = new Request('https://example.com/api/admin', {
+    headers: { Authorization: 'Bearer shared_backup_key' },
+  });
+  const fallbackRes = await verifyAdminAuth(fallbackReq, mcOnlyEnv, 'professional');
+  assert.equal(fallbackRes.authorized, true, 'Must fall back gracefully when only one secret is configured');
+
   console.log('✓ Admin authentication fail-closed and independence tests passed.');
 
   console.log('--- ALL AUTOMATED SECURITY TESTS PASSED SUCCESSFULLY ---');

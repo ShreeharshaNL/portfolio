@@ -251,9 +251,11 @@ export const portfolioApi = {
 
   // 7. Admin Dashboard Fetch
   async getAdminData(pin: string) {
+    const cleanPin = pin.trim();
     const res = await fetch('/api/admin', {
       headers: {
-        Authorization: `Bearer ${pin}`,
+        Authorization: `Bearer ${cleanPin}`,
+        'X-Admin-Token': cleanPin,
       },
     });
 
@@ -273,11 +275,13 @@ export const portfolioApi = {
 
   // 8. Admin Moderation Action
   async adminAction(action: string, id: string, pin: string) {
+    const cleanPin = pin.trim();
     const res = await fetch('/api/admin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${pin}`,
+        Authorization: `Bearer ${cleanPin}`,
+        'X-Admin-Token': cleanPin,
       },
       body: JSON.stringify({ action, id }),
     });

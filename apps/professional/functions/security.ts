@@ -1,5 +1,6 @@
 import type { Env } from './types';
 
+// Allowed origins for CORS (Minecraft portfolio, Professional portfolio, Cloudflare Pages previews, local development)
 export const ALLOWED_ORIGINS = [
   'https://shreeharsha.online',
   'https://minecraft.shreeharsha.online',
@@ -10,18 +11,26 @@ export const ALLOWED_ORIGINS = [
   'http://localhost:8788',
 ];
 
+export function isAllowedOrigin(origin: string | null): boolean {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Support any Cloudflare Pages deployment preview (*.pages.dev)
+  if (/^https:\/\/[a-zA-Z0-9-._]+\.pages\.dev$/.test(origin)) return true;
+  return false;
+}
+
 export function getCorsHeaders(request: Request): Record<string, string> {
   const origin = request.headers.get('Origin');
   let matchedOrigin = 'https://shreeharsha.online';
 
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     matchedOrigin = origin;
   }
 
   return {
     'Access-Control-Allow-Origin': matchedOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token',
     'Access-Control-Max-Age': '86400',
     'Vary': 'Origin',
     'Content-Type': 'application/json',
@@ -64,41 +73,115 @@ export function hexToBytes(hex: string): Uint8Array {
   return bytes;
 }
 
+/**
+ * Normalize and expand raw secret into all likely candidate interpretations:
+ * - Direct value
+ * - Trimmed of leading/trailing whitespace
+ * - Stripped of CRLF/tabs
+ * - Stripped of accidental surrounding single or double quotes
+ */
+export function expandSecretCandidates(raw: unknown): string[] {
+  if (typeof raw !== 'string') return [];
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+
+  const strippedNewlines = trimmed.replace(/[\r\n\t]/g, '');
+  const strippedQuotes = strippedNewlines.replace(/^["']|["']$/g, '').trim();
+
+  return Array.from(new Set([raw, trimmed, strippedNewlines, strippedQuotes])).filter(
+    (s) => s.length > 0
+  );
+}
+
+export function expandHashCandidates(raw: unknown): string[] {
+  if (typeof raw !== 'string') return [];
+  const trimmed = raw.trim().toLowerCase();
+  if (!trimmed) return [];
+
+  const strippedQuotes = trimmed.replace(/^["']|["']$/g, '').trim();
+  return Array.from(new Set([trimmed, strippedQuotes])).filter(
+    (h) => h.length === 64 && /^[0-9a-f]{64}$/.test(h)
+  );
+}
+
 export async function verifyAdminAuth(
   request: Request,
-  env: Env
+  env: Env,
+  site: 'minecraft' | 'professional' = 'professional'
 ): Promise<{ authorized: boolean; reason?: string }> {
-  const authHeader = request.headers.get('Authorization') || '';
+  // Extract token from Authorization: Bearer <token> or X-Admin-Token: <token>
+  const authHeader = request.headers.get('Authorization') || request.headers.get('X-Admin-Token') || '';
   const match = authHeader.match(/^Bearer\s+(.+)$/i);
-  if (!match || !match[1]) {
-    return { authorized: false, reason: 'Missing Authorization header' };
+  const rawToken = match ? match[1] : authHeader;
+
+  const candidateTokens = expandSecretCandidates(rawToken);
+  if (candidateTokens.length === 0) {
+    return { authorized: false, reason: 'Missing or empty authorization token' };
   }
 
-  const presentedToken = match[1].trim();
-  if (!presentedToken) {
-    return { authorized: false, reason: 'Empty token' };
-  }
+  // Determine secret candidates based on requested site and environment availability
+  let rawHashCandidates: unknown[] = [];
+  let rawSecretCandidates: unknown[] = [];
 
-  const presentedHash = await sha256Buffer(presentedToken);
+  if (site === 'professional') {
+    const hasProHash = typeof env.PRO_ADMIN_PASSWORD_HASH === 'string' && env.PRO_ADMIN_PASSWORD_HASH.trim().length > 0;
+    const hasProSecret = typeof env.PRO_ADMIN_SECRET === 'string' && env.PRO_ADMIN_SECRET.trim().length > 0;
+    const hasAdminSecret = typeof env.ADMIN_SECRET === 'string' && env.ADMIN_SECRET.trim().length > 0;
 
-  // Check pre-computed PRO_ADMIN_PASSWORD_HASH
-  if (env.PRO_ADMIN_PASSWORD_HASH && env.PRO_ADMIN_PASSWORD_HASH.trim()) {
-    const expectedHashBytes = hexToBytes(env.PRO_ADMIN_PASSWORD_HASH);
-    if (expectedHashBytes.length === 32 && timingSafeEqual(presentedHash, expectedHashBytes)) {
-      return { authorized: true };
+    if (hasProHash || hasProSecret || hasAdminSecret) {
+      rawHashCandidates = [env.PRO_ADMIN_PASSWORD_HASH];
+      rawSecretCandidates = [env.PRO_ADMIN_SECRET, env.ADMIN_SECRET];
+    } else {
+      // Fallback if user only configured MC_ADMIN_SECRET on this Cloudflare deployment
+      rawHashCandidates = [env.MC_ADMIN_PASSWORD_HASH];
+      rawSecretCandidates = [env.MC_ADMIN_SECRET];
     }
+  } else if (site === 'minecraft') {
+    const hasMcHash = typeof env.MC_ADMIN_PASSWORD_HASH === 'string' && env.MC_ADMIN_PASSWORD_HASH.trim().length > 0;
+    const hasMcSecret = typeof env.MC_ADMIN_SECRET === 'string' && env.MC_ADMIN_SECRET.trim().length > 0;
+    const hasAdminSecret = typeof env.ADMIN_SECRET === 'string' && env.ADMIN_SECRET.trim().length > 0;
+
+    if (hasMcHash || hasMcSecret || hasAdminSecret) {
+      rawHashCandidates = [env.MC_ADMIN_PASSWORD_HASH];
+      rawSecretCandidates = [env.MC_ADMIN_SECRET, env.ADMIN_SECRET];
+    } else {
+      // Fallback if user only configured PRO_ADMIN_SECRET on this Cloudflare deployment
+      rawHashCandidates = [env.PRO_ADMIN_PASSWORD_HASH];
+      rawSecretCandidates = [env.PRO_ADMIN_SECRET];
+    }
+  } else {
+    rawHashCandidates = [env.PRO_ADMIN_PASSWORD_HASH, env.MC_ADMIN_PASSWORD_HASH];
+    rawSecretCandidates = [env.PRO_ADMIN_SECRET, env.MC_ADMIN_SECRET, env.ADMIN_SECRET];
   }
 
-  // Check PRO_ADMIN_SECRET or fallback ADMIN_SECRET
-  const targetSecret = env.PRO_ADMIN_SECRET || env.ADMIN_SECRET;
-  if (!targetSecret || !targetSecret.trim()) {
-    console.error('[Security Warning] Professional admin authentication attempted without configured secret.');
+  const validHashes = rawHashCandidates.flatMap(expandHashCandidates);
+  const validSecrets = rawSecretCandidates.flatMap(expandSecretCandidates);
+
+  if (validHashes.length === 0 && validSecrets.length === 0) {
+    console.error('[Security Warning] Admin authentication attempted without configured secret.');
     return { authorized: false, reason: 'Admin authentication is not configured on server' };
   }
 
-  const expectedHash = await sha256Buffer(targetSecret.trim());
-  if (timingSafeEqual(presentedHash, expectedHash)) {
-    return { authorized: true };
+  const tokenHashes = await Promise.all(candidateTokens.map((t) => sha256Buffer(t)));
+
+  for (const targetHashHex of validHashes) {
+    const expectedHashBytes = hexToBytes(targetHashHex);
+    if (expectedHashBytes.length === 32) {
+      for (const tokenHash of tokenHashes) {
+        if (timingSafeEqual(tokenHash, expectedHashBytes)) {
+          return { authorized: true };
+        }
+      }
+    }
+  }
+
+  for (const secret of validSecrets) {
+    const expectedHash = await sha256Buffer(secret);
+    for (const tokenHash of tokenHashes) {
+      if (timingSafeEqual(tokenHash, expectedHash)) {
+        return { authorized: true };
+      }
+    }
   }
 
   return { authorized: false, reason: 'Invalid credentials' };

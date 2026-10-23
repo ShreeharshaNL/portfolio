@@ -37,9 +37,11 @@ export interface AdminDashboardData {
 export const professionalApi = {
   // Fetch admin dashboard telemetry and messages
   async getAdminData(secret: string): Promise<AdminDashboardData> {
+    const cleanSecret = secret.trim();
     const res = await fetch('/api/admin', {
       headers: {
-        Authorization: `Bearer ${secret}`,
+        Authorization: `Bearer ${cleanSecret}`,
+        'X-Admin-Token': cleanSecret,
       },
     });
 
@@ -104,11 +106,13 @@ export const professionalApi = {
       }
     }
 
+    const cleanSecret = secret.trim();
     const res = await fetch('/api/admin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${secret}`,
+        Authorization: `Bearer ${cleanSecret}`,
+        'X-Admin-Token': cleanSecret,
       },
       body: JSON.stringify({ action, id }),
     });
