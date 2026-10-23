@@ -68,12 +68,12 @@ export const Navbar: React.FC = () => {
           {/* Brand */}
           <a
             href="#home"
-            className="group flex items-center space-x-2 focus-ring rounded-full"
+            className="group flex items-center space-x-2 focus-ring rounded-full shrink-0"
             aria-label="Shreeharsha N. L. homepage"
           >
             <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[3px_3px_0px_0px_#5fb57a] transition-all">
-              <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-1 font-black">08/27</span>
-              <span className="px-3 py-1 text-[#111111] dark:text-white font-extrabold tracking-tight">SHREEHARSHA</span>
+              <span className="bg-[#5fb57a] text-[#111111] px-2 py-1 sm:px-2.5 font-black text-[11px] sm:text-xs">08/27</span>
+              <span className="px-2.5 py-1 sm:px-3 text-[#111111] dark:text-white font-extrabold tracking-tight text-[11px] sm:text-xs">SHREEHARSHA</span>
             </div>
           </a>
 

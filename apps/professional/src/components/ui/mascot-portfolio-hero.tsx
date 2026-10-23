@@ -6,12 +6,10 @@ import * as React from "react"
 
 export type MascotPortfolioHeroProps = {
   /**
-   * Height of the hero. Must be a definite length — the poster is fitted to
-   * this box, so a percentage collapses to 0px unless every ancestor up to
-   * `<html>` has a real height. Never pass `"100%"`.
+   * Height of the hero on desktop.
    */
   height?: string
-  /** Floor for the height, so the headline stays legible. */
+  /** Floor for the height on desktop. */
   minHeight?: string
 
   /* ---- top rule ---- */
@@ -126,97 +124,465 @@ const ROOM = room()
 /* ----------------------------------------------------------------- styles */
 
 const CSS = `
-.mph-root{position:relative;width:100%;overflow:hidden;isolation:isolate;background:var(--mph-paper);color:var(--mph-ink);container:mph / size;font-family:var(--mph-sans);-webkit-font-smoothing:antialiased;}
+.mph-root{position:relative;width:100%;background:var(--mph-paper);color:var(--mph-ink);font-family:var(--mph-sans);-webkit-font-smoothing:antialiased;}
 .mph-room{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--mph-ink);pointer-events:none;}
 .mph-room line,.mph-room path{vector-effect:non-scaling-stroke;}
-.mph-stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100cqw,177.78cqh);aspect-ratio:16/9;container:mphs / inline-size;}
 
-.mph-top{position:absolute;left:4.6%;right:4.6%;top:4.4%;display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;column-gap:2.4cqw;font-size:1.05cqw;font-weight:800;line-height:1.1;text-transform:uppercase;letter-spacing:.02em;}
-.mph-index{display:inline-flex;align-items:center;gap:.9em;border:.12cqw solid var(--mph-ink);border-radius:999px;padding:.12em .9em .12em .12em;font-size:.72em;}
-.mph-index b{background:var(--mph-accent);color:var(--mph-ink);border-radius:999px;padding:.3em 1.2em;font-weight:800;}
-.mph-tagline{font-size:1.18em;font-weight:900;margin-left:1cqw;}
-.mph-brace{grid-column:4;font-size:1.3em;font-weight:700;letter-spacing:.04em;margin-right:2.6cqw;}
-.mph-reel{grid-column:5;display:flex;align-items:center;gap:.8em;font-size:.8em;text-align:right;}
-.mph-reel i{display:block;width:1.9em;height:1.9em;border-radius:50%;background:var(--mph-accent);border:.12cqw solid var(--mph-ink);flex:none;}
-
-.mph-clean-box{position:absolute;left:8.8%;top:20%;max-width:52%;z-index:10;}
-.mph-clean-h1{font-family:var(--mph-display);font-weight:900;font-size:4.8cqw;line-height:1.05;letter-spacing:-.03em;color:var(--mph-ink);margin:0 0 .35em 0;display:flex;align-items:center;flex-wrap:wrap;}
-.mph-clean-desc{font-family:var(--mph-sans);font-size:1.3cqw;font-weight:500;line-height:1.6;color:var(--mph-ink);opacity:.85;margin:0 0 1.4em 0;max-width:35cqw;}
-.mph-clean-actions{display:flex;align-items:center;gap:.9cqw;flex-wrap:wrap;}
-.mph-clean-btn-primary{display:inline-flex;align-items:center;gap:.5em;padding:.65em 1.4em;border-radius:999px;background:var(--mph-accent);color:var(--mph-ink);border:.16cqw solid var(--mph-ink);font-size:1.15cqw;font-weight:800;text-decoration:none;box-shadow:.25cqw .25cqw 0 var(--mph-ink);transition:transform .2s,box-shadow .2s;}
-.mph-clean-btn-primary:hover{transform:translate(-.06em,-.06em);box-shadow:.35cqw .35cqw 0 var(--mph-ink);}
-.mph-clean-btn-secondary{display:inline-flex;align-items:center;padding:.65em 1.4em;border-radius:999px;background:var(--mph-surface, #fff);color:var(--mph-ink);border:.16cqw solid var(--mph-ink);font-size:1.15cqw;font-weight:800;text-decoration:none;box-shadow:.25cqw .25cqw 0 var(--mph-ink);transition:transform .2s,box-shadow .2s;}
-.mph-clean-btn-secondary:hover{transform:translate(-.06em,-.06em);box-shadow:.35cqw .35cqw 0 var(--mph-accent);}
-
+/* Waving Hand Emoji Animation */
 .mph-wave-emoji{display:inline-block;margin-left:.25em;transform-origin:70% 70%;animation:mph-wave 2.2s infinite ease-in-out;user-select:none;}
-
-/* Interactive Emoji Stage (Desktop) */
-.mph-desktop-emoji-slot{position:absolute;left:64%;top:21%;width:22cqw;max-width:320px;z-index:20;}
-.mph-mobile-emoji-slot{display:none;}
-
-.mph-emoji-stage{position:relative;width:100%;}
-.mph-emoji-card{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;padding:1.6cqw 1.8cqw;background:var(--mph-surface, #ffffff);border:.18cqw solid var(--mph-ink);border-radius:2cqw;box-shadow:.45cqw .45cqw 0 var(--mph-ink);cursor:pointer;outline:none;transition:box-shadow .25s cubic-bezier(.3,1.4,.5,1),border-color .2s;transform-style:preserve-3d;will-change:transform;-webkit-tap-highlight-color:transparent;}
-.mph-emoji-card:hover{box-shadow:.6cqw .6cqw 0 var(--mph-accent);border-color:var(--mph-ink);}
-.mph-emoji-card:focus-visible{outline:.2cqw dashed var(--mph-accent);outline-offset:.4cqw;}
-
-.mph-emoji-status{display:inline-flex;align-items:center;gap:.5em;background:var(--mph-paper);border:.12cqw solid var(--mph-ink);padding:.25em .8em;border-radius:999px;font-size:.95cqw;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--mph-ink);}
-.mph-live-dot{width:.6em;height:.6em;border-radius:50%;background:var(--mph-accent);box-shadow:0 0 .5em var(--mph-accent);animation:mph-pulse 1.8s infinite ease-in-out;}
-
-.mph-emoji-wrap{margin:1.1cqw 0 .8cqw 0;display:flex;align-items:center;justify-content:center;width:6.2cqw;height:6.2cqw;border-radius:50%;background:var(--mph-paper);border:.14cqw solid var(--mph-ink);transform-style:preserve-3d;transition:transform .15s ease-out;}
-.mph-main-emoji{font-size:3.6cqw;line-height:1;display:block;user-select:none;}
-.mph-happy .mph-emoji-wrap{animation:mph-wiggle .8s cubic-bezier(.3,1.6,.5,1);}
-
-.mph-emoji-meta{display:flex;flex-direction:column;align-items:center;gap:.25em;}
-.mph-emoji-role{font-family:var(--mph-display);font-size:1.15cqw;font-weight:900;letter-spacing:-.01em;color:var(--mph-ink);text-transform:uppercase;}
-.mph-emoji-hint{font-size:.9cqw;font-weight:700;color:var(--mph-ink);opacity:.65;}
-
-.mph-bubble{position:absolute;left:-8%;top:-28%;min-width:18cqw;max-width:28cqw;background:var(--mph-surface, #ffffff);color:var(--mph-ink);border:.16cqw solid var(--mph-ink);border-radius:1.2em 1.2em 1.2em .2em;padding:.7em 1.1em;font-size:1.15cqw;font-weight:800;line-height:1.25;text-align:left;box-shadow:.35cqw .35cqw 0 var(--mph-accent);transform-origin:15% 100%;transform:scale(0) rotate(-6deg);opacity:0;transition:transform .4s cubic-bezier(.3,1.6,.5,1),opacity .2s;pointer-events:none;z-index:30;}
-.mph-bubble[data-on="true"]{transform:scale(1) rotate(-2deg);opacity:1;}
-.mph-bubble::after{content:"";position:absolute;bottom:-.45em;left:1.2em;width:0;height:0;border-left:.45em solid transparent;border-right:.45em solid transparent;border-top:.45em solid var(--mph-ink);}
-
-.mph-services{position:absolute;left:4.6%;bottom:4.6%;display:flex;gap:4cqw;margin:0;padding:0;list-style:none;font-size:1.3cqw;font-weight:800;}
-.mph-services li{position:relative;cursor:default;padding-bottom:.25em;}
-.mph-services li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.18em;background:var(--mph-accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.6,0,.2,1);}
-.mph-services li:hover::after{transform:scaleX(1);}
-
-.mph-rule{position:absolute;width:0;border-left:.1cqw solid var(--mph-ink);}
-.mph-rule::after{content:"";position:absolute;bottom:0;left:-.1cqw;width:1.1cqw;border-top:.1cqw solid var(--mph-ink);transform:rotate(28deg);transform-origin:left;}
-.mph-rule-l{left:3.7%;top:23%;height:13%;}
-.mph-rule-r{left:94.8%;top:66%;height:13%;}
-
 @keyframes mph-wave{0%{transform:rotate(0deg);}15%{transform:rotate(14deg);}30%{transform:rotate(-8deg);}45%{transform:rotate(14deg);}60%{transform:rotate(-4deg);}75%{transform:rotate(10deg);}100%{transform:rotate(0deg);}}
 @keyframes mph-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.85);}}
 @keyframes mph-wiggle{0%{transform:rotate(0);}25%{transform:rotate(-14deg) scale(1.1);}55%{transform:rotate(9deg) scale(1.15);}80%{transform:rotate(-4deg);}100%{transform:rotate(0) scale(1);}}
 
-@container mph (orientation: portrait){
-.mph-stage{top:0;transform:translateX(-50%);width:min(100cqw,56.25cqh);height:100cqh;aspect-ratio:auto;}
-.mph-top{top:5cqw;left:6%;right:6%;grid-template-columns:auto 1fr auto;font-size:2.5cqw;}
-.mph-tagline,.mph-brace{display:none;}
-.mph-reel{grid-column:3;}
-.mph-clean-box{left:7%;top:18cqw;max-width:88%;}
-.mph-clean-h1{font-size:9.2cqw;}
-.mph-clean-desc{font-size:3.6cqw;max-width:100%;}
-.mph-clean-actions{gap:2.5cqw;}
-.mph-clean-btn-primary,.mph-clean-btn-secondary{font-size:3.2cqw;padding:.7em 1.3em;}
+/* Shared Emoji Card Styles */
+.mph-emoji-stage{position:relative;width:100%;}
+.mph-emoji-card{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;background:var(--mph-surface, #ffffff);border:2px solid var(--mph-ink);border-radius:1.5rem;box-shadow:4px 4px 0px 0px var(--mph-ink);cursor:pointer;outline:none;transition:box-shadow .25s cubic-bezier(.3,1.4,.5,1),border-color .2s;transform-style:preserve-3d;will-change:transform;-webkit-tap-highlight-color:transparent;}
+.mph-emoji-card:hover{box-shadow:6px 6px 0px 0px var(--mph-accent);}
+.mph-emoji-card:focus-visible{outline:2px dashed var(--mph-accent);outline-offset:4px;}
 
-.mph-desktop-emoji-slot{display:none;}
-.mph-mobile-emoji-slot{display:block;margin-top:5cqw;}
-.mph-emoji-stage{position:relative;}
-.mph-emoji-card{flex-direction:row;justify-content:space-between;padding:3cqw 4cqw;border-radius:4.5cqw;border-width:.35cqw;box-shadow:.8cqw .8cqw 0 var(--mph-ink);}
-.mph-emoji-wrap{width:13cqw;height:13cqw;margin:0 2cqw;border-width:.3cqw;}
-.mph-main-emoji{font-size:8cqw;}
-.mph-emoji-status{font-size:2.6cqw;border-width:.28cqw;}
-.mph-emoji-role{font-size:3.2cqw;}
-.mph-emoji-hint{font-size:2.5cqw;}
-.mph-bubble{font-size:3.2cqw;left:4%;top:-16cqw;min-width:auto;max-width:88%;border-width:.35cqw;box-shadow:.7cqw .7cqw 0 var(--mph-accent);}
+.mph-emoji-status{display:inline-flex;align-items:center;gap:.5em;background:var(--mph-paper);border:1.5px solid var(--mph-ink);padding:.25em .8em;border-radius:999px;font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--mph-ink);}
+.mph-live-dot{width:.6em;height:.6em;border-radius:50%;background:var(--mph-accent);box-shadow:0 0 .5em var(--mph-accent);animation:mph-pulse 1.8s infinite ease-in-out;}
 
-.mph-services{left:7%;right:7%;bottom:auto;top:84cqw;flex-wrap:wrap;gap:1.6cqw 5cqw;font-size:3cqw;}
-.mph-rule-l{left:3%;top:22cqw;height:12cqw;}
-.mph-rule-r{left:95%;top:auto;bottom:40cqw;height:12cqw;}
+.mph-emoji-wrap{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--mph-paper);border:2px solid var(--mph-ink);transform-style:preserve-3d;transition:transform .15s ease-out;}
+.mph-main-emoji{line-height:1;display:block;user-select:none;}
+.mph-happy .mph-emoji-wrap{animation:mph-wiggle .8s cubic-bezier(.3,1.6,.5,1);}
+
+.mph-emoji-meta{display:flex;flex-direction:column;align-items:center;gap:.25em;}
+.mph-emoji-role{font-family:var(--mph-display);font-size:1rem;font-weight:900;letter-spacing:-.01em;color:var(--mph-ink);text-transform:uppercase;}
+.mph-emoji-hint{font-size:.75rem;font-weight:700;color:var(--mph-ink);opacity:.65;}
+
+.mph-bubble{position:absolute;background:var(--mph-surface, #ffffff);color:var(--mph-ink);border:2px solid var(--mph-ink);border-radius:1rem;font-weight:800;line-height:1.3;box-shadow:3px 3px 0px 0px var(--mph-accent);opacity:0;pointer-events:none;z-index:30;transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s;}
+.mph-bubble[data-on="true"]{opacity:1;}
+
+/* -------------------------------------------------------------
+   DESKTOP / LAPTOP LAYOUT (@media min-width: 1024px)
+   ------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .mph-root {
+    height: var(--mph-height, calc(100svh - 4rem));
+    min-height: var(--mph-min-height, 620px);
+    overflow: hidden;
+  }
+  .mph-stage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(92vw, 1300px);
+    height: 82%;
+    max-height: 720px;
+  }
+
+  .mph-top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+  }
+  .mph-index {
+    display: inline-flex;
+    align-items: center;
+    gap: .75em;
+    border: 1.5px solid var(--mph-ink);
+    border-radius: 999px;
+    padding: .15em .8em .15em .15em;
+    font-size: .85em;
+  }
+  .mph-index b {
+    background: var(--mph-accent);
+    color: var(--mph-ink);
+    border-radius: 999px;
+    padding: .25em 1em;
+    font-weight: 800;
+  }
+  .mph-tagline {
+    font-size: 1em;
+    font-weight: 900;
+  }
+  .mph-brace {
+    font-size: 1.1em;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  .mph-reel {
+    display: flex;
+    align-items: center;
+    gap: .75em;
+    font-size: .8em;
+    text-align: right;
+  }
+  .mph-reel i {
+    display: block;
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 50%;
+    background: var(--mph-accent);
+    border: 1.5px solid var(--mph-ink);
+    flex: none;
+  }
+
+  .mph-clean-box {
+    position: absolute;
+    left: 0;
+    top: 18%;
+    max-width: 58%;
+    z-index: 10;
+  }
+  .mph-clean-h1 {
+    font-family: var(--mph-display);
+    font-weight: 900;
+    font-size: clamp(2.8rem, 4.2vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    color: var(--mph-ink);
+    margin: 0 0 .4em 0;
+  }
+  .mph-clean-desc {
+    font-family: var(--mph-sans);
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--mph-ink);
+    opacity: .85;
+    margin: 0 0 1.5em 0;
+    max-width: 32rem;
+  }
+  .mph-clean-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .mph-clean-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .5em;
+    padding: .75em 1.6em;
+    border-radius: 999px;
+    background: var(--mph-accent);
+    color: var(--mph-ink);
+    border: 2px solid var(--mph-ink);
+    font-size: .95rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 3px 3px 0 var(--mph-ink);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .mph-clean-btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--mph-ink);
+  }
+  .mph-clean-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: .75em 1.6em;
+    border-radius: 999px;
+    background: var(--mph-surface, #fff);
+    color: var(--mph-ink);
+    border: 2px solid var(--mph-ink);
+    font-size: .95rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 3px 3px 0 var(--mph-ink);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .mph-clean-btn-secondary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--mph-accent);
+  }
+
+  .mph-desktop-emoji-slot {
+    position: absolute;
+    right: 2%;
+    top: 20%;
+    width: 280px;
+    z-index: 20;
+  }
+  .mph-mobile-emoji-slot {
+    display: none;
+  }
+
+  .mph-emoji-card {
+    padding: 1.75rem 1.5rem;
+  }
+  .mph-emoji-wrap {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin: 1.25rem 0 .75rem 0;
+  }
+  .mph-main-emoji {
+    font-size: 3.2rem;
+  }
+
+  .mph-bubble {
+    left: -15%;
+    top: -3.5rem;
+    min-width: 14rem;
+    max-width: 20rem;
+    padding: .7rem 1.1rem;
+    font-size: .85rem;
+    transform-origin: 20% 100%;
+    transform: scale(0) rotate(-4deg);
+  }
+  .mph-bubble[data-on="true"] {
+    transform: scale(1) rotate(-2deg);
+  }
+  .mph-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -.45em;
+    left: 1.5em;
+    width: 0;
+    height: 0;
+    border-left: .45em solid transparent;
+    border-right: .45em solid transparent;
+    border-top: .45em solid var(--mph-ink);
+  }
+
+  .mph-services {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: .95rem;
+    font-weight: 800;
+  }
+  .mph-services li {
+    position: relative;
+    cursor: default;
+    padding-bottom: .25em;
+  }
+  .mph-services li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: .18em;
+    background: var(--mph-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s cubic-bezier(.6,0,.2,1);
+  }
+  .mph-services li:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* -------------------------------------------------------------
+   MOBILE & TABLET LAYOUT (@media max-width: 1023px)
+   ------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .mph-root {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    padding: 1.25rem 1rem 3rem 1rem;
+  }
+
+  .mph-stage {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mph-top {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    font-size: .8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .mph-index {
+    display: inline-flex;
+    align-items: center;
+    gap: .5em;
+    border: 1.5px solid var(--mph-ink);
+    border-radius: 999px;
+    padding: .15em .75em .15em .15em;
+    font-size: .85em;
+  }
+  .mph-index b {
+    background: var(--mph-accent);
+    color: var(--mph-ink);
+    border-radius: 999px;
+    padding: .2em .8em;
+    font-weight: 800;
+  }
+  .mph-tagline, .mph-brace {
+    display: none;
+  }
+  .mph-reel {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-size: .75em;
+  }
+  .mph-reel i {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 50%;
+    background: var(--mph-accent);
+    border: 1.5px solid var(--mph-ink);
+  }
+
+  .mph-clean-box {
+    position: relative;
+    left: auto;
+    top: auto;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .mph-clean-h1 {
+    font-family: var(--mph-display);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 8.5vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    color: var(--mph-ink);
+    margin: 0;
+  }
+  .mph-clean-desc {
+    font-family: var(--mph-sans);
+    font-size: clamp(.92rem, 3.8vw, 1.05rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--mph-ink);
+    opacity: .85;
+    margin: 0;
+  }
+  .mph-clean-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: .25rem;
+  }
+  .mph-clean-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    padding: .75em 1.5em;
+    border-radius: 999px;
+    background: var(--mph-accent);
+    color: var(--mph-ink);
+    border: 2px solid var(--mph-ink);
+    font-size: .9rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 3px 3px 0 var(--mph-ink);
+  }
+  .mph-clean-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .75em 1.5em;
+    border-radius: 999px;
+    background: var(--mph-surface, #fff);
+    color: var(--mph-ink);
+    border: 2px solid var(--mph-ink);
+    font-size: .9rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 3px 3px 0 var(--mph-ink);
+  }
+
+  .mph-desktop-emoji-slot {
+    display: none;
+  }
+  .mph-mobile-emoji-slot {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .mph-emoji-stage {
+    position: relative;
+    width: 100%;
+  }
+  .mph-emoji-card {
+    padding: 1.25rem 1.25rem;
+    border-radius: 1.25rem;
+  }
+  .mph-emoji-wrap {
+    width: 4.8rem;
+    height: 4.8rem;
+    margin: 1rem 0 .6rem 0;
+  }
+  .mph-main-emoji {
+    font-size: 2.8rem;
+  }
+
+  .mph-bubble {
+    left: 5%;
+    right: 5%;
+    top: -3.2rem;
+    margin: 0 auto;
+    padding: .6rem 1rem;
+    font-size: .8rem;
+    text-align: center;
+    transform-origin: 50% 100%;
+    transform: scale(0) translateY(10px);
+  }
+  .mph-bubble[data-on="true"] {
+    transform: scale(1) translateY(0);
+  }
+
+  .mph-services {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: .5rem 0 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mph-services li {
+    font-size: .75rem;
+    font-weight: 700;
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--mph-ink);
+    background: var(--mph-surface, #fff);
+  }
+  .mph-services li::after {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
-.mph-root *,.mph-root *::after{animation:none!important;transition:none!important;}
+  .mph-root *,.mph-root *::after{animation:none!important;transition:none!important;}
 }
 `
 
@@ -241,8 +607,8 @@ const DEFAULT_GREETINGS = [
 ]
 
 export default function MascotPortfolioHero({
-  height = "100svh",
-  minHeight = "440px",
+  height = "calc(100svh - 4rem)",
+  minHeight = "620px",
   headline,
   description,
   index = "08/27",
@@ -317,7 +683,8 @@ export default function MascotPortfolioHero({
       const dt = Math.min(0.05, (now - prev) / 1000)
       prev = now
 
-      const targetEl = cardRef.current || mobileCardRef.current
+      const isMobile = window.innerWidth < 1024
+      const targetEl = isMobile ? mobileCardRef.current : cardRef.current
       if (!targetEl) return
 
       const r = targetEl.getBoundingClientRect()
@@ -345,7 +712,7 @@ export default function MascotPortfolioHero({
 
       const breathe = still ? 0 : Math.sin(now / 550) * 2.5
 
-      // Apply 3D perspective to desktop and mobile cards
+      // Apply 3D perspective to card and inner emoji
       const applyCardTransform = (el: HTMLButtonElement | null, eEl: HTMLDivElement | null) => {
         if (!el) return
         const rotY = (gx * 14).toFixed(2)
@@ -363,8 +730,11 @@ export default function MascotPortfolioHero({
         }
       }
 
-      applyCardTransform(cardRef.current, emojiRef.current)
-      applyCardTransform(mobileCardRef.current, mobileEmojiRef.current)
+      if (isMobile) {
+        applyCardTransform(mobileCardRef.current, mobileEmojiRef.current)
+      } else {
+        applyCardTransform(cardRef.current, emojiRef.current)
+      }
     }
     raf = requestAnimationFrame(frame)
 
@@ -395,8 +765,8 @@ export default function MascotPortfolioHero({
     "--mph-surface": paper === "#0b0c10" || paper === "#0a0c10" || paper === "#0c0d12" ? "#15171f" : "#ffffff",
     "--mph-sans": SANS_STACK,
     "--mph-display": DISPLAY_STACK,
-    height,
-    minHeight,
+    "--mph-height": height,
+    "--mph-min-height": minHeight,
   } as React.CSSProperties
 
   const renderEmojiCard = (
@@ -458,7 +828,7 @@ export default function MascotPortfolioHero({
         <header className="mph-top">
           <span className="mph-index">
             <b>{index}</b>
-            {discipline}
+            <span>{discipline}</span>
           </span>
           <span className="mph-tagline">{tagline}</span>
           <span className="mph-brace">
@@ -476,10 +846,7 @@ export default function MascotPortfolioHero({
           </span>
         </header>
 
-        <span className="mph-rule mph-rule-l" aria-hidden="true" />
-        <span className="mph-rule mph-rule-r" aria-hidden="true" />
-
-        {/* Clean Hero Layout */}
+        {/* Clean Hero Layout (Left Column on Desktop) */}
         <div className="mph-clean-box">
           <h1 className="mph-clean-h1">
             <span>{headline ?? "Hi, I'm Shreeharsha."}</span>
@@ -496,13 +863,13 @@ export default function MascotPortfolioHero({
             </a>
           </div>
 
-          {/* Mobile Portrait Emoji Card Slot */}
+          {/* Mobile Natural Flow Emoji Card Slot */}
           <div className="mph-mobile-emoji-slot">
             {renderEmojiCard(mobileCardRef, mobileEmojiRef)}
           </div>
         </div>
 
-        {/* Desktop Interactive Emoji Card Slot */}
+        {/* Desktop Interactive Emoji Card Slot (Right Column on Desktop) */}
         <div className="mph-desktop-emoji-slot">
           {renderEmojiCard(cardRef, emojiRef)}
         </div>

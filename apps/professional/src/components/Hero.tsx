@@ -21,7 +21,7 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="home" className="relative w-full overflow-hidden pt-16 sm:pt-20">
+    <section id="home" className="relative w-full overflow-x-clip pt-16 sm:pt-20">
       <MascotPortfolioHero
         height="calc(100svh - 4rem)"
         minHeight="600px"

@@ -162,7 +162,7 @@ export const Contact: React.FC = () => {
                 <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400 block">
                   Professional Profiles
                 </span>
-                <div className="flex items-center space-x-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <a
                     href={personalInfo.social.github}
                     target="_blank"

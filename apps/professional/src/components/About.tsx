@@ -69,7 +69,7 @@ export const About: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-xs text-[#111111]/70 dark:text-slate-400 pl-13">
+              <p className="mt-2 text-xs text-[#111111]/70 dark:text-slate-400 sm:pl-[52px]">
                 Information Science and Engineering at The National Institute of Engineering (NIE), Mysuru.
               </p>
             </div>
@@ -89,7 +89,7 @@ export const About: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-xs text-[#111111]/70 dark:text-slate-400 pl-13">
+              <p className="mt-2 text-xs text-[#111111]/70 dark:text-slate-400 sm:pl-[52px]">
                 1st place with Team Code4Care at BITM Ballari for LabelWise — AI food label scanner using Google Vision OCR.
               </p>
             </div>
@@ -109,7 +109,7 @@ export const About: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-xs text-[#111111]/70 dark:text-slate-400 pl-13">
+              <p className="mt-2 text-xs text-[#111111]/70 dark:text-slate-400 sm:pl-[52px]">
                 Building functional web platforms combining modern React frontends, robust backend APIs, and computer vision / NLP.
               </p>
             </div>
