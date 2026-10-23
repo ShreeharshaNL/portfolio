@@ -234,7 +234,7 @@ const DEFAULT_EMOJIS = ["👨‍💻", "👋", "🚀", "⚡", "🤖", "✨"]
 const DEFAULT_GREETINGS = [
   "Hi, I'm Shreeharsha N. L.!",
   "B.E. Information Science @ NIE Mysuru.",
-  "Winner of NeoNexus 36.1 Hackathon!",
+  "Winner of NeoNexus 36.1 Hackathon at BITM Ballari!",
   "Building practical software & AI systems.",
   "Check out my projects below ↓",
   "Okay, you can stop poking me :)",

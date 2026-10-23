@@ -90,7 +90,7 @@ export const About: React.FC = () => {
                 </div>
               </div>
               <p className="text-xs text-[#111111]/70 dark:text-slate-400 pl-13">
-                1st place with Team Code4Care for LabelWise — AI food label scanner using Google Vision OCR.
+                1st place with Team Code4Care at BITM Ballari for LabelWise — AI food label scanner using Google Vision OCR.
               </p>
             </div>
 

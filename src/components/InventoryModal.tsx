@@ -31,7 +31,7 @@ const INVENTORY_ITEMS: InventoryItem[] = [
     type: 'Project · NeoNexus 2026 Winner',
     rarity: 'legendary',
     lore: [
-      'Winner — NeoNexus 36.1 Hackathon at NIE Mysuru (2026)',
+      'Winner — NeoNexus 36.1 Hackathon at BITM Ballari (2026)',
       'Built with Team Code4Care',
       'Analyzes packaged food ingredient labels using Google Vision OCR',
       'Automated health additive risk scoring and nutrition breakdown',

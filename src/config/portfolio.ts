@@ -51,7 +51,7 @@ export const projectsData: ProjectItem[] = [
       "Google Vision OCR ingredient detection",
       "Automated health and additive risk analysis",
     ],
-    achievement: "Winner — NeoNexus 36.1 Hackathon at NIE Mysuru (Team Code4Care)",
+    achievement: "Winner — NeoNexus 36.1 Hackathon at BITM Ballari (Team Code4Care)",
     technologies: ["Google Vision OCR", "Python", "React", "Node.js", "REST APIs"],
     projectUrl: "https://code4-care-8zc2.vercel.app/",
     demoUrl: "https://code4-care-8zc2.vercel.app/",
@@ -112,7 +112,7 @@ export const educationData: EducationData = {
   cgpa: "8.65",
   achievement: {
     title: "Winner — NeoNexus 36.1",
-    event: "NeoNexus 36.1 Hackathon at NIE Mysuru",
+    event: "NeoNexus 36.1 Hackathon at BITM Ballari",
     project: "LabelWise",
     team: "Team Code4Care",
     year: "2026",

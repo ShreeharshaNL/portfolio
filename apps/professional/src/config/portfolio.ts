@@ -50,7 +50,7 @@ export const projectsData: ProjectItem[] = [
       "Rule-based additive and allergen health risk classification",
       "Won NeoNexus 36.1 Hackathon at BITM Ballari (Team Code4Care)",
     ],
-    achievement: "Winner — NeoNexus 36.1 Hackathon (Team Code4Care)",
+    achievement: "Winner — NeoNexus 36.1 Hackathon at BITM Ballari (Team Code4Care)",
     technologies: ["Google Vision OCR", "Python", "React", "Node.js", "REST APIs"],
     projectUrl: "https://code4-care-8zc2.vercel.app/",
     demoUrl: "https://code4-care-8zc2.vercel.app/",
@@ -118,11 +118,11 @@ export const educationData: EducationItem = {
 
 export const achievementData: AchievementItem = {
   title: "Hackathon Winner — NeoNexus 36.1",
-  event: "NeoNexus 36.1 Hackathon",
+  event: "NeoNexus 36.1 Hackathon at BITM Ballari",
   project: "LabelWise",
   team: "Team Code4Care",
   year: "2026",
-  description: "Led development of LabelWise, building the optical character recognition pipeline with Google Vision API to evaluate food additive safety under strict 36-hour hackathon constraints at NIE Mysuru.",
+  description: "Led development of LabelWise, building the optical character recognition pipeline with Google Vision API to evaluate food additive safety under strict 36-hour hackathon constraints at BITM Ballari.",
 };
 
 export const crossLinkConfig = {
