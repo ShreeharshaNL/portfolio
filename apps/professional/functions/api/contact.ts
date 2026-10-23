@@ -1,53 +1,79 @@
 import type { Env, ContactMessagePayload } from '../types';
+import {
+  getCorsHeaders,
+  handleOptions,
+  verifyAdminAuth,
+  checkRateLimit,
+  checkPayloadSize,
+  isValidEmail,
+  sanitizeText,
+} from '../security';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Content-Type': 'application/json',
-};
-
-export const onRequestOptions: PagesFunction<Env> = async () => {
-  return new Response(null, { headers: corsHeaders });
+export const onRequestOptions: PagesFunction<Env> = async (context) => {
+  return handleOptions(context.request);
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
+
+  if (!checkPayloadSize(request, 16 * 1024)) {
+    return new Response(
+      JSON.stringify({ error: 'Payload exceeds size limit.' }),
+      { status: 413, headers: corsHeaders }
+    );
+  }
+
+  const rateCheck = checkRateLimit(clientIp, 'pro_contact_submit', 5, 600);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: `Too many submissions. Please wait ${rateCheck.retryAfter}s.` }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': String(rateCheck.retryAfter) } }
+    );
+  }
+
   try {
-    const { request, env } = context;
     const body = (await request.json()) as Partial<ContactMessagePayload>;
 
-    const name = (body.name || '').trim();
-    const email = (body.email || '').trim();
-    const subject = (body.subject || '').trim() || 'Professional Portfolio Inquiry';
-    const message = (body.message || '').trim();
-
-    // Validation
-    if (!name || name.length < 2) {
+    // Honeypot check
+    if (body._gotcha && body._gotcha.trim().length > 0) {
       return new Response(
-        JSON.stringify({ error: 'Please enter your name (at least 2 characters).' }),
+        JSON.stringify({ success: true, message: 'Inquiry received.' }),
+        { status: 200, headers: corsHeaders }
+      );
+    }
+
+    const name = sanitizeText(body.name, 2, 80);
+    const email = typeof body.email === 'string' ? body.email.trim() : '';
+    const rawSubject = sanitizeText(body.subject, 0, 150);
+    const subject = rawSubject || 'Professional Portfolio Inquiry';
+    const message = sanitizeText(body.message, 5, 3000);
+
+    if (!name) {
+      return new Response(
+        JSON.stringify({ error: 'Please enter your name (2 to 80 characters).' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
       return new Response(
         JSON.stringify({ error: 'Please provide a valid email address.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    if (!message || message.length < 5) {
+    if (!message) {
       return new Response(
-        JSON.stringify({ error: 'Message must be at least 5 characters long.' }),
+        JSON.stringify({ error: 'Message must be between 5 and 3000 characters.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
     const id = crypto.randomUUID();
-    const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
 
-    // Hash client IP for privacy/rate tracking
+    // Hash client IP
     const encoder = new TextEncoder();
     const ipData = encoder.encode(clientIp);
     const hashBuffer = await crypto.subtle.digest('SHA-256', ipData);
@@ -56,7 +82,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       .join('')
       .slice(0, 16);
 
-    // Save to Cloudflare D1
     const db = env.DB || (env as any).portfolio_db;
     if (db) {
       await db.prepare(
@@ -67,7 +92,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         .run();
     }
 
-    // Optional dispatch via Resend
     if (env.RESEND_API_KEY) {
       try {
         const targetEmail = env.NOTIFICATION_EMAIL || 'shreeharsha2027@gmail.com';
@@ -97,7 +121,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           }),
         });
       } catch (emailErr) {
-        console.error('Email notification dispatch error:', emailErr);
+        console.error('Email dispatch notification error:', emailErr);
       }
     }
 
@@ -112,7 +136,49 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   } catch (err: any) {
     console.error('Contact handler error:', err);
     return new Response(
-      JSON.stringify({ error: 'Failed to process inquiry. Please try again later or email directly.' }),
+      JSON.stringify({ error: 'Failed to process inquiry. Please try again later.' }),
+      { status: 500, headers: corsHeaders }
+    );
+  }
+};
+
+// GET: Retrieve recent messages — STRICT FAIL-CLOSED AUTHENTICATION
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+
+  const auth = await verifyAdminAuth(request, env);
+  if (!auth.authorized) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized: Valid Admin Authorization required' }),
+      { status: 401, headers: corsHeaders }
+    );
+  }
+
+  const db = env.DB || (env as any).portfolio_db;
+  if (!db) {
+    return new Response(
+      JSON.stringify({ messages: [], source: 'local-mock' }),
+      { status: 200, headers: corsHeaders }
+    );
+  }
+
+  try {
+    const { results } = await db.prepare(
+      `SELECT id, name, email, subject, message, status, created_at 
+       FROM contact_messages 
+       ORDER BY created_at DESC 
+       LIMIT 50`
+    ).all();
+
+    return new Response(
+      JSON.stringify({ messages: results || [], source: 'd1-database' }),
+      { status: 200, headers: corsHeaders }
+    );
+  } catch (err: any) {
+    console.error('Contact GET error:', err);
+    return new Response(
+      JSON.stringify({ error: 'Failed to retrieve messages' }),
       { status: 500, headers: corsHeaders }
     );
   }

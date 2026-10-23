@@ -2,7 +2,11 @@ import React from 'react';
 import { ArrowUp, ExternalLink, Gamepad2 } from 'lucide-react';
 import { personalInfo, crossLinkConfig } from '../config/portfolio';
 
-export const Footer: React.FC = () => {
+export interface FooterProps {
+  onNavigateToAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -96,8 +100,23 @@ export const Footer: React.FC = () => {
           <div>
             © {currentYear} Shreeharsha N. L. Built with React 18, TypeScript & Tailwind CSS.
           </div>
-          <div>
-            Hosted on Cloudflare Pages Edge Network.
+          <div className="flex items-center space-x-3">
+            <span>Hosted on Cloudflare Pages Edge Network.</span>
+            <span>•</span>
+            {onNavigateToAdmin ? (
+              <button
+                type="button"
+                onClick={onNavigateToAdmin}
+                className="hover:text-[#5fb57a] underline transition-colors"
+                title="Open Operator Console"
+              >
+                /admin
+              </button>
+            ) : (
+              <a href="/admin" className="hover:text-[#5fb57a] underline transition-colors">
+                /admin
+              </a>
+            )}
           </div>
         </div>
 

@@ -7,12 +7,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Build outputs & packages
 node_modules
 dist
 dist-ssr
-*.local
-.wrangler
 apps/professional/dist
+.wrangler
+
+# Secrets, Environment Files & Local Variables
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.local
 
 # Editor directories and files
 .vscode/*

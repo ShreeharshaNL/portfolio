@@ -1,0 +1,12 @@
+# Cloudflare Pages Functions local environment variables (.dev.vars.example)
+# Copy to '.dev.vars' in the root directory for local Pages / Wrangler execution.
+# This file is strictly excluded from Git tracking via .gitignore.
+
+MC_ADMIN_SECRET=
+PRO_ADMIN_SECRET=
+MC_ADMIN_PASSWORD_HASH=
+PRO_ADMIN_PASSWORD_HASH=
+ADMIN_SECRET=
+RESEND_API_KEY=
+NOTIFICATION_EMAIL=shreeharsha2027@gmail.com
+ENVIRONMENT=development

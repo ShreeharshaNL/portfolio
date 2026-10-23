@@ -1,19 +1,20 @@
 import type { Env, MinerLeaderboardPayload } from '../types';
+import {
+  getCorsHeaders,
+  handleOptions,
+  checkRateLimit,
+  checkPayloadSize,
+  sanitizeText,
+} from '../security';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
-};
-
-export const onRequestOptions: PagesFunction<Env> = async () => {
-  return new Response(null, { headers: corsHeaders });
+export const onRequestOptions: PagesFunction<Env> = async (context) => {
+  return handleOptions(context.request);
 };
 
 // GET: Fetch top miners
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const { env } = context;
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
   const db = env.DB || (env as any).portfolio_db;
 
   if (!db) {
@@ -23,7 +24,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
           { id: '1', player_name: 'Shreeharsha (Dev)', diamonds_mined: 42, xp: 420, level: 42 },
           { id: '2', player_name: 'DiamondHunter', diamonds_mined: 24, xp: 240, level: 24 },
           { id: '3', player_name: 'NetherWalker', diamonds_mined: 16, xp: 160, level: 16 },
-          { id: '4', player_name: 'PixelCrafter', diamonds_mined: 9, xp: 90, level: 9 },
         ],
         source: 'local-fallback',
       }),
@@ -54,32 +54,45 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 // POST: Sync/Record player mining stats
 export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
+
+  if (!checkPayloadSize(request, 4 * 1024)) {
+    return new Response(JSON.stringify({ error: 'Payload size limit exceeded' }), {
+      status: 413,
+      headers: corsHeaders,
+    });
+  }
+
+  // Rate limiting: max 30 leaderboard syncs per minute per IP
+  const rateCheck = checkRateLimit(clientIp, 'leaderboard_sync', 30, 60);
+  if (!rateCheck.allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded' }), {
+      status: 429,
+      headers: corsHeaders,
+    });
+  }
+
   try {
-    const { request, env } = context;
     const body = (await request.json()) as Partial<MinerLeaderboardPayload>;
 
-    const player_name = (body.player_name || '').trim();
-    const diamonds_mined = Math.max(0, parseInt(String(body.diamonds_mined || 0), 10));
-    const xp = Math.max(0, parseInt(String(body.xp || 0), 10));
-    const level = Math.max(1, parseInt(String(body.level || 1), 10));
-
-    if (!player_name || player_name.length < 2) {
+    const player_name = sanitizeText(body.player_name, 2, 20);
+    if (!player_name) {
       return new Response(
-        JSON.stringify({ error: 'Please enter a valid miner name (at least 2 characters).' }),
+        JSON.stringify({ error: 'Miner name must be between 2 and 20 characters.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    if (player_name.length > 20) {
-      return new Response(
-        JSON.stringify({ error: 'Miner name must be within 20 characters.' }),
-        { status: 400, headers: corsHeaders }
-      );
-    }
+    // Clamp numeric values to prevent overflow
+    const diamonds_mined = Math.min(1000000, Math.max(0, parseInt(String(body.diamonds_mined || 0), 10) || 0));
+    const xp = Math.min(10000000, Math.max(0, parseInt(String(body.xp || 0), 10) || 0));
+    const level = Math.min(10000, Math.max(1, parseInt(String(body.level || 1), 10) || 1));
 
     const id = crypto.randomUUID();
-
     const db = env.DB || (env as any).portfolio_db;
+
     if (db) {
       await db.prepare(
         `INSERT INTO miner_stats (id, player_name, diamonds_mined, xp, level, last_active)

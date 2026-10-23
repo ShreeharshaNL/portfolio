@@ -251,7 +251,19 @@ export const portfolioApi = {
 
   // 7. Admin Dashboard Fetch
   async getAdminData(pin: string) {
-    const res = await fetch(`/api/admin?secret=${encodeURIComponent(pin)}`);
+    const res = await fetch('/api/admin', {
+      headers: {
+        Authorization: `Bearer ${pin}`,
+      },
+    });
+
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error(
+        'Server returned HTML instead of JSON. Ensure the local dev server is restarted or Cloudflare Pages Functions are active.'
+      );
+    }
+
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.error || 'Invalid Admin Password');

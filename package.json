@@ -11,6 +11,7 @@
     "build:mc": "tsc && vite build",
     "build:pro": "tsc -p apps/professional/tsconfig.json && vite build --config apps/professional/vite.config.ts",
     "build:all": "npm run build:mc && npm run build:pro",
+    "test:security": "node scripts/security-audit-test.mjs",
     "preview": "vite preview",
     "preview:mc": "vite preview",
     "preview:pro": "vite preview --config apps/professional/vite.config.ts",

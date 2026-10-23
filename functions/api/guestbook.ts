@@ -1,23 +1,23 @@
 import type { Env, GuestbookPayload } from '../types';
+import {
+  getCorsHeaders,
+  handleOptions,
+  checkRateLimit,
+  checkPayloadSize,
+  sanitizeText,
+} from '../security';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
+export const onRequestOptions: PagesFunction<Env> = async (context) => {
+  return handleOptions(context.request);
 };
 
-export const onRequestOptions: PagesFunction<Env> = async () => {
-  return new Response(null, { headers: corsHeaders });
-};
-
-// GET: Fetch recent guestbook signpost entries
+// GET: Fetch recent approved guestbook signpost entries
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const { env } = context;
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
   const db = env.DB || (env as any).portfolio_db;
 
   if (!db) {
-    // Graceful fallback seed entries when DB binding is not yet attached
     return new Response(
       JSON.stringify({
         entries: [
@@ -34,13 +34,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
             character_skin: 'alex',
             message: 'The pixel HUD and biome switcher are incredible. Super clean layout!',
             created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
-          },
-          {
-            id: 'seed-3',
-            author_name: 'Steve the Miner',
-            character_skin: 'steve',
-            message: 'Found diamonds in the interactive block. Great sound effects!',
-            created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
           },
         ],
         source: 'local-fallback',
@@ -73,40 +66,54 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 // POST: Sign the guestbook
 export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
+
+  if (!checkPayloadSize(request, 8 * 1024)) {
+    return new Response(
+      JSON.stringify({ error: 'Payload size limit exceeded' }),
+      { status: 413, headers: corsHeaders }
+    );
+  }
+
+  // Rate limiting: max 5 signs per 10 minutes per IP
+  const rateCheck = checkRateLimit(clientIp, 'guestbook_post', 5, 600);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: `You are posting signs too quickly. Please wait ${rateCheck.retryAfter}s.` }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': String(rateCheck.retryAfter) } }
+    );
+  }
+
   try {
-    const { request, env } = context;
     const body = (await request.json()) as Partial<GuestbookPayload>;
 
-    const author_name = (body.author_name || '').trim();
-    const rawSkin = (body.character_skin || 'steve').toLowerCase().trim();
+    // Honeypot check
+    if (body._gotcha && body._gotcha.trim().length > 0) {
+      return new Response(
+        JSON.stringify({ success: true, message: 'Signpost placed.' }),
+        { status: 200, headers: corsHeaders }
+      );
+    }
+
+    const author_name = sanitizeText(body.author_name, 2, 30);
+    const message = sanitizeText(body.message, 3, 180);
+
+    const rawSkin = typeof body.character_skin === 'string' ? body.character_skin.toLowerCase().trim() : 'steve';
     const allowedSkins = ['steve', 'alex', 'knight', 'creeper', 'enderman'];
     const character_skin = allowedSkins.includes(rawSkin) ? rawSkin : 'steve';
-    const message = (body.message || '').trim();
 
-    if (!author_name || author_name.length < 2) {
+    if (!author_name) {
       return new Response(
-        JSON.stringify({ error: 'Please enter a name or gamer tag (at least 2 characters).' }),
+        JSON.stringify({ error: 'Author name must be between 2 and 30 characters.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    if (author_name.length > 30) {
+    if (!message) {
       return new Response(
-        JSON.stringify({ error: 'Name must not exceed 30 characters.' }),
-        { status: 400, headers: corsHeaders }
-      );
-    }
-
-    if (!message || message.length < 3) {
-      return new Response(
-        JSON.stringify({ error: 'Sign message must be at least 3 characters.' }),
-        { status: 400, headers: corsHeaders }
-      );
-    }
-
-    if (message.length > 180) {
-      return new Response(
-        JSON.stringify({ error: 'Sign message must be within 180 characters.' }),
+        JSON.stringify({ error: 'Sign message must be between 3 and 180 characters.' }),
         { status: 400, headers: corsHeaders }
       );
     }

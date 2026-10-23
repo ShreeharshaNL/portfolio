@@ -1,39 +1,34 @@
 import type { Env } from '../types';
+import { getCorsHeaders, handleOptions, verifyAdminAuth, checkRateLimit } from '../security';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Content-Type': 'application/json',
+export const onRequestOptions: PagesFunction<Env> = async (context) => {
+  return handleOptions(context.request);
 };
 
-export const onRequestOptions: PagesFunction<Env> = async () => {
-  return new Response(null, { headers: corsHeaders });
-};
-
-const verifyAdmin = (request: Request, env: Env) => {
-  const defaultSecret = 'shnl2005';
-  const adminSecret = env.ADMIN_SECRET || defaultSecret;
-  const headerSecret = request.headers.get('Authorization')?.replace('Bearer ', '') || '';
-  const url = new URL(request.url);
-  const paramSecret = url.searchParams.get('secret') || '';
-
-  return headerSecret === adminSecret || paramSecret === adminSecret;
-};
-
-// GET: Load admin dashboard data (Messages, Guestbook moderation, Analytics with Theme Popularity)
+// GET: Load admin dashboard data (Messages, Guestbook moderation, Analytics)
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
 
-  if (!verifyAdmin(request, env)) {
-    return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Admin Password' }), {
-      status: 401,
-      headers: corsHeaders,
-    });
+  // Rate limit admin attempts: max 20 per minute per IP
+  const rateCheck = checkRateLimit(clientIp, 'admin_get', 20, 60);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: `Too many requests. Please wait ${rateCheck.retryAfter}s.` }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': String(rateCheck.retryAfter) } }
+    );
+  }
+
+  const auth = await verifyAdminAuth(request, env, 'minecraft');
+  if (!auth.authorized) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized: Invalid Admin Credentials' }),
+      { status: 401, headers: corsHeaders }
+    );
   }
 
   const db = env.DB || (env as any).portfolio_db;
-
   if (!db) {
     return new Response(
       JSON.stringify({
@@ -43,14 +38,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
           totalViews: 0,
           biomeSwitches: 0,
           projectClicks: 0,
-          themeStats: [
-            { theme: 'overworld-night', count: 12 },
-            { theme: 'cherry-grove', count: 8 },
-            { theme: 'overworld-day', count: 6 },
-            { theme: 'nether', count: 4 },
-            { theme: 'the-end', count: 3 },
-            { theme: 'snowy-tundra', count: 2 },
-          ],
+          themeStats: [],
           projectStats: [],
         },
         source: 'local-fallback',
@@ -80,7 +68,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       `SELECT COUNT(*) as count FROM analytics_events WHERE event_type = 'project_click'`
     ).first<{ count: number }>();
 
-    // Detailed Theme / Biome Popularity Ranking
     const themeRanking = await db.prepare(
       `SELECT event_value as theme, COUNT(*) as count 
        FROM analytics_events 
@@ -89,7 +76,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
        ORDER BY count DESC`
     ).all<{ theme: string; count: number }>();
 
-    // Top Clicked Projects
     const projectRanking = await db.prepare(
       `SELECT event_value as project, COUNT(*) as count 
        FROM analytics_events 
@@ -114,37 +100,57 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       { status: 200, headers: corsHeaders }
     );
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: 'Failed to retrieve admin data' }), {
-      status: 500,
-      headers: corsHeaders,
-    });
+    console.error('Admin GET error:', err);
+    return new Response(
+      JSON.stringify({ error: 'Failed to retrieve administrative data' }),
+      { status: 500, headers: corsHeaders }
+    );
   }
 };
 
 // POST: Execute admin moderation actions
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
+  const corsHeaders = getCorsHeaders(request);
+  const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
 
-  if (!verifyAdmin(request, env)) {
-    return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Admin PIN' }), {
-      status: 401,
-      headers: corsHeaders,
-    });
+  const rateCheck = checkRateLimit(clientIp, 'admin_post', 30, 60);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: `Too many requests. Please wait ${rateCheck.retryAfter}s.` }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': String(rateCheck.retryAfter) } }
+    );
+  }
+
+  const auth = await verifyAdminAuth(request, env, 'minecraft');
+  if (!auth.authorized) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized: Invalid Admin Credentials' }),
+      { status: 401, headers: corsHeaders }
+    );
   }
 
   const db = env.DB || (env as any).portfolio_db;
   if (!db) {
-    return new Response(JSON.stringify({ success: true, message: 'Simulated admin action in local mode' }), {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(
+      JSON.stringify({ success: true, message: 'Action registered (local fallback mode)' }),
+      { status: 200, headers: corsHeaders }
+    );
   }
 
   try {
     const body = (await request.json()) as { action?: string; id?: string };
     const { action, id } = body;
 
-    if (action === 'delete_message' && id) {
+    // Strict validation of action and id format
+    if (!action || !id || typeof id !== 'string' || id.length > 64) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid moderation payload' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    if (action === 'delete_message') {
       await db.prepare(`DELETE FROM contact_messages WHERE id = ?`).bind(id).run();
       return new Response(JSON.stringify({ success: true, message: 'Message deleted' }), {
         status: 200,
@@ -152,7 +158,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    if (action === 'delete_guestbook' && id) {
+    if (action === 'delete_guestbook') {
       await db.prepare(`DELETE FROM guestbook_entries WHERE id = ?`).bind(id).run();
       return new Response(JSON.stringify({ success: true, message: 'Guestbook entry deleted' }), {
         status: 200,
@@ -160,7 +166,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    if (action === 'toggle_guestbook' && id) {
+    if (action === 'toggle_guestbook') {
       await db.prepare(`UPDATE guestbook_entries SET is_approved = 1 - is_approved WHERE id = ?`).bind(id).run();
       return new Response(JSON.stringify({ success: true, message: 'Guestbook approval toggled' }), {
         status: 200,
@@ -168,14 +174,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       });
     }
 
-    return new Response(JSON.stringify({ error: 'Unknown admin action' }), {
-      status: 400,
-      headers: corsHeaders,
-    });
+    return new Response(
+      JSON.stringify({ error: 'Unknown moderation action' }),
+      { status: 400, headers: corsHeaders }
+    );
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: 'Admin action failed' }), {
-      status: 500,
-      headers: corsHeaders,
-    });
+    console.error('Admin POST error:', err);
+    return new Response(
+      JSON.stringify({ error: 'Admin action failed' }),
+      { status: 500, headers: corsHeaders }
+    );
   }
 };
