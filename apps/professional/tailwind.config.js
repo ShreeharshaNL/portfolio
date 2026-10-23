@@ -8,6 +8,18 @@ export default {
   theme: {
     extend: {
       colors: {
+        paper: {
+          light: '#ebebea',
+          dark: '#0c0d12',
+        },
+        ink: {
+          light: '#111111',
+          dark: '#f8fafc',
+        },
+        accent: {
+          DEFAULT: '#5fb57a',
+          hover: '#4da368',
+        },
         brand: {
           50: '#eef2ff',
           100: '#e0e7ff',
@@ -23,6 +35,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+        display: ['"Archivo Black"', '"Arial Black"', 'Helvetica', 'Arial', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
     },

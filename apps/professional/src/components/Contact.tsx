@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  Mail, 
   Send, 
   Copy, 
   Check, 
@@ -98,71 +97,77 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 border-t border-slate-200/80 dark:border-slate-800/80 bg-white/50 dark:bg-[#0b0e14]/50">
+    <section id="contact" className="py-24 border-t-2 border-[#111111]/15 dark:border-white/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-mono text-xs font-semibold tracking-wider uppercase mb-2">
-            <Mail className="w-3.5 h-3.5" />
-            <span>Get In Touch</span>
+        <div className="max-w-3xl mb-14">
+          <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold mb-4 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
+            <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-0.5 font-black">05</span>
+            <span className="px-3 py-0.5 text-[#111111] dark:text-white uppercase tracking-wider">Contact</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-[#111111] dark:text-white uppercase leading-[1.08]">
             Let's discuss opportunities or collaborations.
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-base text-[#111111]/75 dark:text-slate-400">
             Open for software engineering internships, technical collaborations, and full-stack projects. Feel free to reach out via the form below or directly through email.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Direct Communication Details (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             
-            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#10141e] shadow-sm space-y-5">
+            <div className="card-editorial p-6 sm:p-8 space-y-6">
               
-              <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+              <h3 className="font-display text-lg font-black text-[#111111] dark:text-white uppercase">
                 Contact Information
               </h3>
 
               {/* Email item */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-mono uppercase text-slate-400">Direct Email</span>
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60">
-                  <span className="text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 truncate">
+              <div className="space-y-2">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  Direct Email
+                </span>
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#ebebea] dark:bg-[#1a1d29] border-2 border-[#111111] dark:border-white/20 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
+                  <span className="text-xs sm:text-sm font-mono font-bold text-[#111111] dark:text-slate-200 truncate">
                     {personalInfo.social.email}
                   </span>
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className="ml-2 p-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus-ring"
+                    className="ml-2 p-1.5 rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[1px_1px_0px_0px_#111111] hover:shadow-[2px_2px_0px_0px_#5fb57a] transition-all focus-ring"
                     title="Copy email to clipboard"
                     aria-label="Copy email address"
                   >
-                    {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-4 h-4 text-[#5fb57a]" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
               {/* Location */}
               <div className="space-y-1">
-                <span className="text-xs font-mono uppercase text-slate-400">Location</span>
-                <p className="text-sm text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
-                  <MapPin className="w-4 h-4 text-slate-400" />
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  Location
+                </span>
+                <p className="text-sm font-bold text-[#111111] dark:text-slate-300 flex items-center space-x-1.5">
+                  <MapPin className="w-4 h-4 text-[#5fb57a]" />
                   <span>{personalInfo.location}</span>
                 </p>
               </div>
 
               {/* Social Profiles */}
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
-                <span className="text-xs font-mono uppercase text-slate-400">Professional Profiles</span>
-                <div className="flex items-center space-x-3 pt-1">
+              <div className="pt-4 border-t-2 border-[#111111]/10 dark:border-white/10 space-y-3">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400 block">
+                  Professional Profiles
+                </span>
+                <div className="flex items-center space-x-3">
                   <a
                     href={personalInfo.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-slate-900 dark:hover:border-white text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors focus-ring"
+                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wide border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] hover:shadow-[3px_3px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring"
                   >
                     <GithubIcon className="w-4 h-4" />
                     <span>GitHub</span>
@@ -171,9 +176,9 @@ export const Contact: React.FC = () => {
                     href={personalInfo.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 hover:border-indigo-600 dark:hover:border-indigo-400 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors focus-ring"
+                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wide border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] hover:shadow-[3px_3px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring"
                   >
-                    <LinkedinIcon className="w-4 h-4 text-indigo-500" />
+                    <LinkedinIcon className="w-4 h-4 text-[#5fb57a]" />
                     <span>LinkedIn</span>
                   </a>
                 </div>
@@ -182,8 +187,8 @@ export const Contact: React.FC = () => {
             </div>
 
             {/* Quick availability pill */}
-            <div className="p-4 rounded-xl border border-emerald-200/60 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-950/20 text-xs text-emerald-800 dark:text-emerald-300 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a]/15 text-[#111111] dark:text-slate-200 text-xs font-medium flex items-start space-x-3 shadow-[3px_3px_0px_0px_#5fb57a]">
+              <CheckCircle2 className="w-4 h-4 text-[#5fb57a] shrink-0 mt-0.5" />
               <span>Currently seeking 2025/2026 software engineering internships and collaborative full-stack projects.</span>
             </div>
 
@@ -191,38 +196,38 @@ export const Contact: React.FC = () => {
 
           {/* Interactive Contact Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#10141e] shadow-sm">
+            <div className="card-editorial p-6 sm:p-8">
               
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-5">
+              <h3 className="font-display text-xl font-black text-[#111111] dark:text-white uppercase mb-6">
                 Send a Message
               </h3>
 
               {/* Status Banner */}
               {status.type && (
                 <div
-                  className={`mb-6 p-4 rounded-xl flex items-start space-x-3 text-sm ${
+                  className={`mb-6 p-4 rounded-xl border-2 border-[#111111] flex items-start space-x-3 text-sm shadow-[3px_3px_0px_0px_#111111] ${
                     status.type === 'success'
-                      ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
-                      : 'bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300'
+                      ? 'bg-[#5fb57a]/20 text-[#111111] dark:text-white'
+                      : 'bg-rose-500/20 text-rose-900 dark:text-rose-200'
                   }`}
                   role="alert"
                 >
                   {status.type === 'success' ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#5fb57a] shrink-0 mt-0.5" />
                   ) : (
                     <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
                   )}
-                  <div className="flex-1">{status.message}</div>
+                  <div className="flex-1 font-semibold">{status.message}</div>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name */}
                   <div className="space-y-1.5">
-                    <label htmlFor="name" className="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400">
-                      Your Name <span className="text-rose-500">*</span>
+                    <label htmlFor="name" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                      Your Name <span className="text-[#5fb57a]">*</span>
                     </label>
                     <input
                       id="name"
@@ -231,14 +236,14 @@ export const Contact: React.FC = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Jane Doe"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
                     />
                   </div>
 
                   {/* Email */}
                   <div className="space-y-1.5">
-                    <label htmlFor="email" className="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400">
-                      Your Email <span className="text-rose-500">*</span>
+                    <label htmlFor="email" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                      Your Email <span className="text-[#5fb57a]">*</span>
                     </label>
                     <input
                       id="email"
@@ -247,14 +252,14 @@ export const Contact: React.FC = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="jane@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Subject */}
                 <div className="space-y-1.5">
-                  <label htmlFor="subject" className="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400">
+                  <label htmlFor="subject" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
                     Subject (Optional)
                   </label>
                   <input
@@ -263,14 +268,14 @@ export const Contact: React.FC = () => {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="e.g. Software Internship Opportunity"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
                   />
                 </div>
 
                 {/* Message */}
                 <div className="space-y-1.5">
-                  <label htmlFor="message" className="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400">
-                    Message <span className="text-rose-500">*</span>
+                  <label htmlFor="message" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                    Message <span className="text-[#5fb57a]">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -279,16 +284,16 @@ export const Contact: React.FC = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Briefly describe your project, role, or inquiry..."
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors resize-y"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all resize-y"
                   />
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-2 flex items-center justify-between">
+                <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
+                    className="inline-flex items-center justify-center space-x-2 px-7 py-3 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-xs uppercase tracking-wider border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
                   >
                     {loading ? (
                       <>
@@ -305,9 +310,9 @@ export const Contact: React.FC = () => {
 
                   <a
                     href={`mailto:${personalInfo.social.email}`}
-                    className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 underline"
+                    className="text-xs font-mono font-bold text-[#111111]/70 dark:text-slate-400 hover:text-[#111111] dark:hover:text-white underline self-center sm:self-auto"
                   >
-                    Open Mail Client
+                    Open Mail Client ↗
                   </a>
                 </div>
 

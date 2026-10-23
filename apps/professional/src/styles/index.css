@@ -3,9 +3,34 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --mph-paper: #ebebea;
+    --mph-ink: #111111;
+    --mph-accent: #5fb57a;
+    --mph-surface: #ffffff;
+    --mph-subtle: #dededb;
+  }
+
+  .dark {
+    --mph-paper: #0b0c10;
+    --mph-ink: #f8fafc;
+    --mph-accent: #5fb57a;
+    --mph-surface: #15171f;
+    --mph-subtle: #242735;
+  }
+
   html {
     scroll-behavior: smooth;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: var(--mph-paper);
+    color: var(--mph-ink);
+  }
+
+  body {
+    background-color: var(--mph-paper);
+    color: var(--mph-ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Custom subtle scrollbar */
@@ -38,6 +63,27 @@
 
 @layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5fb57a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900;
+  }
+
+  /* Tactile Editorial Theme Utilities */
+  .card-editorial {
+    @apply bg-white dark:bg-[#15171f] border-2 border-[#111111] dark:border-white/20 rounded-2xl shadow-[4px_4px_0px_0px_#111111] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.12)] transition-all duration-200;
+  }
+
+  .card-editorial-hover {
+    @apply hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_#5fb57a];
+  }
+
+  .btn-editorial-primary {
+    @apply inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-sm border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 active:shadow-[1px_1px_0px_0px_#111111] transition-all;
+  }
+
+  .btn-editorial-secondary {
+    @apply inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-white dark:bg-[#15171f] text-[#111111] dark:text-white font-extrabold text-sm border-2 border-[#111111] dark:border-white/25 shadow-[3px_3px_0px_0px_#111111] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#5fb57a] active:translate-x-0 active:translate-y-0 transition-all;
+  }
+
+  .pill-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 border-[#111111] dark:border-white/30 text-xs font-mono font-bold tracking-wider uppercase bg-white dark:bg-[#15171f] shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)];
   }
 }

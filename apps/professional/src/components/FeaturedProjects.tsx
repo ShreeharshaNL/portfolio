@@ -1,23 +1,22 @@
 import React from 'react';
-import { FolderGit2 } from 'lucide-react';
 import { projectsData } from '../config/portfolio';
 import { ProjectCard } from './ProjectCard';
 
 export const FeaturedProjects: React.FC = () => {
   return (
-    <section id="projects" className="py-20 border-t border-slate-200/80 dark:border-slate-800/80">
+    <section id="projects" className="py-24 border-t-2 border-[#111111]/15 dark:border-white/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-mono text-xs font-semibold tracking-wider uppercase mb-2">
-            <FolderGit2 className="w-3.5 h-3.5" />
-            <span>Featured Projects</span>
+        <div className="max-w-3xl mb-14">
+          <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold mb-4 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
+            <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-0.5 font-black">02</span>
+            <span className="px-3 py-0.5 text-[#111111] dark:text-white uppercase tracking-wider">Projects</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-[#111111] dark:text-white uppercase leading-[1.08]">
             Practical software built for utility and impact.
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-base text-[#111111]/75 dark:text-slate-400">
             Selected engineering projects demonstrating full-stack architecture, computer vision OCR, and domain-specific query pipelines.
           </p>
         </div>
