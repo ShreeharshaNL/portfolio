@@ -50,10 +50,6 @@ export const Hero: React.FC = () => {
         accent="#5fb57a"
         paper={isDark ? "#0b0c10" : "#ebebea"}
         ink={isDark ? "#f8fafc" : "#111111"}
-        skin="#f7cfb0"
-        beanie={isDark ? "#1e1e24" : "#1d1d1f"}
-        shirt={isDark ? "#14151b" : "#18181a"}
-        tag="#b98158"
       />
     </section>
   );
