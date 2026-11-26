@@ -98,7 +98,7 @@ export const Contact: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="font-mono text-xs text-[#1d7eb6] dark:text-[#38bdf8] uppercase tracking-wider font-semibold mb-2">
+          <div className="font-mono text-xs text-[#e07a5f] dark:text-[#f49d85] uppercase tracking-wider font-semibold mb-2">
             05 / Contact
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
@@ -135,7 +135,7 @@ export const Contact: React.FC = () => {
                     title="Copy email address"
                     aria-label="Copy email address"
                   >
-                    {copied ? <Check className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied ? <Check className="w-3.5 h-3.5 text-[#e07a5f] dark:text-[#f49d85]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export const Contact: React.FC = () => {
                   Location
                 </span>
                 <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 flex items-center space-x-1.5 font-sans">
-                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />
                   <span>{personalInfo.location}</span>
                 </p>
               </div>
@@ -161,7 +161,7 @@ export const Contact: React.FC = () => {
                     href={personalInfo.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors focus-ring rounded"
+                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors focus-ring rounded"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
                     <span>GitHub</span>
@@ -171,7 +171,7 @@ export const Contact: React.FC = () => {
                     href={personalInfo.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors focus-ring rounded"
+                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors focus-ring rounded"
                   >
                     <LinkedinIcon className="w-3.5 h-3.5" />
                     <span>LinkedIn</span>
@@ -183,8 +183,8 @@ export const Contact: React.FC = () => {
 
             {/* Availability Note */}
             <div className="p-4 rounded-xl glass-card text-xs text-slate-600 dark:text-slate-400 flex items-start space-x-2.5 font-sans">
-              <CheckCircle2 className="w-4 h-4 text-[#1d7eb6] dark:text-[#38bdf8] shrink-0 mt-0.5" />
-              <span>Available for 2025/2026 software engineering internships and collaborative technical projects.</span>
+              <CheckCircle2 className="w-4 h-4 text-[#e07a5f] dark:text-[#f49d85] shrink-0 mt-0.5" />
+              <span>Available for software engineering internships, full-time engineering roles, and technical collaborations (Class of 2027).</span>
             </div>
 
           </div>
@@ -279,7 +279,7 @@ export const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium shadow-sm transition-colors disabled:opacity-50 focus-ring"
+                  className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#e07a5f] hover:bg-[#cf6b50] text-white text-xs font-medium shadow-md shadow-[#e07a5f]/20 transition-colors disabled:opacity-50 focus-ring"
                 >
                   {loading ? (
                     <>
@@ -296,7 +296,7 @@ export const Contact: React.FC = () => {
 
                 <a
                   href={`mailto:${personalInfo.social.email}`}
-                  className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
+                  className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
                 >
                   Direct Email ↗
                 </a>

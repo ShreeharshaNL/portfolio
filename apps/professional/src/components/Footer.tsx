@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
             href={crossLinkConfig.minecraftUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] dark:hover:border-[#38bdf8] dark:hover:text-[#38bdf8] bg-white/40 dark:bg-slate-900/40 transition-colors focus-ring shrink-0"
+            className="group inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 border border-[#e8e0d5] dark:border-[#222d3d] hover:border-[#e07a5f] hover:text-[#e07a5f] dark:hover:border-[#f49d85] dark:hover:text-[#f49d85] bg-white/40 dark:bg-[#161d28]/40 transition-colors focus-ring shrink-0"
           >
             <span>Visit Minecraft Edition</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-600 dark:text-slate-400 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
+              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
             >
               GitHub
             </a>
@@ -62,13 +62,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-600 dark:text-slate-400 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
+              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
             >
               LinkedIn
             </a>
             <a
               href={`mailto:${personalInfo.social.email}`}
-              className="text-slate-600 dark:text-slate-400 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
+              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
             >
               Email
             </a>
@@ -85,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
         </div>
 
         {/* Colophon & Admin link */}
-        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-slate-400 dark:text-slate-500">
+        <div className="pt-4 border-t border-[#e8e0d5] dark:border-[#222d3d] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-slate-400 dark:text-slate-500">
           <div>
             © {currentYear} Shreeharsha N. L. · React & Tailwind CSS
           </div>
@@ -96,13 +96,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               <button
                 type="button"
                 onClick={onNavigateToAdmin}
-                className="hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
+                className="hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
                 title="Open Operator Dashboard"
               >
                 /admin
               </button>
             ) : (
-              <a href="/admin" className="hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors">
+              <a href="/admin" className="hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors">
                 /admin
               </a>
             )}

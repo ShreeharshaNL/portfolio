@@ -26,6 +26,23 @@ export const personalInfo: PersonalInfo = {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: "legallens",
+    title: "LegalLens",
+    subdomain: "legallens.shreeharsha.online",
+    category: "AI & Legal Technology",
+    description: "AI legal document analysis and clause breakdown assistant. Maps natural-language legal queries to relevant legal domains, issues, and statutory sections using deterministic classification and similarity retrieval.",
+    highlights: [
+      "Deterministic domain classification paired with cosine similarity matching",
+      "Multilingual query pipeline evaluated across English, Hindi, and Kannada",
+      "Structured statutory clause breakdown and legal awareness guidance",
+    ],
+    technologies: ["Python", "FastAPI", "NLP", "Cosine Similarity", "React"],
+    projectUrl: "https://legallens.shreeharsha.online",
+    demoUrl: "https://legallens.shreeharsha.online",
+    githubUrl: "https://github.com/yogeshs1717/hybrid-ai-powered-legal-awareness-system",
+    image: "/images/projects/legallens.png",
+  },
+  {
     id: "labelwise",
     title: "LabelWise",
     subdomain: "labelwise.shreeharsha.online",
@@ -42,23 +59,6 @@ export const projectsData: ProjectItem[] = [
     demoUrl: "https://labelwise.shreeharsha.online",
     githubUrl: "https://github.com/ShreeharshaNL",
     image: "/images/projects/labelwise.png",
-  },
-  {
-    id: "legallens",
-    title: "LegalLens",
-    subdomain: "legallens.shreeharsha.online",
-    category: "AI & Legal Technology",
-    description: "AI legal document analysis and clause breakdown assistant. Maps natural-language legal queries to relevant legal domains, issues, and statutory sections using deterministic classification and similarity retrieval.",
-    highlights: [
-      "Deterministic domain classification paired with cosine similarity matching",
-      "Multilingual query pipeline evaluated across English, Hindi, and Kannada",
-      "Structured statutory clause breakdown and legal awareness guidance",
-    ],
-    technologies: ["Python", "FastAPI", "NLP", "Cosine Similarity", "React"],
-    projectUrl: "https://legallens.shreeharsha.online",
-    demoUrl: "https://legallens.shreeharsha.online",
-    githubUrl: "https://github.com/yogeshs1717/hybrid-ai-powered-legal-awareness-system",
-    image: "/images/projects/legallens.png",
   },
   {
     id: "scfp",
@@ -92,6 +92,7 @@ export const projectsData: ProjectItem[] = [
     projectUrl: "https://post-your-cat.shreeharsha.online",
     demoUrl: "https://post-your-cat.shreeharsha.online",
     githubUrl: "https://github.com/ShreeharshaNL",
+    image: "/images/projects/post-your-cat.jpg",
   },
   {
     id: "blog",
@@ -108,6 +109,7 @@ export const projectsData: ProjectItem[] = [
     projectUrl: "https://blog.shreeharsha.online",
     demoUrl: "https://blog.shreeharsha.online",
     githubUrl: "https://github.com/ShreeharshaNL",
+    image: "/images/projects/blog.jpg",
   },
 ];
 

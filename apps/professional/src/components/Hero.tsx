@@ -21,13 +21,13 @@ export const Hero: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>Available for Internships · Class of 2027</span>
+              <span>Available for Internships & Full-Time · Class of 2027</span>
             </div>
 
             {/* Primary Headline */}
             <div className="space-y-2">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.1]">
-                Hi, I'm <span className="text-[#1d7eb6] dark:text-[#38bdf8]">Shreeharsha</span>.
+                Hi, I'm <span className="text-[#e07a5f] dark:text-[#f49d85]">Shreeharsha</span>.
               </h1>
               <p className="text-xl sm:text-2xl font-normal text-slate-700 dark:text-slate-300 tracking-tight leading-snug">
                 Undergraduate engineer building functional web software, applied machine learning systems, and edge infrastructure.
@@ -43,7 +43,7 @@ export const Hero: React.FC = () => {
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
-                className="group inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium shadow-sm transition-all focus-ring"
+                className="group inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#e07a5f] hover:bg-[#cf6b50] text-white text-xs font-medium shadow-md shadow-[#e07a5f]/20 transition-all focus-ring"
               >
                 <span>View Projects</span>
                 <ArrowDown className="w-3.5 h-3.5" />
@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
 
               <a
                 href="#contact"
-                className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-600 bg-white/60 dark:bg-slate-900/40 text-xs font-medium transition-all focus-ring"
+                className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg border border-[#e8e0d5] dark:border-[#222d3d] text-slate-800 dark:text-slate-200 hover:border-[#e07a5f] dark:hover:border-[#f49d85] bg-white/70 dark:bg-[#161d28]/70 text-xs font-medium transition-all focus-ring"
               >
                 <Mail className="w-3.5 h-3.5 text-slate-500" />
                 <span>Get In Touch</span>
@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center space-x-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] dark:hover:border-[#38bdf8] dark:hover:text-[#38bdf8] text-slate-800 dark:text-slate-200 text-xs font-medium transition-all focus-ring"
+                className="group inline-flex items-center space-x-1 px-4 py-2.5 rounded-lg border border-[#e8e0d5] dark:border-[#222d3d] hover:border-[#e07a5f] hover:text-[#e07a5f] dark:hover:border-[#f49d85] dark:hover:text-[#f49d85] text-slate-800 dark:text-slate-200 text-xs font-medium transition-all focus-ring"
               >
                 <span>Resume</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -73,7 +73,7 @@ export const Hero: React.FC = () => {
                   href={personalInfo.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-ring"
+                  className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-[#f0e7db]/50 dark:hover:bg-[#1a2330]/50 transition-colors focus-ring"
                   aria-label="GitHub Profile"
                 >
                   <GithubIcon className="w-4 h-4" />
@@ -82,7 +82,7 @@ export const Hero: React.FC = () => {
                   href={personalInfo.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-slate-500 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-ring"
+                  className="p-2 rounded-lg text-slate-500 hover:text-[#e07a5f] dark:hover:text-[#f49d85] hover:bg-[#f0e7db]/50 dark:hover:bg-[#1a2330]/50 transition-colors focus-ring"
                   aria-label="LinkedIn Profile"
                 >
                   <LinkedinIcon className="w-4 h-4" />
@@ -93,11 +93,11 @@ export const Hero: React.FC = () => {
             {/* Quick Metadata Strip */}
             <div className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs font-mono text-slate-500 dark:text-slate-400">
               <span className="flex items-center space-x-1.5">
-                <GraduationCap className="w-3.5 h-3.5 text-[#1d7eb6]" />
+                <GraduationCap className="w-3.5 h-3.5 text-[#e07a5f] dark:text-[#f49d85]" />
                 <span>NIE Mysuru · CGPA {educationData.cgpa}</span>
               </span>
               <span className="flex items-center space-x-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#1d7eb6]" />
+                <MapPin className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />
                 <span>{personalInfo.location}</span>
               </span>
             </div>
@@ -106,17 +106,17 @@ export const Hero: React.FC = () => {
 
           {/* Right Column: Dynamic Floating Tech Profile Card with Subtle Motion */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <div className="w-full max-w-sm rounded-2xl glass-card p-6 space-y-5 animate-float border-slate-200 dark:border-slate-800/80 shadow-lg shadow-slate-900/5 dark:shadow-none">
+            <div className="w-full max-w-sm rounded-2xl glass-card p-6 space-y-5 animate-float border-[#e8e0d5] dark:border-[#222d3d] shadow-lg shadow-slate-900/5 dark:shadow-none">
               
               {/* Header with live telemetry badge */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800/80">
+              <div className="flex items-center justify-between pb-3.5 border-b border-[#e8e0d5] dark:border-[#222d3d]">
                 <div className="flex items-center space-x-2">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block"></span>
                   <span className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-700 dark:text-slate-300">
                     System Telemetry
                   </span>
                 </div>
-                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-[#1d7eb6]/10 text-[#1d7eb6] dark:text-[#38bdf8] font-medium border border-[#1d7eb6]/20">
+                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-[#e07a5f]/10 text-[#e07a5f] dark:text-[#f49d85] font-medium border border-[#e07a5f]/20">
                   5 Subdomains Live
                 </span>
               </div>
@@ -126,7 +126,7 @@ export const Hero: React.FC = () => {
                 
                 {/* Academic */}
                 <div className="flex items-start space-x-3">
-                  <div className="p-2 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-[#1d7eb6] dark:text-[#38bdf8] shrink-0">
+                  <div className="p-2 rounded-lg bg-[#4a7b87]/10 text-[#4a7b87] dark:text-[#7ec3d4] shrink-0">
                     <GraduationCap className="w-4 h-4" />
                   </div>
                   <div>
@@ -144,7 +144,7 @@ export const Hero: React.FC = () => {
 
                 {/* Major Achievement */}
                 <div className="flex items-start space-x-3">
-                  <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 shrink-0">
+                  <div className="p-2 rounded-lg bg-[#e07a5f]/10 text-[#e07a5f] dark:text-[#f49d85] shrink-0">
                     <Award className="w-4 h-4" />
                   </div>
                   <div>
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
 
                 {/* Stack */}
                 <div className="flex items-start space-x-3">
-                  <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 shrink-0">
+                  <div className="p-2 rounded-lg bg-[#4a7b87]/10 text-[#4a7b87] dark:text-[#7ec3d4] shrink-0">
                     <Code2 className="w-4 h-4" />
                   </div>
                   <div>
@@ -177,7 +177,7 @@ export const Hero: React.FC = () => {
 
                 {/* Root Domain */}
                 <div className="flex items-start space-x-3">
-                  <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 shrink-0">
+                  <div className="p-2 rounded-lg bg-[#968ea2]/15 text-[#968ea2] dark:text-[#b8b2c4] shrink-0">
                     <Globe className="w-4 h-4" />
                   </div>
                   <div>
@@ -186,7 +186,7 @@ export const Hero: React.FC = () => {
                     </h3>
                     <a
                       href="https://shreeharsha.online"
-                      className="text-xs font-mono text-[#1d7eb6] dark:text-[#38bdf8] hover:underline flex items-center gap-1 mt-0.5"
+                      className="text-xs font-mono text-[#e07a5f] dark:text-[#f49d85] hover:underline flex items-center gap-1 mt-0.5"
                     >
                       <span>shreeharsha.online</span>
                       <ArrowUpRight className="w-3 h-3" />
@@ -197,14 +197,14 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Card Footer */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500">
+              <div className="pt-3 border-t border-[#e8e0d5] dark:border-[#222d3d] flex items-center justify-between text-xs font-mono text-slate-500">
                 <span className="flex items-center space-x-1 text-slate-600 dark:text-slate-400">
-                  <Sparkles className="w-3.5 h-3.5 text-[#1d7eb6]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#e07a5f] dark:text-[#f49d85]" />
                   <span>Engineering Portfolio</span>
                 </span>
                 <a
                   href="#contact"
-                  className="text-[#1d7eb6] dark:text-[#38bdf8] hover:underline font-semibold"
+                  className="text-[#e07a5f] dark:text-[#f49d85] hover:underline font-semibold"
                 >
                   Connect →
                 </a>

@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? 'bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/80 shadow-sm'
+          ? 'bg-[#faf7f2]/90 dark:bg-[#111620]/90 backdrop-blur-md border-b border-[#e8e0d5]/80 dark:border-[#222d3d]/80 shadow-sm'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
@@ -71,7 +71,7 @@ export const Navbar: React.FC = () => {
             className="group flex items-center space-x-2 rounded-md focus-ring"
             aria-label="Shreeharsha N. L. homepage"
           >
-            <span className="font-semibold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-zinc-100 group-hover:text-[#1d7eb6] dark:group-hover:text-[#1d7eb6] transition-colors">
+            <span className="font-semibold text-sm sm:text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-[#e07a5f] dark:group-hover:text-[#f49d85] transition-colors">
               Shreeharsha N. L.
             </span>
           </a>
@@ -86,8 +86,8 @@ export const Navbar: React.FC = () => {
                   href={item.href}
                   className={`px-3 py-1.5 rounded-md text-xs font-medium tracking-tight transition-colors focus-ring ${
                     isActive
-                      ? 'text-[#1d7eb6] dark:text-[#1d7eb6] font-semibold bg-zinc-100/80 dark:bg-zinc-800/60'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/30'
+                      ? 'text-[#e07a5f] dark:text-[#f49d85] font-semibold bg-[#f0e7db]/70 dark:bg-[#1a2330]/70'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-[#f0e7db]/40 dark:hover:bg-[#1a2330]/40'
                   }`}
                 >
                   {item.name}
@@ -105,7 +105,7 @@ export const Navbar: React.FC = () => {
               href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] dark:hover:border-[#1d7eb6] hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring"
+              className="group inline-flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-medium text-slate-800 dark:text-slate-200 border border-[#e8e0d5] dark:border-[#222d3d] hover:border-[#e07a5f] dark:hover:border-[#f49d85] hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors focus-ring"
               aria-label="Open Resume in new tab"
             >
               <span>Resume</span>
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus-ring"
+              className="p-2 rounded-md border border-[#e8e0d5] dark:border-[#222d3d] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-[#f0e7db]/50 dark:hover:bg-[#1a2330]/50 transition-colors focus-ring"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -131,7 +131,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#09090b]/95 backdrop-blur-lg px-4 pt-2 pb-5 space-y-2 animate-in fade-in duration-150">
+        <div className="md:hidden border-b border-[#e8e0d5] dark:border-[#222d3d] bg-[#faf7f2]/95 dark:bg-[#111620]/95 backdrop-blur-lg px-4 pt-2 pb-5 space-y-2 animate-in fade-in duration-150">
           <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
             {navItems.map((item) => (
               <a

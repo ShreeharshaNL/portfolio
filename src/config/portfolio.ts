@@ -28,6 +28,23 @@ export const personalInfo: PersonalInfo = {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: "legallens",
+    title: "LegalLens",
+    subdomain: "legallens.shreeharsha.online",
+    category: "AI & Legal Technology",
+    description: "A hybrid AI system that maps plain-English legal queries to relevant legal domains, issues, and statutory sections using a curated knowledge pipeline.",
+    highlights: [
+      "Rule-based classification & cosine similarity matching",
+      "Multilingual query pipeline tested in English, Hindi & Kannada",
+    ],
+    technologies: ["Python", "Cosine Similarity", "NLP", "React", "FastAPI"],
+    projectUrl: "https://legallens.shreeharsha.online",
+    demoUrl: "https://legallens.shreeharsha.online",
+    githubUrl: "https://github.com/yogeshs1717/hybrid-ai-powered-legal-awareness-system",
+    accentColor: "amber",
+    image: "/images/projects/legallens.png",
+  },
+  {
     id: "labelwise",
     title: "LabelWise",
     subdomain: "labelwise.shreeharsha.online",
@@ -44,22 +61,6 @@ export const projectsData: ProjectItem[] = [
     githubUrl: "https://github.com/ShreeharshaNL",
     accentColor: "emerald",
     image: "/images/projects/labelwise.png",
-  },
-  {
-    id: "legallens",
-    title: "LegalLens",
-    subdomain: "legallens.shreeharsha.online",
-    category: "AI & Legal Technology",
-    description: "A hybrid AI system that maps plain-English legal queries to relevant legal domains, issues, and statutory sections using a curated knowledge pipeline.",
-    highlights: [
-      "Rule-based classification & cosine similarity matching",
-      "Multilingual query pipeline tested in English, Hindi & Kannada",
-    ],
-    technologies: ["Python", "Cosine Similarity", "NLP", "React", "FastAPI"],
-    projectUrl: "https://legallens.shreeharsha.online",
-    githubUrl: "https://github.com/yogeshs1717/hybrid-ai-powered-legal-awareness-system",
-    accentColor: "amber",
-    image: "/images/projects/legallens.png",
   },
   {
     id: "scfp",
@@ -93,7 +94,7 @@ export const projectsData: ProjectItem[] = [
     demoUrl: "https://post-your-cat.shreeharsha.online",
     githubUrl: "https://github.com/ShreeharshaNL",
     accentColor: "purple",
-    image: "/images/projects/freelance.png",
+    image: "/images/projects/post-your-cat.jpg",
   },
   {
     id: "blog",
@@ -110,7 +111,7 @@ export const projectsData: ProjectItem[] = [
     demoUrl: "https://blog.shreeharsha.online",
     githubUrl: "https://github.com/ShreeharshaNL",
     accentColor: "amber",
-    image: "/images/projects/legallens.png",
+    image: "/images/projects/blog.jpg",
   },
 ];
 

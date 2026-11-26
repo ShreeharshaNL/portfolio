@@ -9,7 +9,7 @@ export const Education: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="font-mono text-xs text-[#1d7eb6] dark:text-[#38bdf8] uppercase tracking-wider font-semibold mb-2">
+          <div className="font-mono text-xs text-[#e07a5f] dark:text-[#f49d85] uppercase tracking-wider font-semibold mb-2">
             04 / Education & Honors
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
@@ -25,17 +25,17 @@ export const Education: React.FC = () => {
           {/* Main Education Details (7 cols) */}
           <div className="lg:col-span-7 p-6 sm:p-7 rounded-xl glass-card glass-card-hover space-y-5">
             
-            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[#e8e0d5] dark:border-[#222d3d] pb-4">
               <div>
                 <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center space-x-1.5">
-                  <GraduationCap className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" />
+                  <GraduationCap className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />
                   <span>Undergraduate Degree</span>
                 </span>
                 <h3 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
                   {educationData.institution}
                 </h3>
               </div>
-              <div className="font-mono text-xs font-semibold text-[#1d7eb6] dark:text-[#38bdf8] shrink-0">
+              <div className="font-mono text-xs font-semibold text-[#e07a5f] dark:text-[#f49d85] shrink-0">
                 CGPA: {educationData.cgpa} / 10.0
               </div>
             </div>
@@ -46,11 +46,11 @@ export const Education: React.FC = () => {
               </h4>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-slate-500 dark:text-slate-400">
                 <span className="flex items-center space-x-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />
                   <span>2023 — {educationData.expectedGraduation} (Expected)</span>
                 </span>
                 <span className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />
                   <span>{educationData.location}</span>
                 </span>
               </div>
@@ -63,7 +63,7 @@ export const Education: React.FC = () => {
               <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
                 {educationData.highlights.map((highlight, idx) => (
                   <li key={idx} className="flex items-start space-x-2">
-                    <span className="text-[#1d7eb6] dark:text-[#38bdf8] font-mono select-none">—</span>
+                    <span className="text-[#e07a5f] dark:text-[#f49d85] font-mono select-none">—</span>
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -76,7 +76,7 @@ export const Education: React.FC = () => {
           <div className="lg:col-span-5 p-6 sm:p-7 rounded-xl glass-card glass-card-hover space-y-4">
             
             <div className="flex items-center space-x-2 text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-              <Award className="w-4 h-4 text-[#1d7eb6] dark:text-[#38bdf8]" />
+              <Award className="w-4 h-4 text-[#e07a5f] dark:text-[#f49d85]" />
               <span>Competitive Victory</span>
             </div>
 
@@ -84,7 +84,7 @@ export const Education: React.FC = () => {
               <h3 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
                 {achievementData.title}
               </h3>
-              <p className="text-xs font-mono text-[#1d7eb6] dark:text-[#38bdf8] mt-0.5">
+              <p className="text-xs font-mono text-[#e07a5f] dark:text-[#f49d85] mt-0.5">
                 {achievementData.team} · {achievementData.event}
               </p>
             </div>

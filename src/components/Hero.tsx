@@ -139,12 +139,13 @@ export const Hero: React.FC = () => {
           {personalInfo.social.resumeUrl && (
             <a
               href={personalInfo.social.resumeUrl}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => sound.playClick()}
               className="mc-button px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm space-x-1.5 text-[#fcee4b]"
             >
               <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Résumé</span>
+              <span>Resume</span>
             </a>
           )}
         </div>

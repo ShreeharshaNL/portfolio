@@ -4,17 +4,19 @@
 
 @layer base {
   :root {
-    --canvas: #f8fafc;
-    --ink: #09090b;
-    --accent: #1d7eb6;
-    --border: #e2e8f0;
+    --canvas: #faf7f2;
+    --ink: #18181b;
+    --accent: #e07a5f;
+    --accent-teal: #4a7b87;
+    --border: #e8e0d5;
   }
 
   .dark {
-    --canvas: #08090d;
-    --ink: #fafafa;
-    --accent: #1d7eb6;
-    --border: #1e2230;
+    --canvas: #111620;
+    --ink: #f8fafc;
+    --accent: #f49d85;
+    --accent-teal: #7ec3d4;
+    --border: #222d3d;
   }
 
   html {
@@ -42,52 +44,41 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #d6cdc1;
     border-radius: 9999px;
   }
 
   .dark ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: #232e3d;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #b5a999;
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #36465c;
   }
 }
 
 @layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1d7eb6] focus-visible:ring-offset-1 dark:focus-visible:ring-offset-zinc-950;
+    @apply focus:outline-none focus-visible:ring-1 focus-visible:ring-[#e07a5f] dark:focus-visible:ring-[#f49d85] focus-visible:ring-offset-1 dark:focus-visible:ring-offset-[#111620];
   }
 
-  /* Blueprint Grid Lattice */
+  /* Minimal paper texture & subtle grid */
   .bg-grid-pattern {
     background-size: 32px 32px;
     background-image: 
-      linear-gradient(to right, rgba(100, 116, 139, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(100, 116, 139, 0.08) 1px, transparent 1px);
+      linear-gradient(to right, rgba(80, 60, 45, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(80, 60, 45, 0.04) 1px, transparent 1px);
   }
 
   .dark .bg-grid-pattern {
     background-size: 32px 32px;
     background-image: 
-      linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
-  }
-
-  /* Subtle dot matrix */
-  .bg-dot-pattern {
-    background-size: 24px 24px;
-    background-image: radial-gradient(rgba(100, 116, 139, 0.15) 1px, transparent 1px);
-  }
-
-  .dark .bg-dot-pattern {
-    background-size: 24px 24px;
-    background-image: radial-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+      linear-gradient(to right, rgba(126, 195, 212, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(126, 195, 212, 0.05) 1px, transparent 1px);
   }
 
   /* Mask fades for marquee edges */
@@ -96,12 +87,12 @@
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   }
 
-  /* Glass card surface */
+  /* Papercraft elevation & matte card surface */
   .glass-card {
-    @apply bg-white/70 dark:bg-[#0e121b]/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all;
+    @apply bg-white/85 dark:bg-[#161d28]/85 backdrop-blur-md border border-[#e8e0d5] dark:border-[#222d3d] shadow-[0_4px_20px_-2px_rgba(45,35,30,0.06)] dark:shadow-[0_4px_20px_-2px_rgba(0,0,0,0.35)] transition-all;
   }
 
   .glass-card-hover {
-    @apply hover:border-[#1d7eb6]/60 dark:hover:border-[#1d7eb6]/60 hover:shadow-md hover:shadow-[#1d7eb6]/5;
+    @apply hover:border-[#e07a5f]/60 dark:hover:border-[#f49d85]/60 hover:shadow-[0_8px_28px_-4px_rgba(224,122,95,0.15)] dark:hover:shadow-[0_8px_28px_-4px_rgba(244,157,133,0.15)];
   }
 }

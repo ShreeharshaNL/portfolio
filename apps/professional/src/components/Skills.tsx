@@ -8,7 +8,7 @@ export const Skills: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="font-mono text-xs text-[#1d7eb6] dark:text-[#38bdf8] uppercase tracking-wider font-semibold mb-2">
+          <div className="font-mono text-xs text-[#e07a5f] dark:text-[#f49d85] uppercase tracking-wider font-semibold mb-2">
             03 / Skills
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
