@@ -93,18 +93,18 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-24 border-t border-zinc-200 dark:border-zinc-800">
+    <section id="contact" className="py-20 sm:py-24 border-t border-slate-200/80 dark:border-slate-800/80">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="font-mono text-xs text-[#1d7eb6] uppercase tracking-wider font-semibold mb-2">
+          <div className="font-mono text-xs text-[#1d7eb6] dark:text-[#38bdf8] uppercase tracking-wider font-semibold mb-2">
             05 / Contact
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
             Let's Discuss Opportunities
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
             Open for software engineering internships, technical collaborations, and full-stack projects.
           </p>
         </div>
@@ -114,46 +114,46 @@ export const Contact: React.FC = () => {
           {/* Direct Channels (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             
-            <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30 space-y-5">
-              <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-900 dark:text-zinc-100">
+            <div className="p-6 rounded-xl glass-card space-y-5">
+              <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-900 dark:text-slate-100">
                 Direct Contact
               </h3>
 
               {/* Email */}
               <div className="space-y-1.5">
-                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Email
                 </span>
-                <div className="flex items-center justify-between p-2.5 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
-                  <span className="text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-200 truncate">
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <span className="text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 truncate">
                     {personalInfo.social.email}
                   </span>
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className="ml-2 p-1.5 rounded text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-ring"
+                    className="ml-2 p-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors focus-ring"
                     title="Copy email address"
                     aria-label="Copy email address"
                   >
-                    {copied ? <Check className="w-3.5 h-3.5 text-[#1d7eb6]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied ? <Check className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </div>
 
               {/* Location */}
               <div className="space-y-1">
-                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Location
                 </span>
-                <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 flex items-center space-x-1.5 font-sans">
-                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6]" />
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 flex items-center space-x-1.5 font-sans">
+                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6] dark:text-[#38bdf8]" />
                   <span>{personalInfo.location}</span>
                 </p>
               </div>
 
               {/* Social Profiles */}
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
-                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Profiles
                 </span>
                 <div className="flex items-center space-x-3 text-xs font-mono">
@@ -161,17 +161,17 @@ export const Contact: React.FC = () => {
                     href={personalInfo.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-zinc-700 dark:text-zinc-300 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring rounded"
+                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors focus-ring rounded"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
                     <span>GitHub</span>
                   </a>
-                  <span className="text-zinc-300 dark:text-zinc-700">•</span>
+                  <span className="text-slate-300 dark:text-slate-700">•</span>
                   <a
                     href={personalInfo.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-zinc-700 dark:text-zinc-300 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring rounded"
+                    className="inline-flex items-center space-x-1.5 text-slate-700 dark:text-slate-300 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors focus-ring rounded"
                   >
                     <LinkedinIcon className="w-3.5 h-3.5" />
                     <span>LinkedIn</span>
@@ -182,22 +182,22 @@ export const Contact: React.FC = () => {
             </div>
 
             {/* Availability Note */}
-            <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 flex items-start space-x-2.5 font-sans">
-              <CheckCircle2 className="w-4 h-4 text-[#1d7eb6] shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl glass-card text-xs text-slate-600 dark:text-slate-400 flex items-start space-x-2.5 font-sans">
+              <CheckCircle2 className="w-4 h-4 text-[#1d7eb6] dark:text-[#38bdf8] shrink-0 mt-0.5" />
               <span>Available for 2025/2026 software engineering internships and collaborative technical projects.</span>
             </div>
 
           </div>
 
           {/* Form (7 cols) */}
-          <div className="lg:col-span-7 p-6 sm:p-7 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30">
-            <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-900 dark:text-zinc-100 mb-5">
+          <div className="lg:col-span-7 p-6 sm:p-7 rounded-xl glass-card">
+            <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-900 dark:text-slate-100 mb-5">
               Send a Message
             </h3>
 
             {status.type && (
               <div
-                className={`mb-5 p-3 rounded border text-xs flex items-start space-x-2 ${
+                className={`mb-5 p-3 rounded-lg border text-xs flex items-start space-x-2 ${
                   status.type === 'success'
                     ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
                     : 'border-rose-500/40 bg-rose-500/10 text-rose-800 dark:text-rose-300'
@@ -216,7 +216,7 @@ export const Contact: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label htmlFor="name" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  <label htmlFor="name" className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400">
                     Your Name
                   </label>
                   <input
@@ -226,12 +226,12 @@ export const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Jane Doe"
-                    className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400">
                     Your Email
                   </label>
                   <input
@@ -241,13 +241,13 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="jane@example.com"
-                    className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="subject" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                <label htmlFor="subject" className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400">
                   Subject (Optional)
                 </label>
                 <input
@@ -256,12 +256,12 @@ export const Contact: React.FC = () => {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="Internship opportunity, project inquiry, etc."
-                  className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors"
                 />
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400">
                   Message
                 </label>
                 <textarea
@@ -271,7 +271,7 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Describe your project, role, or questions..."
-                  className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors resize-y"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 text-sm focus-ring transition-colors resize-y"
                 />
               </div>
 
@@ -279,7 +279,7 @@ export const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-md bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium transition-colors disabled:opacity-50 focus-ring"
+                  className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium shadow-sm transition-colors disabled:opacity-50 focus-ring"
                 >
                   {loading ? (
                     <>
@@ -296,7 +296,7 @@ export const Contact: React.FC = () => {
 
                 <a
                   href={`mailto:${personalInfo.social.email}`}
-                  className="text-xs font-mono text-zinc-500 dark:text-zinc-400 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
+                  className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-[#1d7eb6] dark:hover:text-[#38bdf8] transition-colors"
                 >
                   Direct Email ↗
                 </a>

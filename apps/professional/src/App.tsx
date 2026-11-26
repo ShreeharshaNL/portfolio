@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { MovingCardsShowcase } from './components/MovingCardsShowcase';
 import { About } from './components/About';
 import { FeaturedProjects } from './components/FeaturedProjects';
 import { Skills } from './components/Skills';
@@ -8,6 +9,7 @@ import { Education } from './components/Education';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { AdminPage } from './components/AdminPage';
+import { AtmosphericBackground } from './components/AtmosphericBackground';
 import { professionalApi } from './services/api';
 
 export const App: React.FC = () => {
@@ -50,22 +52,29 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-[#09090b] dark:text-[#fafafa] font-sans antialiased selection:bg-[#1d7eb6]/20 transition-colors duration-200">
-      {/* Minimal Editorial Navbar */}
-      <Navbar />
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#08090d] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#1d7eb6]/20 transition-colors duration-200 relative">
+      {/* Dynamic Atmospheric Background with Image & Blueprint Grid */}
+      <AtmosphericBackground />
 
-      {/* Main Content Area */}
-      <main id="main-content">
-        <Hero />
-        <About />
-        <FeaturedProjects />
-        <Skills />
-        <Education />
-        <Contact />
-      </main>
+      {/* Content wrapper with relative z-10 */}
+      <div className="relative z-10">
+        {/* Minimal Editorial Navbar */}
+        <Navbar />
 
-      {/* Footer with Cross-link to Minecraft & Admin Console */}
-      <Footer onNavigateToAdmin={navigateToAdmin} />
+        {/* Main Content Area */}
+        <main id="main-content">
+          <Hero />
+          <MovingCardsShowcase />
+          <About />
+          <FeaturedProjects />
+          <Skills />
+          <Education />
+          <Contact />
+        </main>
+
+        {/* Footer with Cross-link to Minecraft & Admin Console */}
+        <Footer onNavigateToAdmin={navigateToAdmin} />
+      </div>
     </div>
   );
 };
