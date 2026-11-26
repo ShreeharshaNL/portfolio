@@ -6,20 +6,20 @@ const RESUME_URL = 'https://resume.shreeharsha.online';
 
 export const Hero: React.FC = () => {
   return (
-    <section id="home" className="pt-24 pb-16 sm:pt-28 sm:pb-24 relative overflow-hidden">
+    <section id="home" className="pt-20 pb-12 sm:pt-28 sm:pb-24 relative overflow-hidden">
       
       {/* CAD Ruler & Scale Calibration Line beneath Navbar */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8" aria-hidden="true">
-        <div className="relative w-full flex flex-col">
-          <div className="flex items-center space-x-1.5 mb-1 text-[9px] font-mono text-cad-muted/70">
-            <span className="w-1.5 h-1.5 rounded-full bg-cad-accent" />
-            <span>CALIBRATION GRID · SCALE 1:1 · METRIC MM</span>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8" aria-hidden="true">
+        <div className="relative w-full flex flex-col overflow-hidden">
+          <div className="flex items-center space-x-1.5 mb-1 text-[9px] font-mono text-cad-muted/70 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-cad-accent shrink-0" />
+            <span className="truncate">CALIBRATION GRID · SCALE 1:1 · METRIC MM</span>
           </div>
           <div className="w-full h-2.5 border-t border-cad-border flex justify-between relative overflow-hidden transition-colors">
             {Array.from({ length: 48 }).map((_, i) => (
               <div
                 key={i}
-                className={`w-[1px] bg-cad-border ${
+                className={`w-[1px] bg-cad-border shrink-0 ${
                   i % 6 === 0 ? 'h-2.5 bg-cad-accent/70' : i % 2 === 0 ? 'h-1.5' : 'h-1'
                 }`}
               />
@@ -29,36 +29,36 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start">
           
           {/* =========================================================================
               LEFT COLUMN: Main Technical Narrative & Identity
              ========================================================================= */}
-          <div className="lg:col-span-7 space-y-7 text-left">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
 
             {/* Primary Headline with Signature Golden Dot */}
-            <div className="space-y-3">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-cad-text leading-[1.08] transition-colors">
+            <div className="space-y-2.5 sm:space-y-3">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-cad-text leading-[1.12] transition-colors">
                 Hi, I'm <br />
                 <span>Shreeharsha</span><span className="text-cad-accent">.</span>
               </h1>
-              <p className="text-lg sm:text-xl font-normal text-cad-text tracking-tight leading-snug transition-colors">
+              <p className="text-base sm:text-xl font-normal text-cad-text tracking-tight leading-snug transition-colors">
                 Undergraduate engineer building functional web software, applied machine learning systems, and edge infrastructure.
               </p>
             </div>
 
             {/* Supporting Description */}
-            <p className="text-sm text-cad-muted leading-relaxed max-w-xl font-sans transition-colors">
+            <p className="text-xs sm:text-sm text-cad-muted leading-relaxed max-w-xl font-sans transition-colors">
               B.E. Information Science and Engineering at The National Institute of Engineering (NIE), Mysuru (CGPA 8.65 / 10.0). Winner of NeoNexus 36.1 Hackathon at BITM Ballari for LabelWise.
             </p>
 
             {/* Primary Action Buttons & Technical Profile Connectors */}
-            <div className="pt-1 flex flex-wrap items-center gap-3 font-mono text-xs">
+            <div className="pt-1 flex flex-wrap items-center gap-2.5 sm:gap-3 font-mono text-xs">
               
               {/* Primary CTA: Solid Gold View Projects */}
               <a
                 href="#projects"
-                className="group inline-flex items-center space-x-2 px-4 py-2.5 rounded-sm bg-cad-accent hover:bg-cad-hover text-cad-bg font-bold shadow-[0_2px_12px_rgba(217,164,65,0.25)] transition-all focus-ring"
+                className="group inline-flex items-center space-x-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-sm bg-cad-accent hover:bg-cad-hover text-cad-bg font-bold shadow-[0_2px_12px_rgba(217,164,65,0.25)] transition-all focus-ring text-xs"
               >
                 <span>View Projects</span>
                 <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" />
@@ -67,7 +67,7 @@ export const Hero: React.FC = () => {
               {/* Get in Touch */}
               <a
                 href="#contact"
-                className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel text-cad-text hover:text-cad-accent transition-all focus-ring"
+                className="inline-flex items-center space-x-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel text-cad-text hover:text-cad-accent transition-all focus-ring text-xs"
               >
                 <Mail className="w-3.5 h-3.5 text-cad-muted" />
                 <span>Get In Touch</span>
@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center space-x-1 px-4 py-2.5 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel text-cad-text hover:text-cad-accent transition-all focus-ring"
+                className="group inline-flex items-center space-x-1 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel text-cad-text hover:text-cad-accent transition-all focus-ring text-xs"
               >
                 <span>Resume</span>
                 <span className="text-cad-accent text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
@@ -90,7 +90,7 @@ export const Hero: React.FC = () => {
                   href={personalInfo.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel flex items-center justify-center font-bold text-cad-text hover:text-cad-accent transition-colors focus-ring"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel flex items-center justify-center font-bold text-xs text-cad-text hover:text-cad-accent transition-colors focus-ring"
                   title="GitHub Profile"
                   aria-label="GitHub Profile"
                 >
@@ -100,7 +100,7 @@ export const Hero: React.FC = () => {
                   href={personalInfo.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel flex items-center justify-center font-bold text-cad-text hover:text-cad-accent transition-colors focus-ring"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-sm border border-cad-border hover:border-cad-accent bg-cad-panel flex items-center justify-center font-bold text-xs text-cad-text hover:text-cad-accent transition-colors focus-ring"
                   title="LinkedIn Profile"
                   aria-label="LinkedIn Profile"
                 >
@@ -110,7 +110,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Technical Sub-bar Coordinates */}
-            <div className="pt-2 flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono text-cad-muted border-t border-cad-border/60 max-w-xl transition-colors">
+            <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-y-2 text-[10px] sm:text-[11px] font-mono text-cad-muted border-t border-cad-border/60 max-w-xl transition-colors">
               <div>
                 <span>NIE Mysuru</span>
                 <span className="mx-2 text-cad-dim">•</span>
@@ -126,7 +126,7 @@ export const Hero: React.FC = () => {
             {/* =====================================================================
                 BOTTOM LEFT: QFP IC Chip Schematic Element (U1 ISE 2027)
                ===================================================================== */}
-            <div className="pt-4 flex items-center space-x-6 select-none" aria-hidden="true">
+            <div className="pt-3 sm:pt-4 flex items-center justify-center sm:justify-start space-x-4 sm:space-x-6 select-none" aria-hidden="true">
               
               {/* Fiducial Marker on Left */}
               <div className="flex flex-col items-center space-y-1">
@@ -206,10 +206,10 @@ export const Hero: React.FC = () => {
           {/* =========================================================================
               RIGHT COLUMN: System Telemetry HUD Card & Edge Connector Bus
              ========================================================================= */}
-          <div className="lg:col-span-5 flex items-start justify-center lg:justify-end space-x-4">
+          <div className="lg:col-span-5 flex items-start justify-center lg:justify-end space-x-4 w-full">
             
             {/* Main SYSTEM TELEMETRY Panel */}
-            <div className="w-full max-w-md bg-cad-panel border border-cad-border rounded-sm p-6 relative font-mono text-xs shadow-2xl transition-colors">
+            <div className="w-full max-w-md bg-cad-panel border border-cad-border rounded-sm p-4 sm:p-6 relative font-mono text-xs shadow-2xl transition-colors">
               
               {/* 4 Golden Corner Bracket Markers */}
               <div className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-cad-accent pointer-events-none" />
@@ -218,7 +218,7 @@ export const Hero: React.FC = () => {
               <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-cad-accent pointer-events-none" />
 
               {/* Telemetry Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-cad-border mb-5">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-cad-border mb-4 sm:mb-5">
                 <div className="flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-cad-status shadow-[0_0_8px_var(--cad-status)]" />
                   <span className="font-bold tracking-wider text-xs text-cad-text">
@@ -231,7 +231,7 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Telemetry Module Blocks */}
-              <div className="space-y-4">
+              <div className="space-y-3.5 sm:space-y-4">
                 
                 {/* Block U1: Academics */}
                 <div className="flex items-start space-x-3">
@@ -278,7 +278,7 @@ export const Hero: React.FC = () => {
                     <span className="block text-[9px] font-bold tracking-wider text-cad-accent">
                       CORE STACK
                     </span>
-                    <span className="block font-semibold text-cad-text text-xs leading-relaxed">
+                    <span className="block font-semibold text-cad-text text-xs leading-relaxed break-words">
                       React · TypeScript · Python · FastAPI · Node.js · Cloudflare D1
                     </span>
                   </div>
@@ -306,7 +306,7 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Card Footer Bar */}
-              <div className="pt-5 mt-5 border-t border-cad-border flex items-center justify-between text-[11px] text-cad-muted">
+              <div className="pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-cad-border flex items-center justify-between text-[11px] text-cad-muted">
                 <span>Engineering Portfolio</span>
                 <a
                   href="#contact"

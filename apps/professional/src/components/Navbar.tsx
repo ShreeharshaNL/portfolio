@@ -71,7 +71,7 @@ export const Navbar: React.FC = () => {
             className="group flex items-center space-x-2 rounded focus-ring"
             aria-label="Shreeharsha N. L. homepage"
           >
-            <span className="font-bold text-base tracking-tight text-cad-text group-hover:text-cad-accent transition-colors">
+            <span className="font-bold text-sm sm:text-base tracking-tight text-cad-text group-hover:text-cad-accent transition-colors">
               Shreeharsha N. L.
             </span>
           </a>
