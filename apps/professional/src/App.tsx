@@ -10,6 +10,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { AdminPage } from './components/AdminPage';
 import { AtmosphericBackground } from './components/AtmosphericBackground';
+import { CadBorderFrame } from './components/CadBorderFrame';
 import { professionalApi } from './services/api';
 
 export const App: React.FC = () => {
@@ -52,13 +53,16 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#08090d] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#1d7eb6]/20 transition-colors duration-200 relative">
-      {/* Dynamic Atmospheric Background with Image & Blueprint Grid */}
+    <div className="min-h-screen bg-cad-bg text-cad-text font-sans antialiased selection:bg-cad-accent/35 selection:text-cad-bg relative transition-colors duration-200">
+      {/* Dynamic PCB Atmospheric Background */}
       <AtmosphericBackground />
+
+      {/* Engineering Drawing Cad Outer Border Frame with Coordinates & Title Block */}
+      <CadBorderFrame />
 
       {/* Content wrapper with relative z-10 */}
       <div className="relative z-10">
-        {/* Minimal Editorial Navbar */}
+        {/* Minimal Technical CAD Navbar */}
         <Navbar />
 
         {/* Main Content Area */}

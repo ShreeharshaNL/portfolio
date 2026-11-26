@@ -1,8 +1,31 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark scroll-smooth" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <script>
+      (function() {
+        try {
+          var urlParams = new URLSearchParams(window.location.search);
+          var queryTheme = urlParams.get('theme');
+          var stored = localStorage.getItem('shreeharsha-theme');
+          var theme = (queryTheme === 'light' || queryTheme === 'dark') ? queryTheme : (stored === 'light' ? 'light' : 'dark');
+          if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.documentElement.dataset.theme = 'light';
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            document.documentElement.dataset.theme = 'dark';
+          }
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6565946259212208"
      crossorigin="anonymous"></script>
@@ -11,7 +34,7 @@
     <meta name="title" content="Shreeharsha N. L. | Software Developer" />
     <meta name="description" content="Portfolio of Shreeharsha N. L. — Information Science & Engineering student at NIE Mysuru. Full-stack developer building practical applications with React, Node.js, Python, and applied AI." />
     <meta name="author" content="Shreeharsha N. L." />
-    <meta name="theme-color" content="#1d7eb6" />
+    <meta name="theme-color" content="#0D1613" />
     <link rel="canonical" href="https://shreeharsha.online/" />
     
     <!-- Open Graph / Facebook -->
@@ -36,7 +59,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-[#fafafa] text-[#09090b] dark:bg-[#09090b] dark:text-[#fafafa] font-sans antialiased selection:bg-[#1d7eb6]/20 min-h-screen transition-colors duration-200">
+  <body class="bg-cad-bg text-cad-text font-sans antialiased selection:bg-cad-accent/30 min-h-screen">
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
   </body>

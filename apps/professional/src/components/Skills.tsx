@@ -3,32 +3,36 @@ import { skillsGroups } from '../config/portfolio';
 
 export const Skills: React.FC = () => {
   return (
-    <section id="skills" className="py-20 sm:py-24 border-t border-slate-200/80 dark:border-slate-800/80">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-20 sm:py-24 border-t border-cad-border relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="font-mono text-xs text-[#e07a5f] dark:text-[#f49d85] uppercase tracking-wider font-semibold mb-2">
-            03 / Skills
+        <div className="max-w-2xl mb-12 sm:mb-16 text-left">
+          <div className="font-mono text-xs text-cad-accent uppercase tracking-wider font-semibold mb-2">
+            03 / Skills &amp; Stack Registers
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            Languages, Frameworks & Tooling
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-cad-text transition-colors">
+            Languages, Frameworks &amp; Tooling
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+          <p className="mt-3 text-sm sm:text-base text-cad-muted leading-relaxed font-sans transition-colors">
             Technical competencies applied across engineering coursework, hackathon sprints, and full-stack projects.
           </p>
         </div>
 
-        {/* Clean Editorial Index Grid with Glass Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Technical Register Matrix */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {skillsGroups.map((group) => (
             <div
               key={group.category}
-              className="p-5 rounded-xl glass-card glass-card-hover flex flex-col justify-between space-y-4"
+              className="p-5 rounded-sm bg-cad-panel border border-cad-border hover:border-cad-accent flex flex-col justify-between space-y-4 relative group transition-all shadow-sm"
             >
+              {/* Corner Marker */}
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cad-accent pointer-events-none" />
+
               <div>
-                <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-900 dark:text-slate-100">
-                  {group.category}
+                <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-cad-accent flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cad-accent" />
+                  <span>{group.category}</span>
                 </h3>
               </div>
 
@@ -37,7 +41,7 @@ export const Skills: React.FC = () => {
                 {group.items.map((skill) => (
                   <span
                     key={skill}
-                    className="font-mono text-xs text-slate-700 dark:text-slate-300 bg-slate-100/80 dark:bg-slate-800/60 px-2.5 py-1 rounded border border-slate-200/80 dark:border-slate-700/60"
+                    className="font-mono text-xs text-cad-text bg-cad-subtle px-2.5 py-1 rounded-sm border border-cad-border hover:border-cad-accent hover:text-cad-accent transition-colors"
                   >
                     {skill}
                   </span>

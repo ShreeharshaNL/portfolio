@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 interface NavItem {
@@ -56,38 +56,38 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
         scrolled
-          ? 'bg-[#faf7f2]/90 dark:bg-[#111620]/90 backdrop-blur-md border-b border-[#e8e0d5]/80 dark:border-[#222d3d]/80 shadow-sm'
+          ? 'bg-cad-bg/92 backdrop-blur-md border-b border-cad-border shadow-md'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Minimal Brand */}
           <a
             href="#home"
-            className="group flex items-center space-x-2 rounded-md focus-ring"
+            className="group flex items-center space-x-2 rounded focus-ring"
             aria-label="Shreeharsha N. L. homepage"
           >
-            <span className="font-semibold text-sm sm:text-base tracking-tight text-slate-900 dark:text-slate-100 group-hover:text-[#e07a5f] dark:group-hover:text-[#f49d85] transition-colors">
+            <span className="font-bold text-base tracking-tight text-cad-text group-hover:text-cad-accent transition-colors">
               Shreeharsha N. L.
             </span>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 font-mono text-xs" aria-label="Main Navigation">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace('#', '');
               return (
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium tracking-tight transition-colors focus-ring ${
+                  className={`transition-colors focus-ring py-1 ${
                     isActive
-                      ? 'text-[#e07a5f] dark:text-[#f49d85] font-semibold bg-[#f0e7db]/70 dark:bg-[#1a2330]/70'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-[#f0e7db]/40 dark:hover:bg-[#1a2330]/40'
+                      ? 'text-cad-accent font-semibold border-b border-cad-accent'
+                      : 'text-cad-muted hover:text-cad-text'
                   }`}
                 >
                   {item.name}
@@ -96,20 +96,20 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action: Theme Toggle & Direct Resume Link */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* Right Actions: Theme Toggle & Boxed Technical Resume Button */}
+          <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
 
-            {/* Direct Resume Link to resume.shreeharsha.online */}
+            {/* Boxed Resume Button */}
             <a
               href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-medium text-slate-800 dark:text-slate-200 border border-[#e8e0d5] dark:border-[#222d3d] hover:border-[#e07a5f] dark:hover:border-[#f49d85] hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors focus-ring"
+              className="group inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm text-xs font-mono font-medium text-cad-text border border-cad-border hover:border-cad-accent hover:text-cad-accent bg-cad-panel/60 hover:bg-cad-panel transition-colors focus-ring"
               aria-label="Open Resume in new tab"
             >
               <span>Resume</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span className="text-cad-accent text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
             </a>
           </div>
 
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md border border-[#e8e0d5] dark:border-[#222d3d] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-[#f0e7db]/50 dark:hover:bg-[#1a2330]/50 transition-colors focus-ring"
+              className="p-1.5 rounded border border-cad-border text-cad-muted hover:text-cad-text hover:bg-cad-panel transition-colors focus-ring"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -131,29 +131,29 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#e8e0d5] dark:border-[#222d3d] bg-[#faf7f2]/95 dark:bg-[#111620]/95 backdrop-blur-lg px-4 pt-2 pb-5 space-y-2 animate-in fade-in duration-150">
-          <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
+        <div className="md:hidden border-b border-cad-border bg-cad-bg/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-3 font-mono text-xs">
+          <nav className="flex flex-col space-y-2" aria-label="Mobile Navigation">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
+                className="px-3 py-2 rounded text-cad-muted hover:text-cad-text hover:bg-cad-panel transition-colors"
               >
                 {item.name}
               </a>
             ))}
             
-            <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800">
+            <div className="pt-3 border-t border-cad-border">
               <a
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center space-x-1.5 py-2 px-3 rounded-md text-xs font-medium text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] transition-colors"
+                className="w-full inline-flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded text-xs font-mono font-medium text-cad-text border border-cad-border hover:border-cad-accent hover:text-cad-accent bg-cad-panel transition-colors"
               >
-                <span>View Resume</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span>Resume</span>
+                <span className="text-cad-accent">↗</span>
               </a>
             </div>
           </nav>

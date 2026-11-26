@@ -8,43 +8,45 @@ export default {
   theme: {
     extend: {
       colors: {
+        cad: {
+          bg: 'var(--cad-bg)',
+          panel: 'var(--cad-panel)',
+          subtle: 'var(--cad-panel-subtle)',
+          accent: 'var(--cad-accent)',
+          hover: 'var(--cad-accent-hover)',
+          text: 'var(--cad-text)',
+          muted: 'var(--cad-muted)',
+          dim: 'var(--cad-dim)',
+          status: 'var(--cad-status)',
+          border: 'var(--cad-border)',
+          gold: 'var(--cad-accent)',
+        },
         canvas: {
-          light: '#faf7f2',
-          dark: '#111620',
+          light: '#F5F7F4',
+          dark: '#0D1613',
+          DEFAULT: 'var(--cad-bg)',
         },
         ink: {
-          light: '#18181b',
-          dark: '#f8fafc',
-          muted: '#71717a',
-          dim: '#a1a1aa',
-        },
-        coral: {
-          DEFAULT: '#e07a5f',
-          hover: '#cf6b50',
-          light: '#f49d85',
-          muted: '#fdf0ec',
-          darkMuted: '#2d1b16',
-        },
-        teal: {
-          DEFAULT: '#4a7b87',
-          hover: '#3b6570',
-          light: '#7ec3d4',
-          muted: '#edf5f7',
-          darkMuted: '#14252a',
+          light: '#111A16',
+          dark: '#E9E4D2',
+          muted: 'var(--cad-muted)',
+          dim: 'var(--cad-dim)',
+          DEFAULT: 'var(--cad-text)',
         },
         accent: {
-          DEFAULT: '#e07a5f',
-          hover: '#cf6b50',
-          muted: '#fdf0ec',
-          darkMuted: '#2d1b16',
-          teal: '#4a7b87',
-          tealLight: '#7ec3d4',
+          DEFAULT: 'var(--cad-accent)',
+          hover: 'var(--cad-accent-hover)',
+          muted: 'rgba(217, 164, 65, 0.15)',
+          darkMuted: 'rgba(217, 164, 65, 0.15)',
         },
-        cobalt: {
-          DEFAULT: '#4a7b87',
-          hover: '#3b6570',
-          light: '#7ec3d4',
-          dark: '#2e5058',
+        panel: {
+          DEFAULT: 'var(--cad-panel)',
+          dark: '#13211C',
+          light: '#FFFFFF',
+        },
+        border: {
+          DEFAULT: 'var(--cad-border)',
+          gold: 'var(--cad-accent)',
         },
       },
       fontFamily: {
@@ -66,15 +68,15 @@ export default {
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
+          '50%': { transform: 'translateY(-6px)' },
         },
         'float-slow': {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
         'pulse-glow': {
           '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.04)' },
         },
       },
       animation: {

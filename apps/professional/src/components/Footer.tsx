@@ -14,17 +14,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
   };
 
   return (
-    <footer className="border-t border-slate-200/80 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 text-xs py-12 transition-colors">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <footer className="border-t border-cad-border text-cad-muted text-xs py-14 transition-colors relative z-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Alternate Interactive Dimension (Minecraft Edition Cross-Link) */}
-        <div className="p-5 rounded-xl glass-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1 max-w-xl">
-            <span className="font-mono text-xs text-slate-800 dark:text-slate-200 font-semibold block">
+        <div className="p-5 rounded-sm bg-cad-panel border border-cad-border hover:border-cad-accent transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative group shadow-sm">
+          <div className="absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-cad-accent pointer-events-none" />
+
+          <div className="space-y-1 max-w-xl text-left">
+            <span className="font-mono text-xs text-cad-accent font-semibold block">
               Minecraft Edition Portfolio
             </span>
-            <p className="text-xs text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
-              Looking for an interactive experience? Explore the Minecraft Edition portfolio with dynamic biome atmospheres, Web Audio sound effects, and diamond mining.
+            <p className="text-xs text-cad-muted font-sans leading-relaxed">
+              Looking for an interactive gamified experience? Explore the retro pixel Minecraft Edition with dynamic biome atmospheres, Web Audio sound effects, and diamond mining.
             </p>
           </div>
 
@@ -32,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
             href={crossLinkConfig.minecraftUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200 border border-[#e8e0d5] dark:border-[#222d3d] hover:border-[#e07a5f] hover:text-[#e07a5f] dark:hover:border-[#f49d85] dark:hover:text-[#f49d85] bg-white/40 dark:bg-[#161d28]/40 transition-colors focus-ring shrink-0"
+            className="group inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-sm text-xs font-mono font-medium text-cad-text border border-cad-border hover:border-cad-accent hover:text-cad-accent bg-cad-subtle transition-colors focus-ring shrink-0"
           >
             <span>Visit Minecraft Edition</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -41,11 +43,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
 
         {/* Navigation & Identity Strip */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          <div className="flex items-center space-x-2 font-mono text-xs">
-            <span className="font-semibold text-slate-900 dark:text-slate-100">
+          <div className="flex items-center space-x-2 font-mono text-xs text-cad-muted">
+            <span className="font-semibold text-cad-text">
               {personalInfo.name}
             </span>
-            <span className="text-slate-300 dark:text-slate-700">•</span>
+            <span className="text-cad-dim">•</span>
             <span>NIE Mysuru (B.E. ISE 2027)</span>
           </div>
 
@@ -54,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
+              className="text-cad-muted hover:text-cad-accent transition-colors"
             >
               GitHub
             </a>
@@ -62,20 +64,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
+              className="text-cad-muted hover:text-cad-accent transition-colors"
             >
               LinkedIn
             </a>
             <a
               href={`mailto:${personalInfo.social.email}`}
-              className="text-slate-600 dark:text-slate-400 hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
+              className="text-cad-muted hover:text-cad-accent transition-colors"
             >
               Email
             </a>
             <button
               type="button"
               onClick={scrollToTop}
-              className="inline-flex items-center space-x-1 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors ml-2"
+              className="inline-flex items-center space-x-1 text-cad-muted hover:text-cad-accent transition-colors ml-2 cursor-pointer"
               aria-label="Scroll to top of page"
             >
               <span>Top</span>
@@ -85,9 +87,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
         </div>
 
         {/* Colophon & Admin link */}
-        <div className="pt-4 border-t border-[#e8e0d5] dark:border-[#222d3d] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-slate-400 dark:text-slate-500">
+        <div className="pt-4 border-t border-cad-border flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-cad-dim">
           <div>
-            © {currentYear} Shreeharsha N. L. · React & Tailwind CSS
+            © {currentYear} Shreeharsha N. L. · Schematics &amp; Architecture
           </div>
           <div className="flex items-center space-x-2">
             <span>Hosted on Cloudflare Pages</span>
@@ -96,13 +98,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               <button
                 type="button"
                 onClick={onNavigateToAdmin}
-                className="hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors"
+                className="hover:text-cad-accent transition-colors"
                 title="Open Operator Dashboard"
               >
                 /admin
               </button>
             ) : (
-              <a href="/admin" className="hover:text-[#e07a5f] dark:hover:text-[#f49d85] transition-colors">
+              <a href="/admin" className="hover:text-cad-accent transition-colors">
                 /admin
               </a>
             )}

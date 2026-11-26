@@ -1,117 +1,294 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#faf7f2" />
-  <title>Resume | Shreeharsha N. L.</title>
+  <meta name="theme-color" content="#0D1613" />
+  <title>Resume | Shreeharsha N. L. · Engineering Portfolio</title>
+  <meta name="description" content="Engineering Resume & Curriculum Vitae of Shreeharsha N. L. — Undergraduate Software Engineer at The National Institute of Engineering (NIE), Mysuru. Available for internships and full-time software engineering roles." />
+  
+  <script>
+    (function() {
+      try {
+        var urlParams = new URLSearchParams(window.location.search);
+        var queryTheme = urlParams.get('theme');
+        var stored = localStorage.getItem('shreeharsha-theme');
+        var theme = (queryTheme === 'light' || queryTheme === 'dark') ? queryTheme : (stored === 'light' ? 'light' : 'dark');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          document.documentElement.dataset.theme = 'light';
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.dataset.theme = 'dark';
+      }
+    })();
+  </script>
+
+  <!-- Typography: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      color-scheme: light;
-      --canvas: #faf7f2;
-      --surface: #ffffff;
-      --surface-subtle: #f5eee5;
-      --fg: #18181b;
-      --muted: #71717a;
-      --dim: #a1a1aa;
-      --grid: rgba(80, 60, 45, 0.04);
-      --accent: #e07a5f;
-      --accent-hover: #cf6b50;
-      --accent-teal: #4a7b87;
-      --accent-light: rgba(224, 122, 95, 0.1);
-      --border: #e8e0d5;
-      --border-focus: #e07a5f;
-      --shadow: 0 4px 20px -2px rgba(45, 35, 30, 0.06);
+    :root, [data-theme="dark"], .dark {
+      color-scheme: dark;
+      --cad-bg: #0D1613;
+      --cad-panel: #13211C;
+      --cad-panel-subtle: #0F1A16;
+      --cad-accent: #D9A441;
+      --cad-accent-hover: #E5B552;
+      --cad-text: #E9E4D2;
+      --cad-muted: #93A096;
+      --cad-dim: #5E6C62;
+      --cad-status: #6FCF7F;
+      --cad-border: #1F332B;
+      --cad-border-gold: rgba(217, 164, 65, 0.4);
+      --cad-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6);
+      --cad-grid-line: rgba(31, 51, 43, 0.45);
+      --cad-vignette: rgba(13, 22, 19, 0.6);
+      --cad-nav-bg: rgba(13, 22, 19, 0.92);
+      --cad-pdf-bg: #0D1613;
     }
 
-    [data-theme="dark"] {
-      color-scheme: dark;
-      --canvas: #111620;
-      --surface: #161d28;
-      --surface-subtle: #1c2635;
-      --fg: #f8fafc;
-      --muted: #94a3b8;
-      --dim: #64748b;
-      --grid: rgba(126, 195, 212, 0.05);
-      --accent: #f49d85;
-      --accent-hover: #faad98;
-      --accent-teal: #7ec3d4;
-      --accent-light: rgba(244, 157, 133, 0.12);
-      --border: #222d3d;
-      --border-focus: #f49d85;
-      --shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4);
+    [data-theme="light"], .light {
+      color-scheme: light;
+      --cad-bg: #F5F7F4;
+      --cad-panel: #FFFFFF;
+      --cad-panel-subtle: #EDF1EC;
+      --cad-accent: #B8801A;
+      --cad-accent-hover: #9E6C12;
+      --cad-text: #111A16;
+      --cad-muted: #536259;
+      --cad-dim: #84938A;
+      --cad-status: #18863D;
+      --cad-border: #D5DDD7;
+      --cad-border-gold: rgba(184, 128, 26, 0.4);
+      --cad-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+      --cad-grid-line: rgba(83, 98, 89, 0.15);
+      --cad-vignette: rgba(245, 247, 244, 0.6);
+      --cad-nav-bg: rgba(245, 247, 244, 0.92);
+      --cad-pdf-bg: #E8ECE9;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
       min-height: 100%;
-      background: var(--canvas);
-      color: var(--fg);
+      background: var(--cad-bg);
+      color: var(--cad-text);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     body {
       min-height: 100vh;
-      background-color: var(--canvas);
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(224, 122, 95, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(74, 123, 135, 0.08) 0%, transparent 40%),
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
-      background-position: center top;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
+    ::selection {
+      background: rgba(217, 164, 65, 0.35);
+      color: var(--cad-text);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--cad-bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--cad-border);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cad-accent);
+    }
+
+    /* =========================================================================
+       CAD Schematic Background & Outer Coordinate Border System
+       ========================================================================= */
+    .cad-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background: var(--cad-bg);
+      transition: background-color 0.2s ease;
+    }
+
+    .cad-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, var(--cad-grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--cad-grid-line) 1px, transparent 1px);
+      opacity: 0.8;
+      transition: background-image 0.2s ease;
+    }
+
+    .cad-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, transparent 0%, var(--cad-vignette) 60%, var(--cad-bg) 100%);
+      transition: background 0.2s ease;
+    }
+
+    /* Outer Bounding Border */
+    .outer-cad-frame {
+      position: fixed;
+      inset: 12px;
+      border: 1px solid var(--cad-border);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    @media (min-width: 1024px) {
+      .outer-cad-frame { inset: 24px; }
+    }
+
+    /* 4 Corner PCB Mounting Holes */
+    .mounting-hole {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--cad-border-gold);
+      background: var(--cad-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 45;
+      pointer-events: none;
+      box-shadow: 0 0 10px rgba(217, 164, 65, 0.12);
+    }
+
+    .mounting-hole::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1px solid var(--cad-accent);
+      background: var(--cad-panel-subtle);
+    }
+
+    .hole-tl { top: 8px; left: 8px; }
+    .hole-tr { top: 8px; right: 8px; }
+    .hole-bl { bottom: 8px; left: 8px; }
+    .hole-br { bottom: 8px; right: 8px; }
+
+    @media (min-width: 1024px) {
+      .mounting-hole { width: 38px; height: 38px; }
+      .mounting-hole::after { width: 20px; height: 20px; }
+      .hole-tl { top: 18px; left: 18px; }
+      .hole-tr { top: 18px; right: 18px; }
+      .hole-bl { bottom: 18px; left: 18px; }
+      .hole-br { bottom: 18px; right: 18px; }
+    }
+
+    /* Ambient hardware glows */
+    .cad-glow-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: rgba(217, 164, 65, 0.06);
+      filter: blur(120px);
+    }
+
+    .cad-glow-2 {
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(111, 207, 127, 0.04);
+      filter: blur(120px);
+    }
+
+    /* =========================================================================
+       Navigation Header
+       ========================================================================= */
     .topbar {
       height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      max-width: 1200px;
+      max-width: 1240px;
       width: 100%;
       margin: 0 auto;
       padding: 0 24px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(250, 247, 242, 0.85);
-      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--cad-border);
+      background: var(--cad-nav-bg);
+      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
       z-index: 50;
-      transition: background 0.2s ease, border-color 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    [data-theme="dark"] .topbar {
-      background: rgba(17, 22, 32, 0.85);
-    }
-
-    .brand {
+    .brand-wrap {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       text-decoration: none;
-      color: var(--fg);
+      color: var(--cad-text);
       font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      font-weight: 700;
+      letter-spacing: -0.015em;
       transition: color 0.15s ease;
     }
 
-    .brand:hover {
-      color: var(--accent);
+    .brand-wrap:hover {
+      color: var(--cad-accent);
     }
 
-    .brand-back {
-      font-size: 12px;
-      color: var(--muted);
+    .back-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: var(--cad-panel);
+      border: 1px solid var(--cad-border);
       font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cad-muted);
+      transition: all 0.15s ease;
+    }
+
+    .brand-wrap:hover .back-pill {
+      border-color: var(--cad-accent);
+      color: var(--cad-accent);
+      background: rgba(217, 164, 65, 0.12);
+    }
+
+    .topbar-center {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cad-muted);
+    }
+
+    @media (min-width: 768px) {
+      .topbar-center { display: flex; }
     }
 
     .actions {
@@ -126,22 +303,23 @@
       justify-content: center;
       gap: 6px;
       height: 34px;
-      padding: 0 14px;
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      padding: 0 13px;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
       font-weight: 500;
       text-decoration: none;
       cursor: pointer;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--fg);
+      border: 1px solid var(--cad-border);
+      background: var(--cad-panel);
+      color: var(--cad-text);
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
 
     .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--cad-accent);
+      color: var(--cad-accent);
     }
 
     .btn-icon {
@@ -149,126 +327,336 @@
       padding: 0;
     }
 
+    /* Solid Gold Primary CTA Button matching the mockup */
     .btn-primary {
-      background: #e07a5f;
-      border-color: #e07a5f;
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(224, 122, 95, 0.25);
-    }
-
-    [data-theme="dark"] .btn-primary {
-      background: #f49d85;
-      border-color: #f49d85;
-      color: #111620;
-      font-weight: 600;
-      box-shadow: 0 2px 8px rgba(244, 157, 133, 0.2);
+      background: #D9A441;
+      border-color: #D9A441;
+      color: #0D1613;
+      font-weight: 700;
+      box-shadow: 0 2px 12px rgba(217, 164, 65, 0.25);
     }
 
     .btn-primary:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-      color: #ffffff;
+      background: #E5B552;
+      border-color: #E5B552;
+      color: #0D1613;
+      box-shadow: 0 4px 16px rgba(217, 164, 65, 0.4);
+      transform: translateY(-1px);
     }
 
-    [data-theme="dark"] .btn-primary:hover {
-      background: #faad98;
-      border-color: #faad98;
-      color: #111620;
-    }
-
-    .main {
+    /* =========================================================================
+       Main Content Layout
+       ========================================================================= */
+    .main-wrap {
       flex: 1;
-      width: min(1120px, calc(100% - 48px));
-      margin: 24px auto 36px;
+      width: min(1200px, calc(100% - 48px));
+      margin: 18px auto 36px;
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .doc-header {
+    /* Status Strip */
+    .status-strip {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 14px;
+      gap: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
     }
 
-    .status-badge {
+    .status-badge-live {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 2px;
+      background: var(--cad-panel);
+      border: 1px solid var(--cad-border);
+      color: var(--cad-text);
       font-size: 11px;
       font-weight: 500;
     }
 
-    .status-dot {
-      width: 7px;
-      height: 7px;
+    .ping-circle {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: #10b981;
+      background: var(--cad-status);
+      box-shadow: 0 0 8px var(--cad-status);
     }
 
-    .doc-meta {
-      color: var(--dim);
+    .meta-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 2px;
+      background: var(--cad-panel);
+      border: 1px solid var(--cad-border);
       font-size: 11px;
+      color: var(--cad-muted);
     }
 
-    .viewer-frame {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      box-shadow: var(--shadow);
+    .meta-chip.highlight {
+      border-color: rgba(217, 164, 65, 0.4);
+      color: var(--cad-accent);
+      background: rgba(217, 164, 65, 0.1);
+    }
+
+    /* =========================================================================
+       Schematic CAD Viewer Window
+       ========================================================================= */
+    .viewer-window {
+      border: 1px solid var(--cad-border);
+      border-radius: 2px;
+      background: var(--cad-panel);
+      box-shadow: var(--cad-shadow);
       overflow: hidden;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+
+    .viewer-window:hover {
+      border-color: rgba(217, 164, 65, 0.4);
+    }
+
+    /* 4 Golden Corner Brackets */
+    .bracket {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+      z-index: 30;
+    }
+    .bracket-tl { top: -1px; left: -1px; border-top: 2px solid var(--cad-accent); border-left: 2px solid var(--cad-accent); }
+    .bracket-tr { top: -1px; right: -1px; border-top: 2px solid var(--cad-accent); border-right: 2px solid var(--cad-accent); }
+    .bracket-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--cad-accent); border-left: 2px solid var(--cad-accent); }
+    .bracket-br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--cad-accent); border-right: 2px solid var(--cad-accent); }
+
+    /* Window Toolbar */
+    .window-toolbar {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--cad-panel-subtle);
+      border-bottom: 1px solid var(--cad-border);
+      user-select: none;
+    }
+
+    .window-dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 80px;
+    }
+
+    .window-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .dot-coral { background: #D9A441; opacity: 0.9; }
+    .dot-amber { background: #E5B552; opacity: 0.9; }
+    .dot-teal  { background: #6FCF7F; opacity: 0.9; }
+
+    .window-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cad-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-tools {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 80px;
+      justify-content: flex-end;
+    }
+
+    .tool-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cad-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .tool-link:hover {
+      color: var(--cad-accent);
+      background: rgba(217, 164, 65, 0.1);
+    }
+
+    /* PDF Frame Viewport */
+    .pdf-viewport {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 210px);
+      min-height: 680px;
+      background: var(--cad-pdf-bg);
     }
 
     .pdf-frame {
       display: block;
       width: 100%;
-      height: calc(100vh - 170px);
-      min-height: 640px;
+      height: 100%;
       border: 0;
-      background: #ffffff;
+      background: transparent;
     }
 
-    .footer-note {
-      margin-top: 16px;
-      text-align: center;
+    /* Mobile Quick Banner */
+    .mobile-banner {
+      display: none;
+      background: var(--cad-panel);
+      border: 1px solid var(--cad-border);
+      border-radius: 2px;
+      padding: 12px 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .mobile-banner-text {
+      font-size: 12px;
+      color: var(--cad-muted);
+    }
+
+    /* Footer */
+    .footer-wrap {
+      margin-top: 10px;
+      padding: 16px 4px 8px;
+      border-top: 1px solid var(--cad-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.02em;
+      color: var(--cad-dim);
     }
 
-    @media (max-width: 640px) {
-      .topbar { padding: 0 16px; height: 56px; }
-      .main { width: 100%; margin: 12px auto 20px; }
-      .doc-header { padding: 0 16px; margin-bottom: 10px; }
-      .viewer-frame { border-radius: 0; border-left: 0; border-right: 0; }
-      .pdf-frame { height: calc(100vh - 140px); min-height: 480px; }
-      .footer-note { padding: 0 16px; }
+    @media (min-width: 768px) {
+      .footer-wrap { flex-direction: row; }
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--cad-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--cad-accent);
+    }
+
+    @media (max-width: 768px) {
+      .topbar { padding: 0 16px; height: 58px; }
+      .main-wrap { width: min(100%, calc(100% - 24px)); margin: 12px auto 28px; }
+      .status-strip { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .pdf-viewport { height: calc(100vh - 180px); min-height: 520px; }
+      .mobile-banner { display: flex; }
+      .footer-wrap { flex-direction: column; text-align: center; gap: 8px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- CAD Background Layer -->
+  <div class="cad-bg" aria-hidden="true">
+    <div class="cad-grid"></div>
+    <div class="cad-vignette"></div>
+    <div class="cad-glow-1"></div>
+    <div class="cad-glow-2"></div>
+  </div>
+
+  <!-- Outer Bounding Schematic Frame -->
+  <div class="outer-cad-frame" aria-hidden="true"></div>
+
+  <!-- 4 Corner PCB Mounting Holes -->
+  <div class="mounting-hole hole-tl" aria-hidden="true"></div>
+  <div class="mounting-hole hole-tr" aria-hidden="true"></div>
+  <div class="mounting-hole hole-bl" aria-hidden="true"></div>
+  <div class="mounting-hole hole-br" aria-hidden="true"></div>
+
+  <!-- Header Navigation -->
   <header class="topbar">
-    <a class="brand" href="https://shreeharsha.online" aria-label="Back to main portfolio">
-      <span class="brand-back">←</span>
+    <a class="brand-wrap" href="https://shreeharsha.online" aria-label="Return to Shreeharsha N. L. Main Portfolio">
+      <span class="back-pill">← portfolio</span>
       <span>Shreeharsha N. L.</span>
     </a>
 
+    <div class="topbar-center" aria-hidden="true">
+      <span>DOC_ID: RESUME_ISE_2027</span>
+      <span>•</span>
+      <span>Information Science (NIE Mysuru)</span>
+    </div>
+
     <div class="actions">
-      <button class="btn btn-icon" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle theme">
-        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>
+      <!-- Theme Toggle Button -->
+      <button class="btn btn-icon" id="themeToggle" type="button" aria-label="Toggle Theme" title="Toggle Theme">
+        <svg id="sunIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--cad-accent);">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2"/>
+          <path d="M12 20v2"/>
+          <path d="m4.93 4.93 1.41 1.41"/>
+          <path d="m17.66 17.66 1.41 1.41"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="m6.34 17.66-1.41 1.41"/>
+          <path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+        <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none; color: var(--cad-accent);">
+          <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/>
         </svg>
       </button>
-      <a class="btn btn-primary" href="/resume.pdf" download="Shreeharsha-Resume.pdf">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+      <!-- Open PDF Directly in Browser Tab -->
+      <a class="btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer" title="Open PDF in new browser tab">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        <span>Open</span>
+      </a>
+
+      <!-- Primary Action: Solid Gold Download Button -->
+      <a class="btn btn-primary" href="/resume.pdf" download="Shreeharsha-Resume.pdf" title="Download Shreeharsha's Resume PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
@@ -278,63 +666,147 @@
     </div>
   </header>
 
-  <main class="main">
-    <div class="doc-header">
-      <span class="status-badge">
-        <span class="status-dot"></span>
-        <span>Resume · PDF Document</span>
-      </span>
-      <span class="doc-meta">B.E. Information Science (NIE Mysuru) · Class of 2027</span>
+  <!-- Main Document Container -->
+  <main class="main-wrap">
+    
+    <!-- Status & Academic Summary Strip -->
+    <div class="status-strip">
+      <div class="status-badge-live">
+        <span class="ping-circle" aria-hidden="true"></span>
+        <span>Available for Internships &amp; Full-Time</span>
+      </div>
+
+      <div class="meta-badges">
+        <span class="meta-chip highlight">NeoNexus 36.1 Winner</span>
+        <span class="meta-chip">NIE Mysuru (B.E. ISE 2027)</span>
+        <span class="meta-chip">CGPA: 8.65 / 10.0</span>
+      </div>
     </div>
 
-    <section class="viewer-frame" aria-label="Resume document viewer">
-      <iframe class="pdf-frame" src="/resume.pdf#toolbar=1&navpanes=0&view=FitH" title="Shreeharsha's resume">
-        Your browser cannot display PDFs inline.
-        <a href="/resume.pdf" style="padding: 24px; display: block; color: var(--accent); text-align: center;">Click here to open the resume PDF directly.</a>
-      </iframe>
+    <!-- Schematic CAD Window Frame -->
+    <section class="viewer-window" aria-label="Resume Document Viewer">
+      
+      <!-- 4 Golden Corner Brackets -->
+      <div class="bracket bracket-tl"></div>
+      <div class="bracket bracket-tr"></div>
+      <div class="bracket bracket-bl"></div>
+      <div class="bracket bracket-br"></div>
+
+      <!-- Window Titlebar -->
+      <div class="window-toolbar">
+        <div class="window-dots" aria-hidden="true">
+          <span class="window-dot dot-coral"></span>
+          <span class="window-dot dot-amber"></span>
+          <span class="window-dot dot-teal"></span>
+        </div>
+
+        <div class="window-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>Shreeharsha_Resume_2026.pdf</span>
+        </div>
+
+        <div class="window-tools">
+          <a class="tool-link" href="/resume.pdf" target="_blank" rel="noopener noreferrer" title="View Fullscreen">
+            <span>expand ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PDF Frame Viewport -->
+      <div class="pdf-viewport">
+        <iframe
+          id="pdfFrame"
+          class="pdf-frame"
+          src="/resume.pdf#toolbar=1&navpanes=0&view=FitH"
+          title="Shreeharsha N. L. Resume Document"
+        >
+          Your browser cannot render PDFs inline.
+          <a href="/resume.pdf" style="padding: 30px; display: block; color: #D9A441; text-align: center; font-weight: 700;">
+            Click here to open and read the resume PDF directly.
+          </a>
+        </iframe>
+      </div>
+
     </section>
 
-    <p class="footer-note">THE NATIONAL INSTITUTE OF ENGINEERING (NIE), MYSURU · CGPA 8.65 / 10.0</p>
+    <!-- Mobile Quick Action Banner -->
+    <div class="mobile-banner">
+      <span class="mobile-banner-text">Reading on mobile? Open full PDF for easier pinch-to-zoom.</span>
+      <a class="btn btn-primary" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+        Open PDF
+      </a>
+    </div>
+
+    <!-- Footer Colophon -->
+    <footer class="footer-wrap">
+      <div>
+        © 2026 Shreeharsha N. L. · The National Institute of Engineering, Mysuru
+      </div>
+
+      <nav class="footer-links" aria-label="Footer Links">
+        <a class="footer-link" href="https://shreeharsha.online">Main Portfolio</a>
+        <a class="footer-link" href="https://minecraft.shreeharsha.online" target="_blank" rel="noopener noreferrer">Minecraft Edition</a>
+        <a class="footer-link" href="https://github.com/ShreeharshaNL" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="footer-link" href="https://www.linkedin.com/in/shreeharshanl" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="footer-link" href="mailto:shreeharshanl05@gmail.com">Contact</a>
+      </nav>
+    </footer>
+
   </main>
 
+  <!-- Theme Script -->
   <script>
-    const root = document.documentElement;
-    const toggle = document.getElementById("themeToggle");
-    const icon = document.getElementById("themeIcon");
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    (function () {
+      const toggle = document.getElementById("themeToggle");
+      const sunIcon = document.getElementById("sunIcon");
+      const moonIcon = document.getElementById("moonIcon");
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 
-    const sun = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>';
-    const moon = '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>';
-
-    function setTheme(theme) {
-      root.dataset.theme = theme;
-      const dark = theme === "dark";
-      toggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
-      icon.innerHTML = dark ? sun : moon;
-      metaTheme.setAttribute("content", dark ? "#111620" : "#faf7f2");
-      try {
-        localStorage.setItem("shreeharsha-theme", theme);
-      } catch (e) {}
-    }
-
-    const savedTheme = (() => {
-      try {
-        return localStorage.getItem("shreeharsha-theme");
-      } catch (e) {
-        return null;
+      function updateUI(theme) {
+        const isDark = theme === "dark";
+        if (sunIcon && moonIcon) {
+          sunIcon.style.display = isDark ? "block" : "none";
+          moonIcon.style.display = isDark ? "none" : "block";
+        }
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute("content", isDark ? "#0D1613" : "#F5F7F4");
+        }
+        if (toggle) {
+          toggle.setAttribute("aria-label", "Switch to " + (isDark ? "light" : "dark") + " mode");
+          toggle.setAttribute("title", "Switch to " + (isDark ? "light" : "dark") + " mode");
+        }
       }
+
+      function getCurrentTheme() {
+        return document.documentElement.classList.contains("dark") || document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+      }
+
+      updateUI(getCurrentTheme());
+
+      toggle?.addEventListener("click", () => {
+        const current = getCurrentTheme();
+        const next = current === "dark" ? "light" : "dark";
+        if (next === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+          document.documentElement.dataset.theme = "dark";
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          document.documentElement.dataset.theme = "light";
+        }
+        try {
+          localStorage.setItem("shreeharsha-theme", next);
+        } catch (e) {}
+        updateUI(next);
+      });
     })();
-
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
-    } else {
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
-    }
-
-    toggle.addEventListener("click", () => {
-      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
-    });
   </script>
 </body>
 </html>

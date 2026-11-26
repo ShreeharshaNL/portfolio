@@ -88,37 +88,37 @@ export const MovingCardsShowcase: React.FC = () => {
   const renderIcon = (type: ShowcaseCard['icon']) => {
     switch (type) {
       case 'award':
-        return <Award className="w-3.5 h-3.5 text-[#e07a5f] dark:text-[#f49d85]" />;
+        return <Award className="w-3.5 h-3.5 text-[#D9A441]" />;
       case 'terminal':
-        return <Terminal className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />;
+        return <Terminal className="w-3.5 h-3.5 text-[#6FCF7F]" />;
       case 'sparkles':
-        return <Sparkles className="w-3.5 h-3.5 text-[#fab598]" />;
+        return <Sparkles className="w-3.5 h-3.5 text-[#D9A441]" />;
       default:
-        return <Globe className="w-3.5 h-3.5 text-[#4a7b87] dark:text-[#7ec3d4]" />;
+        return <Globe className="w-3.5 h-3.5 text-[#D9A441]" />;
     }
   };
 
   return (
-    <section className="py-10 sm:py-12 overflow-hidden relative border-y border-[#e8e0d5]/80 dark:border-[#222d3d]/80 bg-[#faf7f2]/50 dark:bg-[#111620]/40 backdrop-blur-sm">
+    <section className="py-8 sm:py-10 overflow-hidden relative border-y border-cad-border bg-cad-panel-subtle/90 backdrop-blur-md">
       
       {/* Section Header with Live Radar Beacon */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center space-x-2.5">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cad-status opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-cad-status"></span>
           </span>
-          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-slate-700 dark:text-slate-300">
-            Live Subdomain Ecosystem · <span className="text-[#e07a5f] dark:text-[#f49d85]">*.shreeharsha.online</span>
+          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-cad-text">
+            LIVE SUBDOMAIN ECOSYSTEM · <span className="text-cad-accent">*.shreeharsha.online</span>
           </span>
         </div>
 
-        <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+        <span className="text-[11px] font-mono text-cad-muted">
           Hover to pause · Click card to visit
         </span>
       </div>
 
-      {/* SINGLE MOVING ROW ONLY (as requested) */}
+      {/* SINGLE MOVING ROW ONLY */}
       <div className="relative w-full overflow-hidden mask-marquee py-2 group">
         <div className="flex w-max space-x-4 animate-marquee group-hover:[animation-play-state:paused]">
           {[...TICKER_CARDS, ...TICKER_CARDS].map((card, idx) => (
@@ -127,41 +127,41 @@ export const MovingCardsShowcase: React.FC = () => {
               href={card.url || '#projects'}
               target={card.url ? '_blank' : '_self'}
               rel={card.url ? 'noopener noreferrer' : undefined}
-              className="w-72 sm:w-80 p-3.5 rounded-xl glass-card glass-card-hover block shrink-0 cursor-pointer text-left transition-all duration-200 hover:-translate-y-1"
+              className="w-72 sm:w-80 p-3.5 rounded-sm bg-cad-panel border border-cad-border hover:border-cad-accent block shrink-0 cursor-pointer text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(217,164,65,0.15)] group/card"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center space-x-2 truncate">
-                  <div className="p-1 rounded-md bg-slate-100 dark:bg-slate-800/80 shrink-0">
+                  <div className="p-1 rounded-sm bg-cad-bg border border-cad-border shrink-0">
                     {renderIcon(card.icon)}
                   </div>
-                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 tracking-tight truncate">
+                  <h3 className="font-bold text-xs sm:text-sm text-cad-text tracking-tight truncate group-hover/card:text-cad-accent transition-colors">
                     {card.title}
                   </h3>
                 </div>
 
                 {card.badge && (
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#e07a5f]/10 text-[#e07a5f] dark:text-[#f49d85] border border-[#e07a5f]/20 shrink-0">
+                  <span className="px-2 py-0.5 rounded-sm text-[10px] font-mono font-medium bg-cad-accent/10 text-cad-accent border border-cad-accent/30 shrink-0">
                     {card.badge}
                   </span>
                 )}
               </div>
 
               {card.subdomain && (
-                <div className="mt-1.5 flex items-center space-x-1 font-mono text-[11px] text-slate-500 dark:text-slate-400 group-hover:text-[#e07a5f] dark:group-hover:text-[#f49d85] transition-colors">
+                <div className="mt-1.5 flex items-center space-x-1 font-mono text-[11px] text-cad-muted group-hover/card:text-cad-accent transition-colors">
                   <span className="truncate">{card.subdomain}</span>
-                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
                 </div>
               )}
 
-              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans line-clamp-1">
+              <p className="mt-1.5 text-xs text-cad-muted leading-relaxed font-sans line-clamp-1">
                 {card.description}
               </p>
 
-              <div className="mt-2.5 flex flex-wrap gap-1 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+              <div className="mt-2.5 flex flex-wrap gap-1 pt-2 border-t border-cad-border">
                 {card.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100/80 dark:bg-slate-800/60"
+                    className="px-1.5 py-0.5 rounded-sm text-[10px] font-mono text-cad-muted bg-cad-bg border border-cad-border"
                   >
                     {tag}
                   </span>

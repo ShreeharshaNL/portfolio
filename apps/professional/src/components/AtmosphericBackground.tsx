@@ -2,47 +2,52 @@ import React from 'react';
 
 export const AtmosphericBackground: React.FC = () => {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-cad-bg transition-colors duration-200">
       
-      {/* Primary Geometric Paper Texture Layer */}
+      {/* Primary PCB Coordinate Grid Lattice */}
+      <div className="absolute inset-0 bg-pcb-grid opacity-80" />
+      <div className="absolute inset-0 bg-pcb-grid-fine opacity-50" />
+
+      {/* Subtle CAD Vignette & Contrast Mask */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-cad-bg/40 to-cad-bg transition-colors" />
+
+      {/* Decorative Routed PCB Traces (SVG layer) */}
+      <svg 
+        className="absolute inset-0 w-full h-full opacity-15 dark:opacity-20 transition-opacity" 
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern id="pcb-traces" width="240" height="240" patternUnits="userSpaceOnUse">
+            {/* 45-degree angled trace paths */}
+            <path d="M0 60 L60 60 L100 100 L180 100" fill="none" stroke="var(--cad-accent)" strokeWidth="1" strokeDasharray="3 3" />
+            <path d="M120 0 L120 40 L160 80 L240 80" fill="none" stroke="var(--cad-border)" strokeWidth="1.2" />
+            <path d="M60 180 L120 180 L150 210 L150 240" fill="none" stroke="var(--cad-accent)" strokeWidth="0.8" opacity="0.6" />
+            
+            {/* Vias / Solder pads */}
+            <circle cx="180" cy="100" r="3" fill="var(--cad-bg)" stroke="var(--cad-accent)" strokeWidth="1.2" />
+            <circle cx="180" cy="100" r="1" fill="var(--cad-accent)" />
+            
+            <circle cx="60" cy="180" r="2.5" fill="var(--cad-bg)" stroke="var(--cad-muted)" strokeWidth="1" />
+            <circle cx="240" cy="80" r="3" fill="var(--cad-bg)" stroke="var(--cad-border)" strokeWidth="1.2" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#pcb-traces)" />
+      </svg>
+
+      {/* Ambient Hardware Thermal Glow Spots */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 dark:opacity-35 mix-blend-normal dark:mix-blend-luminosity transition-opacity duration-700"
-        style={{
-          backgroundImage: "url('/images/backgrounds/geometric-paper.jpg')",
-        }}
-      />
-
-      {/* Radial Vignette & Contrast Mask (Paper Ivory #faf7f2 / Slate Midnight #111620) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#faf7f2]/75 to-[#faf7f2] dark:from-transparent dark:via-[#111620]/85 dark:to-[#111620]" />
-
-      {/* Subtle Tactile Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-60 dark:opacity-40" />
-
-      {/* Subtle Floating Geometric Accent Diamonds (matches the wallpaper composition) */}
-      <div 
-        className="hidden md:block absolute top-28 right-[12%] w-72 h-72 rotate-45 rounded-2xl border border-[#e07a5f]/20 dark:border-[#f49d85]/15 bg-gradient-to-br from-[#e07a5f]/5 to-transparent backdrop-blur-[1px] animate-float shadow-xl shadow-[#e07a5f]/5"
+        className="absolute -top-32 -right-32 w-96 h-96 sm:w-[500px] sm:h-[500px] rounded-full bg-cad-accent/05 blur-[140px] animate-pulse-glow"
         aria-hidden="true"
       />
       
       <div 
-        className="hidden lg:block absolute bottom-24 left-[8%] w-60 h-60 rotate-45 rounded-2xl border border-[#4a7b87]/20 dark:border-[#7ec3d4]/15 bg-gradient-to-tl from-[#4a7b87]/5 to-transparent backdrop-blur-[1px] animate-float-slow shadow-xl shadow-[#4a7b87]/5"
-        style={{ animationDelay: '2s' }}
-        aria-hidden="true"
-      />
-
-      {/* Ambient Glowing Orbs reflecting the Peach / Teal palette */}
-      <div 
-        className="absolute -top-32 -right-32 w-96 h-96 sm:w-[520px] sm:h-[520px] rounded-full bg-[#e07a5f]/15 dark:bg-[#f49d85]/12 blur-[120px] animate-pulse-glow"
-        aria-hidden="true"
-      />
-      
-      <div 
-        className="absolute top-1/3 -left-32 w-80 h-80 sm:w-[460px] sm:h-[460px] rounded-full bg-[#4a7b87]/15 dark:bg-[#7ec3d4]/12 blur-[130px] animate-float-slow"
+        className="absolute top-1/3 -left-32 w-80 h-80 sm:w-[460px] sm:h-[460px] rounded-full bg-cad-status/04 blur-[140px] animate-float-slow"
         aria-hidden="true"
       />
 
       <div 
-        className="absolute bottom-10 right-10 w-72 h-72 sm:w-[420px] sm:h-[420px] rounded-full bg-[#fab598]/15 dark:bg-[#e07a5f]/12 blur-[120px] animate-pulse-glow"
+        className="absolute bottom-10 right-10 w-72 h-72 sm:w-[420px] sm:h-[420px] rounded-full bg-cad-accent/04 blur-[130px] animate-pulse-glow"
         style={{ animationDelay: '3s' }}
         aria-hidden="true"
       />
