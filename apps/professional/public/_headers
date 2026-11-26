@@ -10,6 +10,23 @@
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none';
 
+# Ensure root document & HTML are revalidated immediately
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/resume/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/resume/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Hashed assets can be safely cached
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Disallow caching for administrative and dynamic API endpoints
 /api/*
   Cache-Control: no-store, no-cache, must-revalidate, max-age=0

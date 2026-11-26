@@ -17,9 +17,11 @@
     "preview:pro": "vite preview --config apps/professional/vite.config.ts",
     "d1:migrate:local": "wrangler d1 execute portfolio-db --local --file=./d1/schema.sql --yes",
     "d1:migrate:remote": "wrangler d1 execute portfolio-db --remote --file=./d1/schema.sql --yes",
-    "pages:deploy": "wrangler pages deploy dist --project-name=shreeharsha-portfolio",
+    "pages:deploy": "wrangler pages deploy apps/professional/dist --project-name=shreeharsha-pro",
+    "pages:deploy:pro": "wrangler pages deploy apps/professional/dist --project-name=shreeharsha-pro",
     "pages:deploy:mc": "wrangler pages deploy dist --project-name=shreeharsha-portfolio",
-    "pages:deploy:pro": "wrangler pages deploy apps/professional/dist --project-name=shreeharsha-pro"
+    "pages:deploy:resume": "wrangler deploy --config=resume-site/wrangler.jsonc",
+    "deploy:all": "npm run build:pro && npm run build:mc && npm run pages:deploy:pro && npm run pages:deploy:mc && npm run pages:deploy:resume"
   },
   "dependencies": {
     "lucide-react": "^1.16.0",
