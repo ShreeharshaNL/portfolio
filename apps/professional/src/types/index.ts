@@ -23,15 +23,16 @@ export interface PersonalInfo {
 export interface ProjectItem {
   id: string;
   title: string;
+  subdomain: string;
   category: string;
   description: string;
   highlights: string[];
   achievement?: string;
   technologies: string[];
-  projectUrl?: string;
+  projectUrl: string;
   demoUrl?: string;
   githubUrl?: string;
-  image: string;
+  image?: string;
 }
 
 export interface SkillGroup {

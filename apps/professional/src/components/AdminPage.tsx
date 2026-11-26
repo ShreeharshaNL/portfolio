@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Shield,
-  Lock,
-  Trash2,
+import React, { useState, useEffect, useMemo } from 'react';
+import { 
+  Shield, 
+  Lock, 
+  ArrowLeft, 
+  Mail, 
+  Trash2, 
+  Check, 
+  Copy, 
+  ExternalLink, 
+  RefreshCw, 
+  BarChart2, 
+  Layers, 
+  Database, 
+  Search, 
+  LogOut, 
   AlertCircle,
-  Loader2,
-  BarChart2,
-  Mail,
-  ArrowLeft,
-  RefreshCw,
-  LogOut,
-  Copy,
-  Check,
-  Send,
   Eye,
   EyeOff,
-  Layers,
-  Database,
-  ExternalLink,
-  Search,
+  Send,
+  Loader2
 } from 'lucide-react';
-import { professionalApi, AdminDashboardData, AdminMessage } from '../services/api';
-import { ThemeToggle } from './ThemeToggle';
 import { personalInfo } from '../config/portfolio';
+import { ThemeToggle } from './ThemeToggle';
+import { professionalApi, AdminDashboardData, AdminMessage, AdminGuestbookEntry } from '../services/api';
 
 interface AdminPageProps {
   onBackToHome: () => void;
@@ -49,8 +49,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
       setIsAuthenticated(true);
       setSessionToken(token);
       sessionStorage.setItem('pro_admin_token', token);
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Invalid authorization credentials.');
+    } catch (err: unknown) {
+      const error = err as Error;
+      setErrorMsg(error.message || 'Invalid authorization credentials.');
       setIsAuthenticated(false);
       sessionStorage.removeItem('pro_admin_token');
     } finally {
@@ -89,8 +90,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
           messages: adminData.messages.filter((m) => m.id !== id),
         });
       }
-    } catch (err: any) {
-      alert(err.message || 'Failed to delete message');
+    } catch (err: unknown) {
+      const error = err as Error;
+      alert(error.message || 'Failed to delete message');
     } finally {
       setDeletingId(null);
     }
@@ -102,13 +104,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
       if (adminData) {
         setAdminData({
           ...adminData,
-          guestbook: adminData.guestbook.map((g) =>
+          guestbook: adminData.guestbook.map((g: AdminGuestbookEntry) =>
             g.id === id ? { ...g, is_approved: g.is_approved ? 0 : 1 } : g
           ),
         });
       }
-    } catch (err: any) {
-      alert(err.message || 'Failed to toggle guestbook entry');
+    } catch (err: unknown) {
+      const error = err as Error;
+      alert(error.message || 'Failed to toggle guestbook entry');
     }
   };
 
@@ -119,11 +122,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
       if (adminData) {
         setAdminData({
           ...adminData,
-          guestbook: adminData.guestbook.filter((g) => g.id !== id),
+          guestbook: adminData.guestbook.filter((g: AdminGuestbookEntry) => g.id !== id),
         });
       }
-    } catch (err: any) {
-      alert(err.message || 'Failed to delete guestbook entry');
+    } catch (err: unknown) {
+      const error = err as Error;
+      alert(error.message || 'Failed to delete guestbook entry');
     }
   };
 
@@ -133,39 +137,37 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
     setTimeout(() => setCopiedEmail(null), 2000);
   };
 
-  // Filter messages based on search query
-  const filteredMessages = (adminData?.messages || []).filter((msg) => {
-    if (!searchQuery.trim()) return true;
+  const filteredMessages = useMemo(() => {
+    if (!adminData?.messages) return [];
+    if (!searchQuery.trim()) return adminData.messages;
     const q = searchQuery.toLowerCase();
-    return (
-      msg.name.toLowerCase().includes(q) ||
-      msg.email.toLowerCase().includes(q) ||
-      (msg.subject && msg.subject.toLowerCase().includes(q)) ||
-      msg.message.toLowerCase().includes(q)
+    return adminData.messages.filter(
+      (m: AdminMessage) =>
+        m.name.toLowerCase().includes(q) ||
+        m.email.toLowerCase().includes(q) ||
+        m.message.toLowerCase().includes(q) ||
+        (m.subject && m.subject.toLowerCase().includes(q))
     );
-  });
+  }, [adminData?.messages, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#ebebea] dark:bg-[#0b0c10] text-[#111111] dark:text-[#f8fafc] font-sans antialiased selection:bg-[#5fb57a] selection:text-[#111111] transition-colors duration-200">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 font-sans antialiased selection:bg-[#1d7eb6]/20 transition-colors duration-200">
       
       {/* Top Header Rule */}
-      <header className="sticky top-0 z-40 bg-[#ebebea]/95 dark:bg-[#0b0c10]/95 backdrop-blur-md border-b-2 border-[#111111] dark:border-white/20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           <button
             type="button"
             onClick={onBackToHome}
-            className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wide border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] hover:shadow-[3px_3px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] transition-colors focus-ring"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Portfolio</span>
           </button>
 
-          <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#111111]">
-            <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-1 font-black">00</span>
-            <span className="px-3 py-1 text-[#111111] dark:text-white uppercase tracking-wider font-extrabold">
-              Operator Console
-            </span>
+          <div className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
+            Operator Console
           </div>
 
           <div className="flex items-center space-x-2">
@@ -174,7 +176,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border-2 border-[#111111] dark:border-white/25 bg-rose-500 text-white shadow-[2px_2px_0px_0px_#111111] hover:shadow-[3px_3px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all focus-ring"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-rose-600 hover:bg-rose-700 text-white transition-colors focus-ring"
                 title="Log out of operator session"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -187,33 +189,33 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
       </header>
 
       {/* Main Body */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         
         {!isAuthenticated ? (
           /* =========================================================================
              LOGIN VIEW
              ========================================================================= */
           <div className="max-w-md mx-auto pt-8 pb-16">
-            <div className="card-editorial p-8 sm:p-10 shadow-[6px_6px_0px_0px_#111111] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.15)] text-center space-y-6">
+            <div className="p-8 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-center space-y-6">
               
-              <div className="w-16 h-16 rounded-full border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a] text-[#111111] flex items-center justify-center font-bold mx-auto shadow-[3px_3px_0px_0px_#111111]">
-                <Shield className="w-8 h-8" />
+              <div className="w-12 h-12 rounded-full border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-[#1d7eb6] flex items-center justify-center font-bold mx-auto">
+                <Shield className="w-6 h-6" />
               </div>
 
               <div>
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider block">
                   Authentication Required
                 </span>
-                <h1 className="font-display text-2xl sm:text-3xl font-black text-[#111111] dark:text-white uppercase tracking-tight mt-1">
-                  Admin Operator
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mt-1">
+                  Operator Login
                 </h1>
-                <p className="text-xs text-[#111111]/75 dark:text-slate-400 mt-2 font-sans">
-                  Access leads, contact form inquiries, and system analytics stored on the Cloudflare edge network.
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 font-sans leading-relaxed">
+                  Access leads, contact form inquiries, and edge telemetry stored in Cloudflare D1.
                 </p>
               </div>
 
               {errorMsg && (
-                <div className="p-3.5 rounded-xl border-2 border-[#111111] bg-rose-500/15 text-rose-800 dark:text-rose-200 text-xs font-bold flex items-center space-x-2 text-left shadow-[2px_2px_0px_0px_#111111]">
+                <div className="p-3 rounded border border-rose-500/40 bg-rose-500/10 text-rose-800 dark:text-rose-200 text-xs font-medium flex items-center space-x-2 text-left">
                   <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
                   <span>{errorMsg}</span>
                 </div>
@@ -221,7 +223,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
 
               <form onSubmit={handleLogin} className="space-y-4 text-left">
                 <div className="space-y-1.5">
-                  <label htmlFor="admin-pass" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                  <label htmlFor="admin-pass" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                     Master Password
                   </label>
                   <div className="relative">
@@ -233,16 +235,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter administrator password..."
-                      className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-all font-mono"
                     />
-                    <Lock className="w-4 h-4 absolute right-3.5 top-3.5 text-[#111111]/40 dark:text-white/40 pointer-events-none" />
+                    <Lock className="w-4 h-4 absolute right-3.5 top-3 text-zinc-400 pointer-events-none" />
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-xs uppercase tracking-wider border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
+                  className="w-full inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-md bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium transition-colors disabled:opacity-50 focus-ring"
                 >
                   {isLoading ? (
                     <>
@@ -258,8 +260,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 </button>
               </form>
 
-              <div className="pt-2 border-t-2 border-[#111111]/10 dark:border-white/10 text-[11px] font-mono text-[#111111]/50 dark:text-slate-500">
-                Route: <code className="font-bold">/admin</code> · Authenticated via Cloudflare D1
+              <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 text-[11px] font-mono text-zinc-400">
+                Route: <code>/admin</code> · Authenticated via Cloudflare D1
               </div>
 
             </div>
@@ -273,57 +275,57 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
             {/* Top Metrics Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               
-              <div className="card-editorial card-editorial-hover p-5 flex items-center space-x-3.5">
-                <div className="w-11 h-11 rounded-full border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a] text-[#111111] flex items-center justify-center font-bold shrink-0">
+              <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex items-center space-x-3.5">
+                <div className="w-10 h-10 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 text-[#1d7eb6] flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
                     Inbox Inquiries
                   </span>
-                  <div className="font-display text-2xl font-black text-[#111111] dark:text-white">
+                  <div className="text-xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                     {adminData?.messages?.length || 0}
                   </div>
                 </div>
               </div>
 
-              <div className="card-editorial card-editorial-hover p-5 flex items-center space-x-3.5">
-                <div className="w-11 h-11 rounded-full border-2 border-[#111111] dark:border-white/20 bg-sky-400 text-[#111111] flex items-center justify-center font-bold shrink-0">
+              <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex items-center space-x-3.5">
+                <div className="w-10 h-10 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 text-sky-500 flex items-center justify-center shrink-0">
                   <BarChart2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
                     Total Page Views
                   </span>
-                  <div className="font-display text-2xl font-black text-[#111111] dark:text-white">
+                  <div className="text-xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                     {adminData?.analytics?.totalViews || 0}
                   </div>
                 </div>
               </div>
 
-              <div className="card-editorial card-editorial-hover p-5 flex items-center space-x-3.5">
-                <div className="w-11 h-11 rounded-full border-2 border-[#111111] dark:border-white/20 bg-amber-400 text-[#111111] flex items-center justify-center font-bold shrink-0">
+              <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex items-center space-x-3.5">
+                <div className="w-10 h-10 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 text-amber-500 flex items-center justify-center shrink-0">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
                     Project Clicks
                   </span>
-                  <div className="font-display text-2xl font-black text-[#111111] dark:text-white">
+                  <div className="text-xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                     {adminData?.analytics?.projectClicks || 0}
                   </div>
                 </div>
               </div>
 
-              <div className="card-editorial card-editorial-hover p-5 flex items-center space-x-3.5">
-                <div className="w-11 h-11 rounded-full border-2 border-[#111111] dark:border-white/20 bg-purple-400 text-[#111111] flex items-center justify-center font-bold shrink-0">
+              <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex items-center space-x-3.5">
+                <div className="w-10 h-10 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 text-purple-500 flex items-center justify-center shrink-0">
                   <Database className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                  <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
                     Data Source
                   </span>
-                  <div className="text-sm font-mono font-black text-[#111111] dark:text-white truncate">
+                  <div className="text-xs font-mono font-bold text-zinc-900 dark:text-zinc-100 truncate">
                     {adminData?.source === 'd1-database' ? 'Cloudflare D1' : 'Local / Edge'}
                   </div>
                 </div>
@@ -332,16 +334,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
             </div>
 
             {/* Dashboard Navigation Tabs */}
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#111111]/15 dark:border-white/10 pb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
               
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 <button
                   type="button"
                   onClick={() => setActiveTab('messages')}
-                  className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all focus-ring ${
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-ring ${
                     activeTab === 'messages'
-                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111] shadow-[2px_2px_0px_0px_#5fb57a]'
-                      : 'border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-slate-300 shadow-[2px_2px_0px_0px_#111111]'
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                   }`}
                 >
                   <Mail className="w-3.5 h-3.5" />
@@ -351,10 +353,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('analytics')}
-                  className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all focus-ring ${
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-ring ${
                     activeTab === 'analytics'
-                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111] shadow-[2px_2px_0px_0px_#5fb57a]'
-                      : 'border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-slate-300 shadow-[2px_2px_0px_0px_#111111]'
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                   }`}
                 >
                   <BarChart2 className="w-3.5 h-3.5" />
@@ -364,10 +366,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('guestbook')}
-                  className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all focus-ring ${
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-ring ${
                     activeTab === 'guestbook'
-                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111] shadow-[2px_2px_0px_0px_#5fb57a]'
-                      : 'border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-slate-300 shadow-[2px_2px_0px_0px_#111111]'
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                   }`}
                 >
                   <Layers className="w-3.5 h-3.5" />
@@ -377,10 +379,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('system')}
-                  className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all focus-ring ${
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-ring ${
                     activeTab === 'system'
-                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111] shadow-[2px_2px_0px_0px_#5fb57a]'
-                      : 'border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-slate-300 shadow-[2px_2px_0px_0px_#111111]'
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                   }`}
                 >
                   <Database className="w-3.5 h-3.5" />
@@ -392,7 +394,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 type="button"
                 onClick={() => fetchDashboardData(sessionToken)}
                 disabled={isLoading}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-wider border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] hover:shadow-[3px_3px_0px_0px_#5fb57a] active:translate-x-0 active:translate-y-0 transition-all focus-ring disabled:opacity-50"
+                className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-md text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus-ring disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
                 <span>Refresh</span>
@@ -412,90 +414,82 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search inquiries by name, email, or message..."
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-sm text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 focus:outline-none focus:border-[#5fb57a] focus:shadow-[2px_2px_0px_0px_#5fb57a] transition-all"
+                      className="w-full pl-9 pr-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus-ring transition-colors"
                     />
-                    <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#111111]/40 dark:text-white/40 pointer-events-none" />
+                    <Search className="w-4 h-4 absolute left-3 top-2.5 text-zinc-400 pointer-events-none" />
                   </div>
-                  <span className="text-xs font-mono text-[#111111]/60 dark:text-slate-400 self-center">
+                  <span className="text-xs font-mono text-zinc-500 self-center">
                     Showing {filteredMessages.length} of {adminData?.messages?.length || 0} messages
                   </span>
                 </div>
 
                 {filteredMessages.length === 0 ? (
-                  <div className="card-editorial p-12 text-center space-y-3">
-                    <Mail className="w-10 h-10 mx-auto text-[#111111]/30 dark:text-white/30" />
-                    <h3 className="font-display text-lg font-black uppercase text-[#111111] dark:text-white">
+                  <div className="p-12 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-center space-y-2">
+                    <Mail className="w-8 h-8 mx-auto text-zinc-400" />
+                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                       No Messages Found
                     </h3>
-                    <p className="text-xs text-[#111111]/60 dark:text-slate-400 max-w-sm mx-auto font-sans">
+                    <p className="text-xs text-zinc-500 max-w-sm mx-auto font-sans">
                       {searchQuery
                         ? 'No inquiries match your current search query.'
-                        : 'Submissions from the Contact form on either the professional or Minecraft portfolio will appear here.'}
+                        : 'Submissions from the Contact form will appear here.'}
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {filteredMessages.map((msg: AdminMessage) => (
                       <div
                         key={msg.id}
-                        className="card-editorial card-editorial-hover p-6 sm:p-7 space-y-4 border-l-8 border-l-[#5fb57a]"
+                        className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3"
                       >
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-[#111111]/10 dark:border-white/10 pb-4">
-                          <div className="space-y-1">
+                        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                          <div className="space-y-0.5">
                             <div className="flex items-center space-x-2">
-                              <span className="font-display text-base font-black text-[#111111] dark:text-white uppercase">
+                              <span className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                                 {msg.name}
                               </span>
                               {msg.status && (
-                                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-[#5fb57a]/20 text-[#111111] dark:text-[#5fb57a] border border-[#5fb57a]">
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
                                   {msg.status}
                                 </span>
                               )}
                             </div>
-                            <div className="flex items-center space-x-2 text-xs font-mono text-[#111111]/70 dark:text-slate-400">
+                            <div className="flex items-center space-x-1.5 text-xs font-mono text-zinc-500">
                               <span>{msg.email}</span>
                               <button
                                 type="button"
                                 onClick={() => copyToClipboard(msg.email)}
-                                className="p-1 rounded hover:bg-[#111111]/10 dark:hover:bg-white/10"
+                                className="p-0.5 rounded hover:text-zinc-900 dark:hover:text-zinc-100"
                                 title="Copy email address"
                               >
                                 {copiedEmail === msg.email ? (
-                                  <Check className="w-3 h-3 text-[#5fb57a]" />
+                                  <Check className="w-3 h-3 text-[#1d7eb6]" />
                                 ) : (
-                                  <Copy className="w-3 h-3 text-[#111111]/50" />
+                                  <Copy className="w-3 h-3" />
                                 )}
                               </button>
                             </div>
                           </div>
 
-                          <div className="text-right self-start sm:self-auto">
-                            <span className="text-[11px] font-mono font-bold text-[#111111]/60 dark:text-slate-400">
-                              {new Date(msg.created_at).toLocaleString()}
-                            </span>
-                          </div>
+                          <span className="text-[11px] font-mono text-zinc-400 self-start sm:self-auto">
+                            {new Date(msg.created_at).toLocaleString()}
+                          </span>
                         </div>
 
                         {msg.subject && (
-                          <div>
-                            <span className="text-[11px] font-mono font-bold uppercase text-[#111111]/50 dark:text-slate-400 block">
-                              Subject
-                            </span>
-                            <h4 className="font-bold text-sm text-[#111111] dark:text-slate-200 mt-0.5">
-                              {msg.subject}
-                            </h4>
+                          <div className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                            Subject: {msg.subject}
                           </div>
                         )}
 
-                        <div className="p-4 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/50 dark:bg-[#1a1d29] text-sm text-[#111111]/90 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
+                        <div className="p-3 rounded-md bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans whitespace-pre-wrap">
                           {msg.message}
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+                        <div className="pt-1 flex items-center justify-between">
                           <a
                             href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject || 'Portfolio Inquiry')}&body=${encodeURIComponent(`\n\n--- Original Message from ${msg.name} ---\n${msg.message}`)}`}
-                            className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase bg-[#5fb57a] text-[#111111] border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] hover:shadow-[3px_3px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all focus-ring"
+                            className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d7eb6] hover:underline"
                           >
                             <Send className="w-3 h-3" />
                             <span>Reply via Email</span>
@@ -505,7 +499,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                             type="button"
                             onClick={() => handleDeleteMessage(msg.id)}
                             disabled={deletingId === msg.id}
-                            className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-full text-xs font-bold uppercase text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-900/60 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors focus-ring"
+                            className="inline-flex items-center space-x-1 text-xs text-rose-500 hover:text-rose-600 transition-colors"
                           >
                             {deletingId === msg.id ? (
                               <Loader2 className="w-3 h-3 animate-spin" />
@@ -531,28 +525,28 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   
                   {/* Project Popularity */}
-                  <div className="card-editorial p-6 sm:p-7 space-y-5">
+                  <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-display text-base font-black text-[#111111] dark:text-white uppercase">
+                      <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                         Project Engagement
                       </h3>
-                      <span className="text-[11px] font-mono font-bold uppercase text-[#111111]/60 dark:text-slate-400">
+                      <span className="text-xs font-mono text-zinc-500">
                         Clicks
                       </span>
                     </div>
 
                     {(!adminData?.analytics?.projectStats || adminData.analytics.projectStats.length === 0) ? (
-                      <div className="p-8 text-center text-xs font-mono text-[#111111]/50 dark:text-slate-400">
+                      <div className="p-6 text-center text-xs font-mono text-zinc-400">
                         No individual project click telemetry recorded yet.
                       </div>
                     ) : (
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         {adminData.analytics.projectStats.map((item) => (
-                          <div key={item.project} className="flex items-center justify-between p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29]">
-                            <span className="font-mono font-bold text-xs text-[#111111] dark:text-white">
+                          <div key={item.project} className="flex items-center justify-between p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs">
+                            <span className="font-mono font-medium text-zinc-800 dark:text-zinc-200">
                               {item.project}
                             </span>
-                            <span className="px-2.5 py-0.5 rounded-full bg-[#5fb57a] text-[#111111] font-mono font-black text-xs border border-[#111111]">
+                            <span className="font-mono font-semibold text-[#1d7eb6]">
                               {item.count} clicks
                             </span>
                           </div>
@@ -561,29 +555,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                     )}
                   </div>
 
-                  {/* Theme / Biome Preferences */}
-                  <div className="card-editorial p-6 sm:p-7 space-y-5">
+                  {/* Theme Preferences */}
+                  <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-display text-base font-black text-[#111111] dark:text-white uppercase">
+                      <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                         Atmospheric Selection Stats
                       </h3>
-                      <span className="text-[11px] font-mono font-bold uppercase text-[#111111]/60 dark:text-slate-400">
-                        Total
+                      <span className="text-xs font-mono text-zinc-500">
+                        Visits
                       </span>
                     </div>
 
                     {(!adminData?.analytics?.themeStats || adminData.analytics.themeStats.length === 0) ? (
-                      <div className="p-8 text-center text-xs font-mono text-[#111111]/50 dark:text-slate-400">
+                      <div className="p-6 text-center text-xs font-mono text-zinc-400">
                         No theme selection events recorded yet.
                       </div>
                     ) : (
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         {adminData.analytics.themeStats.map((t) => (
-                          <div key={t.theme} className="flex items-center justify-between p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29]">
-                            <span className="font-mono font-bold text-xs uppercase text-[#111111] dark:text-white">
+                          <div key={t.theme} className="flex items-center justify-between p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs">
+                            <span className="font-mono uppercase text-zinc-800 dark:text-zinc-200">
                               {t.theme}
                             </span>
-                            <span className="px-2.5 py-0.5 rounded-full bg-sky-300 dark:bg-sky-900/60 text-[#111111] dark:text-sky-200 font-mono font-bold text-xs border border-[#111111]/30">
+                            <span className="font-mono font-semibold text-zinc-600 dark:text-zinc-400">
                               {t.count} visits
                             </span>
                           </div>
@@ -602,44 +596,44 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
               <div className="space-y-6">
                 
                 {(!adminData?.guestbook || adminData.guestbook.length === 0) ? (
-                  <div className="card-editorial p-12 text-center space-y-3">
-                    <Layers className="w-10 h-10 mx-auto text-[#111111]/30 dark:text-white/30" />
-                    <h3 className="font-display text-lg font-black uppercase text-[#111111] dark:text-white">
+                  <div className="p-12 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-center space-y-2">
+                    <Layers className="w-8 h-8 mx-auto text-zinc-400" />
+                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                       No Guestbook Notes
                     </h3>
-                    <p className="text-xs text-[#111111]/60 dark:text-slate-400 max-w-sm mx-auto font-sans">
+                    <p className="text-xs text-zinc-500 max-w-sm mx-auto font-sans">
                       Visitor signs created on the Minecraft Community Ledger will appear here for review and moderation.
                     </p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {adminData.guestbook.map((entry) => (
+                    {adminData.guestbook.map((entry: AdminGuestbookEntry) => (
                       <div
                         key={entry.id}
-                        className="card-editorial card-editorial-hover p-6 space-y-3 flex flex-col justify-between"
+                        className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3 flex flex-col justify-between"
                       >
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="font-display text-sm font-black text-[#111111] dark:text-white uppercase">
+                            <span className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                               {entry.author_name}
                             </span>
                             <span
-                              className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase border ${
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-medium ${
                                 entry.is_approved
-                                  ? 'bg-[#5fb57a]/20 text-[#111111] dark:text-[#5fb57a] border-[#5fb57a]'
-                                  : 'bg-amber-400/20 text-amber-800 dark:text-amber-300 border-amber-500'
+                                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
+                                  : 'bg-amber-500/10 text-amber-700 dark:text-amber-400'
                               }`}
                             >
                               {entry.is_approved ? 'Approved' : 'Hidden'}
                             </span>
                           </div>
-                          <p className="text-sm text-[#111111]/85 dark:text-slate-300 font-sans">
+                          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-sans">
                             "{entry.message}"
                           </p>
                         </div>
 
-                        <div className="pt-3 border-t border-[#111111]/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                          <span className="text-[11px] text-[#111111]/50 dark:text-slate-400">
+                        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-xs font-mono">
+                          <span className="text-[11px] text-zinc-400">
                             {new Date(entry.created_at).toLocaleDateString()}
                           </span>
 
@@ -647,7 +641,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                             <button
                               type="button"
                               onClick={() => handleToggleGuestbook(entry.id)}
-                              className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-xs font-bold border border-[#111111]/30 dark:border-white/30 hover:bg-[#111111]/10 dark:hover:bg-white/10"
+                              className="inline-flex items-center space-x-1 px-2 py-1 rounded text-xs border border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 text-zinc-700 dark:text-zinc-300 transition-colors"
                             >
                               {entry.is_approved ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
                               <span>{entry.is_approved ? 'Hide' : 'Approve'}</span>
@@ -656,7 +650,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                             <button
                               type="button"
                               onClick={() => handleDeleteGuestbook(entry.id)}
-                              className="p-1 rounded text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30"
+                              className="p-1 rounded text-rose-500 hover:text-rose-600 transition-colors"
                               title="Delete entry"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -679,66 +673,66 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToHome }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   
                   {/* Database Schema & Tables */}
-                  <div className="card-editorial p-6 sm:p-7 space-y-4">
-                    <h3 className="font-display text-base font-black text-[#111111] dark:text-white uppercase">
+                  <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
+                    <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                       Cloudflare D1 Infrastructure
                     </h3>
-                    <p className="text-xs text-[#111111]/75 dark:text-slate-400 leading-relaxed font-sans">
-                      Serverless SQLite database distributed on Cloudflare's edge network.
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                      Serverless SQLite database distributed globally on Cloudflare's edge network.
                     </p>
 
-                    <div className="space-y-2 pt-2 font-mono text-xs">
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29] flex items-center justify-between">
-                        <span className="font-bold text-[#111111] dark:text-white">contact_messages</span>
-                        <span className="text-[#5fb57a] font-bold">D1 Table</span>
+                    <div className="space-y-2 pt-1 font-mono text-xs">
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between">
+                        <span className="font-medium text-zinc-800 dark:text-zinc-200">contact_messages</span>
+                        <span className="text-[#1d7eb6] font-semibold">D1 Table</span>
                       </div>
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29] flex items-center justify-between">
-                        <span className="font-bold text-[#111111] dark:text-white">guestbook_entries</span>
-                        <span className="text-[#5fb57a] font-bold">D1 Table</span>
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between">
+                        <span className="font-medium text-zinc-800 dark:text-zinc-200">guestbook_entries</span>
+                        <span className="text-[#1d7eb6] font-semibold">D1 Table</span>
                       </div>
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29] flex items-center justify-between">
-                        <span className="font-bold text-[#111111] dark:text-white">analytics_events</span>
-                        <span className="text-[#5fb57a] font-bold">D1 Table</span>
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between">
+                        <span className="font-medium text-zinc-800 dark:text-zinc-200">analytics_events</span>
+                        <span className="text-[#1d7eb6] font-semibold">D1 Table</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Project Identity & Deployment Targets */}
-                  <div className="card-editorial p-6 sm:p-7 space-y-4">
-                    <h3 className="font-display text-base font-black text-[#111111] dark:text-white uppercase">
+                  <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
+                    <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                       Portfolio Ecosystem Targets
                     </h3>
 
-                    <div className="space-y-3 font-mono text-xs pt-1">
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29]">
-                        <span className="text-[#111111]/50 dark:text-slate-400 uppercase text-[10px] block">Main Site</span>
+                    <div className="space-y-2 font-mono text-xs pt-1">
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+                        <span className="text-zinc-400 uppercase text-[10px] block">Main Site</span>
                         <a
                           href="https://shreeharsha.online"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-bold text-[#111111] dark:text-white flex items-center space-x-1.5 hover:text-[#5fb57a] transition-colors"
+                          className="font-medium text-zinc-900 dark:text-zinc-100 flex items-center space-x-1.5 hover:text-[#1d7eb6] transition-colors mt-0.5"
                         >
                           <span>https://shreeharsha.online</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       </div>
 
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29]">
-                        <span className="text-[#111111]/50 dark:text-slate-400 uppercase text-[10px] block">Minecraft Edition</span>
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+                        <span className="text-zinc-400 uppercase text-[10px] block">Minecraft Edition</span>
                         <a
                           href="https://minecraft.shreeharsha.online"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-bold text-[#111111] dark:text-white flex items-center space-x-1.5 hover:text-[#5fb57a] transition-colors"
+                          className="font-medium text-zinc-900 dark:text-zinc-100 flex items-center space-x-1.5 hover:text-[#1d7eb6] transition-colors mt-0.5"
                         >
                           <span>https://minecraft.shreeharsha.online</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       </div>
 
-                      <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea]/40 dark:bg-[#1a1d29]">
-                        <span className="text-[#111111]/50 dark:text-slate-400 uppercase text-[10px] block">Owner Information</span>
-                        <span className="font-bold text-[#111111] dark:text-white">
+                      <div className="p-2.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+                        <span className="text-zinc-400 uppercase text-[10px] block">Owner Information</span>
+                        <span className="font-medium text-zinc-900 dark:text-zinc-100 mt-0.5 block">
                           {personalInfo.name} · NIE Mysuru · CGPA {personalInfo.cgpa}
                         </span>
                       </div>

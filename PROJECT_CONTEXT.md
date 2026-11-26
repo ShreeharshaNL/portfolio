@@ -15,7 +15,7 @@
   2. **Minecraft Edition Portfolio:** `https://minecraft.shreeharsha.online` (Live on Cloudflare Pages: `https://shreeharsha-portfolio.pages.dev`)
      * **Aesthetic & Audience:** Playful, retro-pixel interactive experience with dynamic biome skies, Web Audio API sound effects, diamond mining block, XP progression, 9-slot HUD hotbar, Community Ledger guestbook, global miner leaderboard, and operator admin dashboard at `/admin`.
 * **Database & Cloudflare Infrastructure:**
-  * Shared Cloudflare D1 SQL database: `portfolio-db` (UUID: `2c30e30a-033b-4fa4-a61e-83efb3490af8`).
+  * Shared Cloudflare D1 SQL database: `portfolio-db` (UUID: `c8ba3a46-f9cf-41a3-bc8d-11648d3b87f5`).
   * Both sites record contact inquiries directly to `contact_messages`, enabling unified management from `/admin`.
 
 ---

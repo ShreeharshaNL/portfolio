@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, ExternalLink, Gamepad2 } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { personalInfo, crossLinkConfig } from '../config/portfolio';
 
 export interface FooterProps {
@@ -14,55 +14,47 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
   };
 
   return (
-    <footer className="border-t-2 border-[#111111]/15 dark:border-white/10 bg-[#ebebea] dark:bg-[#0b0c10] text-[#111111]/70 dark:text-slate-400 text-xs py-10 sm:py-14 transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+    <footer className="border-t border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 text-xs py-12 transition-colors">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Top Tier: Cross-link to Minecraft Portfolio */}
-        <div className="card-editorial p-5 sm:p-7 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-5 border-2 border-[#111111] dark:border-white/20">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
-            <div className="w-12 h-12 rounded-full border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a] text-[#111111] flex items-center justify-center font-bold shrink-0">
-              <Gamepad2 className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-display text-base font-black text-[#111111] dark:text-white uppercase tracking-tight">
-                Explore an alternate interactive dimension
-              </h4>
-              <p className="text-xs text-[#111111]/75 dark:text-slate-400 mt-1 font-sans max-w-xl">
-                {crossLinkConfig.description}
-              </p>
-            </div>
+        {/* Alternate Interactive Dimension (Minecraft Edition Cross-Link) */}
+        <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1 max-w-xl">
+            <span className="font-mono text-xs text-zinc-800 dark:text-zinc-200 font-semibold block">
+              Minecraft Edition Portfolio
+            </span>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
+              Looking for an interactive version? Explore the Minecraft Edition portfolio with dynamic biome atmospheres, Web Audio sound effects, and diamond mining.
+            </p>
           </div>
 
           <a
             href={crossLinkConfig.minecraftUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wide bg-white dark:bg-[#15171f] text-[#111111] dark:text-white border-2 border-[#111111] dark:border-white/25 shadow-[3px_3px_0px_0px_#111111] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] hover:shadow-[5px_5px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring shrink-0"
+            className="group inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] dark:hover:border-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring shrink-0"
           >
             <span>Visit Minecraft Edition</span>
-            <ExternalLink className="w-3.5 h-3.5 text-[#5fb57a]" />
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
 
-        {/* Middle Tier: Identity & Navigation Links */}
+        {/* Navigation & Identity Strip */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 font-mono text-xs text-center sm:text-left">
-            <span className="font-display font-black text-[#111111] dark:text-white uppercase tracking-tight text-sm">
+          <div className="flex items-center space-x-2 font-mono text-xs">
+            <span className="font-semibold text-zinc-900 dark:text-zinc-100">
               {personalInfo.name}
             </span>
-            <span className="text-[#111111]/30 dark:text-white/30">•</span>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <span>NIE Mysuru (B.E. ISE 2027)</span>
           </div>
 
-          {/* Social Profiles */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 font-mono font-bold uppercase text-[11px] tracking-wider">
+          <div className="flex items-center space-x-4 font-mono text-xs">
             <a
               href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#111111] dark:text-slate-300 hover:text-[#5fb57a] dark:hover:text-[#5fb57a] transition-colors py-1"
-              aria-label="GitHub Profile"
+              className="text-zinc-600 dark:text-zinc-400 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
             >
               GitHub
             </a>
@@ -70,50 +62,47 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToAdmin }) => {
               href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#111111] dark:text-slate-300 hover:text-[#5fb57a] dark:hover:text-[#5fb57a] transition-colors py-1"
-              aria-label="LinkedIn Profile"
+              className="text-zinc-600 dark:text-zinc-400 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
             >
               LinkedIn
             </a>
             <a
               href={`mailto:${personalInfo.social.email}`}
-              className="text-[#111111] dark:text-slate-300 hover:text-[#5fb57a] dark:hover:text-[#5fb57a] transition-colors py-1"
-              aria-label="Email Address"
+              className="text-zinc-600 dark:text-zinc-400 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
             >
               Email
             </a>
             <button
               type="button"
               onClick={scrollToTop}
-              className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] hover:shadow-[3px_3px_0px_0px_#5fb57a] transition-all focus-ring ml-1"
+              className="inline-flex items-center space-x-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors ml-2"
               aria-label="Scroll to top of page"
             >
               <span>Top</span>
-              <ArrowUp className="w-3 h-3 text-[#5fb57a]" />
+              <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
-
         </div>
 
-        {/* Bottom Tier: Copyright & Colophon */}
-        <div className="pt-5 border-t-2 border-[#111111]/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-[#111111]/60 dark:text-slate-400 text-center sm:text-left">
+        {/* Colophon & Admin link */}
+        <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
           <div>
             © {currentYear} Shreeharsha N. L. · React & Tailwind CSS
           </div>
-          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-2 gap-y-1">
+          <div className="flex items-center space-x-2">
             <span>Hosted on Cloudflare Pages</span>
             <span>•</span>
             {onNavigateToAdmin ? (
               <button
                 type="button"
                 onClick={onNavigateToAdmin}
-                className="hover:text-[#5fb57a] underline transition-colors"
-                title="Open Operator Console"
+                className="hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
+                title="Open Operator Dashboard"
               >
                 /admin
               </button>
             ) : (
-              <a href="/admin" className="hover:text-[#5fb57a] underline transition-colors">
+              <a href="/admin" className="hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors">
                 /admin
               </a>
             )}

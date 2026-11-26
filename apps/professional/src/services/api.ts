@@ -53,15 +53,21 @@ export const professionalApi = {
     }
 
     if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
+      const err = (await res.json().catch(() => ({}))) as { error?: string };
       throw new Error(err.error || 'Invalid Admin Password');
     }
 
-    const data = await res.json();
+    const data = (await res.json()) as AdminDashboardData;
 
     // Also merge any local fallback inquiries saved in localStorage (offline/local dev)
     try {
-      const offlineInquiries: any[] = JSON.parse(
+      const offlineInquiries: Array<{
+        name?: string;
+        email?: string;
+        subject?: string;
+        message?: string;
+        timestamp?: string;
+      }> = JSON.parse(
         localStorage.getItem('shreeharsha_offline_inquiries') || '[]'
       );
       if (offlineInquiries.length > 0) {
@@ -95,7 +101,7 @@ export const professionalApi = {
     // If it's a local inquiry, remove from localStorage
     if (id.startsWith('local-')) {
       try {
-        const offlineInquiries: any[] = JSON.parse(
+        const offlineInquiries: Array<unknown> = JSON.parse(
           localStorage.getItem('shreeharsha_offline_inquiries') || '[]'
         );
         const filtered = offlineInquiries.filter((_, idx) => !id.includes(`local-${idx}-`));
@@ -123,7 +129,7 @@ export const professionalApi = {
     }
 
     if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
+      const err = (await res.json().catch(() => ({}))) as { error?: string };
       throw new Error(err.error || 'Admin action failed');
     }
 

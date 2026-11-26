@@ -4,39 +4,37 @@
 
 @layer base {
   :root {
-    --mph-paper: #ebebea;
-    --mph-ink: #111111;
-    --mph-accent: #5fb57a;
-    --mph-surface: #ffffff;
-    --mph-subtle: #dededb;
+    --canvas: #fafafa;
+    --ink: #09090b;
+    --accent: #1d7eb6;
+    --border: #e4e4e7;
   }
 
   .dark {
-    --mph-paper: #0b0c10;
-    --mph-ink: #f8fafc;
-    --mph-accent: #5fb57a;
-    --mph-surface: #15171f;
-    --mph-subtle: #242735;
+    --canvas: #09090b;
+    --ink: #fafafa;
+    --accent: #1d7eb6;
+    --border: #27272a;
   }
 
   html {
     scroll-behavior: smooth;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    background-color: var(--mph-paper);
-    color: var(--mph-ink);
+    background-color: var(--canvas);
+    color: var(--ink);
   }
 
   body {
-    background-color: var(--mph-paper);
-    color: var(--mph-ink);
+    background-color: var(--canvas);
+    color: var(--ink);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
   /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -44,46 +42,30 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #d4d4d8;
     border-radius: 9999px;
   }
 
   .dark ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #27272a;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #a1a1aa;
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: #475569;
+    background: #3f3f46;
   }
 }
 
 @layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5fb57a] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900;
+    @apply focus:outline-none focus-visible:ring-1 focus-visible:ring-[#1d7eb6] focus-visible:ring-offset-1 dark:focus-visible:ring-offset-zinc-950;
   }
 
-  /* Tactile Editorial Theme Utilities */
-  .card-editorial {
-    @apply bg-white dark:bg-[#15171f] border-2 border-[#111111] dark:border-white/20 rounded-2xl shadow-[4px_4px_0px_0px_#111111] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.12)] transition-all duration-200;
-  }
-
-  .card-editorial-hover {
-    @apply hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_#5fb57a];
-  }
-
-  .btn-editorial-primary {
-    @apply inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-sm border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 active:shadow-[1px_1px_0px_0px_#111111] transition-all;
-  }
-
-  .btn-editorial-secondary {
-    @apply inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-white dark:bg-[#15171f] text-[#111111] dark:text-white font-extrabold text-sm border-2 border-[#111111] dark:border-white/25 shadow-[3px_3px_0px_0px_#111111] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#5fb57a] active:translate-x-0 active:translate-y-0 transition-all;
-  }
-
-  .pill-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 border-[#111111] dark:border-white/30 text-xs font-mono font-bold tracking-wider uppercase bg-white dark:bg-[#15171f] shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)];
+  /* Editorial Index Divider */
+  .hairline-divider {
+    @apply border-t border-zinc-200 dark:border-zinc-800;
   }
 }

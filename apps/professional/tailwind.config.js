@@ -8,35 +8,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper: {
-          light: '#ebebea',
-          dark: '#0c0d12',
+        canvas: {
+          light: '#fafafa',
+          dark: '#09090b',
         },
         ink: {
-          light: '#111111',
-          dark: '#f8fafc',
+          light: '#09090b',
+          dark: '#fafafa',
+          muted: '#71717a',
+          dim: '#a1a1aa',
         },
         accent: {
-          DEFAULT: '#5fb57a',
-          hover: '#4da368',
+          DEFAULT: '#1d7eb6',
+          hover: '#156593',
+          muted: '#e0f2fe',
+          darkMuted: '#082f49',
         },
-        brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
+        cobalt: {
+          DEFAULT: '#1d7eb6',
+          hover: '#156593',
+          light: '#38bdf8',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-        display: ['"Archivo Black"', '"Arial Black"', 'Helvetica', 'Arial', 'sans-serif'],
+        display: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+      },
+      lineHeight: {
+        relaxed: '1.6',
       },
     },
   },

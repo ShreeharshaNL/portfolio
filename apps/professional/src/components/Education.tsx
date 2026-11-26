@@ -1,74 +1,69 @@
 import React from 'react';
-import { Award, Calendar, MapPin, CheckCircle2, GraduationCap } from 'lucide-react';
+import { Calendar, MapPin, Award, GraduationCap } from 'lucide-react';
 import { educationData, achievementData } from '../config/portfolio';
 
 export const Education: React.FC = () => {
   return (
-    <section id="education" className="py-24 border-t-2 border-[#111111]/15 dark:border-white/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="education" className="py-20 sm:py-24 border-t border-zinc-200 dark:border-zinc-800">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14">
-          <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold mb-4 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
-            <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-0.5 font-black">04</span>
-            <span className="px-3 py-0.5 text-[#111111] dark:text-white uppercase tracking-wider">Academia</span>
+        <div className="max-w-2xl mb-12 sm:mb-16">
+          <div className="font-mono text-xs text-[#1d7eb6] uppercase tracking-wider font-semibold mb-2">
+            04 / Education & Honors
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-[#111111] dark:text-white uppercase leading-[1.08]">
-            Education & Honors
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            Academic Credentials & Hackathons
           </h2>
-          <p className="mt-3 text-base text-[#111111]/75 dark:text-slate-400">
-            Formal undergraduate training in Information Science and Engineering, accompanied by competitive hackathon milestones.
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+            Undergraduate training in Information Science and Engineering paired with competitive hackathon outcomes.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Main Education Card (7 cols) */}
-          <div className="lg:col-span-7 card-editorial card-editorial-hover p-6 sm:p-8 space-y-6">
+          {/* Main Education Details (7 cols) */}
+          <div className="lg:col-span-7 p-6 sm:p-7 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30 space-y-5">
             
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-[#111111]/10 dark:border-white/10 pb-5">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a] text-[#111111] flex items-center justify-center font-bold shrink-0">
-                  <GraduationCap className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
-                    Undergraduate Degree
-                  </span>
-                  <h3 className="font-display text-xl sm:text-2xl font-black text-[#111111] dark:text-white uppercase">
-                    {educationData.institution}
-                  </h3>
-                </div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-4">
+              <div>
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider flex items-center space-x-1.5">
+                  <GraduationCap className="w-3.5 h-3.5 text-[#1d7eb6]" />
+                  <span>Undergraduate Degree</span>
+                </span>
+                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mt-1">
+                  {educationData.institution}
+                </h3>
               </div>
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#5fb57a] text-[#111111] text-xs font-mono font-black border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] self-start sm:self-auto">
-                <span>CGPA: {educationData.cgpa} / 10.0</span>
+              <div className="font-mono text-xs font-semibold text-[#1d7eb6] dark:text-[#38bdf8] shrink-0">
+                CGPA: {educationData.cgpa} / 10.0
               </div>
             </div>
 
-            <div className="space-y-2">
-              <h4 className="text-base sm:text-lg font-bold text-[#111111] dark:text-slate-100">
+            <div className="space-y-1.5">
+              <h4 className="text-sm sm:text-base font-semibold text-zinc-800 dark:text-zinc-200">
                 {educationData.degree} in {educationData.field}
               </h4>
-              <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs sm:text-sm text-[#111111]/70 dark:text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-zinc-500 dark:text-zinc-400">
                 <span className="flex items-center space-x-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-[#5fb57a]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#1d7eb6]" />
                   <span>2023 — {educationData.expectedGraduation} (Expected)</span>
                 </span>
                 <span className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#5fb57a]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6]" />
                   <span>{educationData.location}</span>
                 </span>
               </div>
             </div>
 
-            <div className="space-y-2.5 pt-2">
-              <h5 className="text-[11px] font-mono uppercase tracking-wider text-[#111111]/60 dark:text-slate-400 font-bold">
-                Curriculum Focus & Involvement
-              </h5>
-              <ul className="space-y-2 text-sm text-[#111111]/85 dark:text-slate-300">
+            <div className="pt-2 space-y-2">
+              <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block font-semibold">
+                Curriculum Focus
+              </span>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
                 {educationData.highlights.map((highlight, idx) => (
-                  <li key={idx} className="flex items-start space-x-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#5fb57a] shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-start space-x-2">
+                    <span className="text-[#1d7eb6] font-mono select-none">—</span>
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -77,39 +72,35 @@ export const Education: React.FC = () => {
 
           </div>
 
-          {/* Achievement Spotlight Card (5 cols) */}
-          <div className="lg:col-span-5 card-editorial card-editorial-hover p-6 sm:p-8 space-y-5 border-l-8 border-l-[#5fb57a]">
+          {/* Hackathon Achievement (5 cols) */}
+          <div className="lg:col-span-5 p-6 sm:p-7 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30 space-y-4">
             
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a] text-[#111111] flex items-center justify-center font-bold shrink-0">
-                <Award className="w-5 h-5" />
+            <div className="flex items-center space-x-2 text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+              <Award className="w-4 h-4 text-[#1d7eb6]" />
+              <span>Competitive Victory</span>
+            </div>
+
+            <div>
+              <h3 className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                {achievementData.title}
+              </h3>
+              <p className="text-xs font-mono text-[#1d7eb6] dark:text-[#38bdf8] mt-0.5">
+                {achievementData.team} · {achievementData.event}
+              </p>
+            </div>
+
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+              {achievementData.description}
+            </p>
+
+            <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 grid grid-cols-2 gap-3 text-xs font-mono">
+              <div>
+                <span className="text-zinc-400 dark:text-zinc-500 block">Team</span>
+                <span className="text-zinc-800 dark:text-zinc-200 font-semibold">{achievementData.team}</span>
               </div>
               <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#111111]/60 dark:text-slate-400 font-bold">
-                  Hackathon Victory
-                </span>
-                <h3 className="font-display text-xl font-black text-[#111111] dark:text-white uppercase">
-                  {achievementData.title}
-                </h3>
-              </div>
-            </div>
-
-            <div className="space-y-2 text-sm text-[#111111]/85 dark:text-slate-300 leading-relaxed font-sans">
-              <p>{achievementData.description}</p>
-            </div>
-
-            <div className="pt-4 border-t-2 border-[#111111]/10 dark:border-white/10 grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea] dark:bg-[#1a1d29]">
-                <span className="text-[11px] text-[#111111]/60 dark:text-slate-400 font-mono font-bold uppercase block">Team</span>
-                <p className="font-bold text-[#111111] dark:text-slate-100 mt-0.5">
-                  {achievementData.team}
-                </p>
-              </div>
-              <div className="p-3 rounded-xl border border-[#111111]/20 dark:border-white/10 bg-[#ebebea] dark:bg-[#1a1d29]">
-                <span className="text-[11px] text-[#111111]/60 dark:text-slate-400 font-mono font-bold uppercase block">Event</span>
-                <p className="font-bold text-[#111111] dark:text-slate-100 mt-0.5">
-                  {achievementData.event}
-                </p>
+                <span className="text-zinc-400 dark:text-zinc-500 block">Year</span>
+                <span className="text-zinc-800 dark:text-zinc-200 font-semibold">{achievementData.year}</span>
               </div>
             </div>
 

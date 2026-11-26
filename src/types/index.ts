@@ -24,6 +24,7 @@ export interface PersonalInfo {
 export interface ProjectItem {
   id: string;
   title: string;
+  subdomain?: string;
   category: string;
   description: string;
   highlights: string[];

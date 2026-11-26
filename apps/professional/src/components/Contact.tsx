@@ -36,7 +36,6 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     setStatus({ type: null, message: '' });
 
-    // Client-side validation
     if (!formData.name.trim() || formData.name.trim().length < 2) {
       setStatus({ type: 'error', message: 'Please enter your name (at least 2 characters).' });
       return;
@@ -56,14 +55,13 @@ export const Contact: React.FC = () => {
     setLoading(true);
 
     try {
-      // POST to /api/contact
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json().catch(() => ({}));
+      const data = (await response.json().catch(() => ({}))) as { success?: boolean; error?: string };
 
       if (response.ok && (data.success !== false)) {
         setStatus({
@@ -72,14 +70,12 @@ export const Contact: React.FC = () => {
         });
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
-        // If server returned an error
         setStatus({
           type: 'error',
-          message: data.error || 'Unable to send message right now. Please email me directly.',
+          message: data.error || 'Unable to send message right now. Please email directly.',
         });
       }
     } catch {
-      // Offline fallback: save locally and notify user
       try {
         const stored = JSON.parse(localStorage.getItem('shreeharsha_offline_inquiries') || '[]');
         stored.push({ ...formData, timestamp: new Date().toISOString() });
@@ -88,7 +84,7 @@ export const Contact: React.FC = () => {
 
       setStatus({
         type: 'success',
-        message: 'Your inquiry has been noted! If urgent, please feel free to email directly at ' + personalInfo.social.email,
+        message: 'Your inquiry has been recorded. Feel free to follow up directly at ' + personalInfo.social.email,
       });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } finally {
@@ -97,88 +93,87 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 border-t-2 border-[#111111]/15 dark:border-white/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 sm:py-24 border-t border-zinc-200 dark:border-zinc-800">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14">
-          <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold mb-4 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
-            <span className="bg-[#5fb57a] text-[#111111] px-2.5 py-0.5 font-black">05</span>
-            <span className="px-3 py-0.5 text-[#111111] dark:text-white uppercase tracking-wider">Contact</span>
+        <div className="max-w-2xl mb-12 sm:mb-16">
+          <div className="font-mono text-xs text-[#1d7eb6] uppercase tracking-wider font-semibold mb-2">
+            05 / Contact
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-[#111111] dark:text-white uppercase leading-[1.08]">
-            Let's discuss opportunities or collaborations.
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            Let's Discuss Opportunities
           </h2>
-          <p className="mt-3 text-base text-[#111111]/75 dark:text-slate-400">
-            Open for software engineering internships, technical collaborations, and full-stack projects. Feel free to reach out via the form below or directly through email.
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+            Open for software engineering internships, technical collaborations, and full-stack projects.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Direct Communication Details (5 cols) */}
+          {/* Direct Channels (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             
-            <div className="card-editorial p-6 sm:p-8 space-y-6">
-              
-              <h3 className="font-display text-lg font-black text-[#111111] dark:text-white uppercase">
-                Contact Information
+            <div className="p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30 space-y-5">
+              <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-900 dark:text-zinc-100">
+                Direct Contact
               </h3>
 
-              {/* Email item */}
-              <div className="space-y-2">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
-                  Direct Email
+              {/* Email */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
+                  Email
                 </span>
-                <div className="flex items-center justify-between p-3 rounded-xl bg-[#ebebea] dark:bg-[#1a1d29] border-2 border-[#111111] dark:border-white/20 shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)]">
-                  <span className="text-xs sm:text-sm font-mono font-bold text-[#111111] dark:text-slate-200 truncate">
+                <div className="flex items-center justify-between p-2.5 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                  <span className="text-xs sm:text-sm font-mono text-zinc-800 dark:text-zinc-200 truncate">
                     {personalInfo.social.email}
                   </span>
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className="ml-2 p-1.5 rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[1px_1px_0px_0px_#111111] hover:shadow-[2px_2px_0px_0px_#5fb57a] transition-all focus-ring"
-                    title="Copy email to clipboard"
+                    className="ml-2 p-1.5 rounded text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-ring"
+                    title="Copy email address"
                     aria-label="Copy email address"
                   >
-                    {copied ? <Check className="w-4 h-4 text-[#5fb57a]" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-3.5 h-3.5 text-[#1d7eb6]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </div>
 
               {/* Location */}
               <div className="space-y-1">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400">
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
                   Location
                 </span>
-                <p className="text-sm font-bold text-[#111111] dark:text-slate-300 flex items-center space-x-1.5">
-                  <MapPin className="w-4 h-4 text-[#5fb57a]" />
+                <p className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 flex items-center space-x-1.5 font-sans">
+                  <MapPin className="w-3.5 h-3.5 text-[#1d7eb6]" />
                   <span>{personalInfo.location}</span>
                 </p>
               </div>
 
               {/* Social Profiles */}
-              <div className="pt-4 border-t-2 border-[#111111]/10 dark:border-white/10 space-y-3">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111111]/60 dark:text-slate-400 block">
-                  Professional Profiles
+              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
+                  Profiles
                 </span>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center space-x-3 text-xs font-mono">
                   <a
                     href={personalInfo.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wide border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] hover:shadow-[3px_3px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring"
+                    className="inline-flex items-center space-x-1.5 text-zinc-700 dark:text-zinc-300 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring rounded"
                   >
-                    <GithubIcon className="w-4 h-4" />
+                    <GithubIcon className="w-3.5 h-3.5" />
                     <span>GitHub</span>
                   </a>
+                  <span className="text-zinc-300 dark:text-zinc-700">•</span>
                   <a
                     href={personalInfo.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wide border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] hover:shadow-[3px_3px_0px_0px_#5fb57a] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all focus-ring"
+                    className="inline-flex items-center space-x-1.5 text-zinc-700 dark:text-zinc-300 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring rounded"
                   >
-                    <LinkedinIcon className="w-4 h-4 text-[#5fb57a]" />
+                    <LinkedinIcon className="w-3.5 h-3.5" />
                     <span>LinkedIn</span>
                   </a>
                 </div>
@@ -186,139 +181,127 @@ export const Contact: React.FC = () => {
 
             </div>
 
-            {/* Quick availability pill */}
-            <div className="p-4 rounded-xl border-2 border-[#111111] dark:border-white/20 bg-[#5fb57a]/15 text-[#111111] dark:text-slate-200 text-xs font-medium flex items-start space-x-3 shadow-[3px_3px_0px_0px_#5fb57a]">
-              <CheckCircle2 className="w-4 h-4 text-[#5fb57a] shrink-0 mt-0.5" />
-              <span>Currently seeking 2025/2026 software engineering internships and collaborative full-stack projects.</span>
+            {/* Availability Note */}
+            <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 flex items-start space-x-2.5 font-sans">
+              <CheckCircle2 className="w-4 h-4 text-[#1d7eb6] shrink-0 mt-0.5" />
+              <span>Available for 2025/2026 software engineering internships and collaborative technical projects.</span>
             </div>
 
           </div>
 
-          {/* Interactive Contact Form (7 cols) */}
-          <div className="lg:col-span-7">
-            <div className="card-editorial p-6 sm:p-8">
-              
-              <h3 className="font-display text-xl font-black text-[#111111] dark:text-white uppercase mb-6">
-                Send a Message
-              </h3>
+          {/* Form (7 cols) */}
+          <div className="lg:col-span-7 p-6 sm:p-7 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/30">
+            <h3 className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-900 dark:text-zinc-100 mb-5">
+              Send a Message
+            </h3>
 
-              {/* Status Banner */}
-              {status.type && (
-                <div
-                  className={`mb-6 p-4 rounded-xl border-2 border-[#111111] flex items-start space-x-3 text-sm shadow-[3px_3px_0px_0px_#111111] ${
-                    status.type === 'success'
-                      ? 'bg-[#5fb57a]/20 text-[#111111] dark:text-white'
-                      : 'bg-rose-500/20 text-rose-900 dark:text-rose-200'
-                  }`}
-                  role="alert"
-                >
-                  {status.type === 'success' ? (
-                    <CheckCircle2 className="w-5 h-5 text-[#5fb57a] shrink-0 mt-0.5" />
-                  ) : (
-                    <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
-                  )}
-                  <div className="flex-1 font-semibold">{status.message}</div>
-                </div>
-              )}
+            {status.type && (
+              <div
+                className={`mb-5 p-3 rounded border text-xs flex items-start space-x-2 ${
+                  status.type === 'success'
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
+                    : 'border-rose-500/40 bg-rose-500/10 text-rose-800 dark:text-rose-300'
+                }`}
+                role="alert"
+              >
+                {status.type === 'success' ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                )}
+                <span>{status.message}</span>
+              </div>
+            )}
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Name */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="name" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
-                      Your Name <span className="text-[#5fb57a]">*</span>
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Jane Doe"
-                      className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="email" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
-                      Your Email <span className="text-[#5fb57a]">*</span>
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="jane@example.com"
-                      className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
-                    />
-                  </div>
-                </div>
-
-                {/* Subject */}
-                <div className="space-y-1.5">
-                  <label htmlFor="subject" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
-                    Subject (Optional)
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label htmlFor="name" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    Your Name
                   </label>
                   <input
-                    id="subject"
+                    id="name"
                     type="text"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    placeholder="e.g. Software Internship Opportunity"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all"
-                  />
-                </div>
-
-                {/* Message */}
-                <div className="space-y-1.5">
-                  <label htmlFor="message" className="block text-xs font-mono font-bold uppercase tracking-wider text-[#111111] dark:text-slate-300">
-                    Message <span className="text-[#5fb57a]">*</span>
-                  </label>
-                  <textarea
-                    id="message"
                     required
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Briefly describe your project, role, or inquiry..."
-                    className="w-full px-4 py-3 rounded-xl border-2 border-[#111111] dark:border-white/25 bg-[#ebebea]/40 dark:bg-[#0b0c10] text-[#111111] dark:text-white placeholder-[#111111]/40 dark:placeholder-white/40 text-sm focus:outline-none focus:border-[#5fb57a] focus:shadow-[3px_3px_0px_0px_#5fb57a] transition-all resize-y"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Jane Doe"
+                    className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
                   />
                 </div>
 
-                {/* Submit Button */}
-                <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="inline-flex items-center justify-center space-x-2 px-7 py-3 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-xs uppercase tracking-wider border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Sending Message...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </button>
-
-                  <a
-                    href={`mailto:${personalInfo.social.email}`}
-                    className="text-xs font-mono font-bold text-[#111111]/70 dark:text-slate-400 hover:text-[#111111] dark:hover:text-white underline self-center sm:self-auto"
-                  >
-                    Open Mail Client ↗
-                  </a>
+                <div className="space-y-1">
+                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    Your Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="jane@example.com"
+                    className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
+                  />
                 </div>
+              </div>
 
-              </form>
+              <div className="space-y-1">
+                <label htmlFor="subject" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  Subject (Optional)
+                </label>
+                <input
+                  id="subject"
+                  type="text"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  placeholder="Internship opportunity, project inquiry, etc."
+                  className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors"
+                />
+              </div>
 
-            </div>
+              <div className="space-y-1">
+                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Describe your project, role, or questions..."
+                  className="w-full px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus-ring transition-colors resize-y"
+                />
+              </div>
+
+              <div className="pt-1 flex items-center justify-between">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-md bg-[#1d7eb6] hover:bg-[#156593] text-white text-xs font-medium transition-colors disabled:opacity-50 focus-ring"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </button>
+
+                <a
+                  href={`mailto:${personalInfo.social.email}`}
+                  className="text-xs font-mono text-zinc-500 dark:text-zinc-400 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
+                >
+                  Direct Email ↗
+                </a>
+              </div>
+            </form>
           </div>
 
         </div>

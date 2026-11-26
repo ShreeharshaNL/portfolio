@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, ArrowRight } from 'lucide-react';
-import { personalInfo } from '../config/portfolio';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 interface NavItem {
@@ -16,6 +15,8 @@ const navItems: NavItem[] = [
   { name: 'Contact', href: '#contact' },
 ];
 
+const RESUME_URL = 'https://resume.shreeharsha.online';
+
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,13 +26,12 @@ export const Navbar: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Simple intersection tracker for active section highlighting
       const sections = ['home', 'about', 'projects', 'skills', 'education', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 120 && rect.bottom >= 120) {
+          if (rect.top <= 140 && rect.bottom >= 140) {
             setActiveSection(section);
             break;
           }
@@ -58,23 +58,22 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? 'bg-[#ebebea]/90 dark:bg-[#0b0c10]/90 backdrop-blur-md border-b-2 border-[#111111] dark:border-white/20 shadow-sm'
-          : 'bg-transparent border-b-2 border-transparent'
+          ? 'bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/80 shadow-sm'
+          : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           
-          {/* Brand */}
+          {/* Minimal Brand */}
           <a
             href="#home"
-            className="group flex items-center space-x-2 focus-ring rounded-full shrink-0"
+            className="group flex items-center space-x-2 rounded-md focus-ring"
             aria-label="Shreeharsha N. L. homepage"
           >
-            <div className="inline-flex items-center rounded-full border-2 border-[#111111] dark:border-white/25 bg-white dark:bg-[#15171f] overflow-hidden text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#111111] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[3px_3px_0px_0px_#5fb57a] transition-all">
-              <span className="bg-[#5fb57a] text-[#111111] px-2 py-1 sm:px-2.5 font-black text-[11px] sm:text-xs">08/27</span>
-              <span className="px-2.5 py-1 sm:px-3 text-[#111111] dark:text-white font-extrabold tracking-tight text-[11px] sm:text-xs">SHREEHARSHA</span>
-            </div>
+            <span className="font-semibold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-zinc-100 group-hover:text-[#1d7eb6] dark:group-hover:text-[#1d7eb6] transition-colors">
+              Shreeharsha N. L.
+            </span>
           </a>
 
           {/* Desktop Navigation Links */}
@@ -85,10 +84,10 @@ export const Navbar: React.FC = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all focus-ring ${
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium tracking-tight transition-colors focus-ring ${
                     isActive
-                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111] shadow-[2px_2px_0px_0px_#5fb57a]'
-                      : 'text-[#111111] dark:text-slate-300 hover:bg-[#111111]/10 dark:hover:bg-white/10'
+                      ? 'text-[#1d7eb6] dark:text-[#1d7eb6] font-semibold bg-zinc-100/80 dark:bg-zinc-800/60'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/30'
                   }`}
                 >
                   {item.name}
@@ -97,38 +96,30 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action Icons & Theme Toggle */}
+          {/* Right Action: Theme Toggle & Direct Resume Link */}
           <div className="hidden md:flex items-center space-x-3">
             <ThemeToggle />
 
-            {/* Resume Button: Visible if resumeUrl exists */}
-            {personalInfo.social.resumeUrl ? (
-              <a
-                href={personalInfo.social.resumeUrl}
-                download
-                className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wide bg-[#5fb57a] text-[#111111] border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all focus-ring"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>Resume</span>
-              </a>
-            ) : (
-              <a
-                href="#contact"
-                className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wide bg-[#5fb57a] text-[#111111] border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_#111111] active:translate-x-0 active:translate-y-0 transition-all focus-ring"
-              >
-                <span>Connect</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            )}
+            {/* Direct Resume Link to resume.shreeharsha.online */}
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-medium text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] dark:hover:border-[#1d7eb6] hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors focus-ring"
+              aria-label="Open Resume in new tab"
+            >
+              <span>Resume</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center space-x-2">
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full border-2 border-[#111111] dark:border-white/20 bg-white dark:bg-[#15171f] text-[#111111] dark:text-white shadow-[2px_2px_0px_0px_#111111] focus-ring"
+              className="p-2 rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus-ring"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -140,37 +131,30 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b-2 border-[#111111] dark:border-white/20 bg-[#ebebea]/95 dark:bg-[#0b0c10]/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-2 animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#09090b]/95 backdrop-blur-lg px-4 pt-2 pb-5 space-y-2 animate-in fade-in duration-150">
           <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2.5 rounded-xl text-sm font-bold uppercase tracking-wider text-[#111111] dark:text-slate-200 hover:bg-[#111111]/10 dark:hover:bg-white/10 transition-colors"
+                className="px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 hover:text-[#1d7eb6] dark:hover:text-[#1d7eb6] transition-colors"
               >
                 {item.name}
               </a>
             ))}
             
-            <div className="pt-3 border-t-2 border-[#111111]/20 dark:border-white/20 flex items-center justify-between">
-              {personalInfo.social.resumeUrl ? (
-                <a
-                  href={personalInfo.social.resumeUrl}
-                  download
-                  className="w-full text-center py-2.5 px-4 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-xs uppercase tracking-wider border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111]"
-                >
-                  Download Resume
-                </a>
-              ) : (
-                <a
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 px-4 rounded-full bg-[#5fb57a] text-[#111111] font-extrabold text-xs uppercase tracking-wider border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111]"
-                >
-                  Get In Touch
-                </a>
-              )}
+            <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800">
+              <a
+                href={RESUME_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center space-x-1.5 py-2 px-3 rounded-md text-xs font-medium text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 hover:border-[#1d7eb6] hover:text-[#1d7eb6] transition-colors"
+              >
+                <span>View Resume</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </nav>
         </div>

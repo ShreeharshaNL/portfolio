@@ -50,8 +50,8 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#ebebea] dark:bg-[#0b0c10] text-[#111111] dark:text-[#f8fafc] font-sans antialiased selection:bg-[#5fb57a] selection:text-[#111111] transition-colors duration-200">
-      {/* Sticky Professional Navbar */}
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-[#09090b] dark:text-[#fafafa] font-sans antialiased selection:bg-[#1d7eb6]/20 transition-colors duration-200">
+      {/* Minimal Editorial Navbar */}
       <Navbar />
 
       {/* Main Content Area */}
